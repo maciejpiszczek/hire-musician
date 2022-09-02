@@ -1,5 +1,72 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% block container %}
-    <h1>Home</h1>
+    <div class="row row-cols-1 row-cols-md-2 g-4">
+        <div class="col-6">
+            <div class="card mb-3 h-100">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="{% static '/images/drake_yes.png' %}" class="img-fluid rounded-start" alt="...">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">Jobs</h5>
+                            <p class="card-text">Search for job opportunities - both live and in studio, add offers and grow.</p>
+                            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="card mb-3 h-100">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="{% static '/images/drake_no.png' %}" class="img-fluid rounded-start" alt="...">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">Musicians</h5>
+                            <p class="card-text">Find a man suitable for your job.</p>
+                            <p class="card-text"><small class="text-muted">Last updated 20 mins ago</small></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="card mb-3 h-100">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="{% static '/images/drake_yes.png' %}" class="img-fluid rounded-start" alt="...">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">Messages</h5>
+                            <p class="card-text">Check your inbox.</p>
+                            <p class="card-text"><small class="text-muted">New messages!</small></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="card mb-3 h-100">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="{% static '/images/drake_no.png' %}" class="img-fluid rounded-start" alt="...">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">Calendar</h5>
+                            <p class="card-text">Time management is the key - use a featured calendar to keep up with your schedule.</p>
+                            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock container %}
