@@ -1,9 +1,9 @@
 {% load static %}
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark partials">
     <div class="container">
         <a class="navbar-brand" href="/">
-            <img src="{% static '/images/logo_small.svg' %}" class="logo" alt="">
+            <img src="{% static '/images/logo.svg' %}" class="logo" alt="">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -18,7 +18,7 @@
 
         <div>
             <ul class="navbar-nav">
-                <li class="nav-item dropdown bg-dark">
+                <li class="nav-item dropdown partials">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         {{ user }}
                     </a>

@@ -1,3 +1,27 @@
-<footer class="fixed-bottom">
-        <p>&copy; Maciej Piszczek 2022</p>
+{% load static %}
+
+<footer class="text-white partials">
+  <div class="container mt-auto">
+    <section class="mb-3">
+      <a class="btn btn-floating m-1" href="https://github.com/maciejpiszczek/" role="button"
+        ><img src="{% static 'images/github_logo.png' %}" class="socials" alt="">
+        </a>
+      <a class="btn btn-floating m-1" href="https://www.linkedin.com/in/maciej-piszczek-105a25109/"
+         role="button"
+        ><img src="{% static 'images/linked_in_logo.png' %}" class="socials" alt="">
+      </a>
+      <a class="btn btn-floating m-1" href=""
+         role="button"
+        ><img src="{% static 'images/twitter_logo.png' %}" class="socials" alt="">
+      </a>
+    </section>
+    <section class="mb-3">
+      <p>
+        I encourage you to visit my socials linked above. Check out my projects and hire me!
+      </p>
+    </section>
+  <div class="text-center p-2">
+    © 2022 Maciej Piszczek. All rights reserved.
+  </div>
+  </div>
 </footer>
