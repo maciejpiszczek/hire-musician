@@ -1,3 +1,30 @@
+body {
+    background: #2c3034;
+}
+
+.card {
+    background: #2c3034;
+    color: white;
+    --bs-card-border-color: #aaaaaa;
+}
+
+.last-update {
+    color: #aaaaaa;
+}
+
 .logo {
     height: 60px;
+}
+
+#searchbar {
+    justify-content: space-around;
+}
+
+#footer {
+    color: #aaaaaa;
+    display: block;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
 }
