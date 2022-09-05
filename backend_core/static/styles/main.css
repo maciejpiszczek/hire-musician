@@ -26,6 +26,15 @@
     height: 100%;
 }
 
+.center-contents {
+    position: absolute;
+    top: 200px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+
 .last-update {
     position: absolute;
     display: inline-flex;
@@ -43,7 +52,7 @@
 }
 
 footer {
-    display: inline-block;
+    display: flex;
     position: fixed;
     bottom: 0;
     left: 0;
