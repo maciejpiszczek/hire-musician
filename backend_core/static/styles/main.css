@@ -42,3 +42,16 @@ footer {
 .socials {
     height: 30px;
 }
+
+.musicians-list-card {
+    display: inline-flex;
+}
+
+.avatar {
+    width: 150px;
+    height: 150px;
+}
+
+.musician-info {
+    display: flex;
+}

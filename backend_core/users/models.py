@@ -20,7 +20,7 @@ class UserProfile(models.Model):
     equipment = models.TextField(default="", blank=True)
     is_mobile = models.BooleanField(default=False)
     cut = models.DecimalField(default=Decimal(0), max_digits=6, decimal_places=2)
-    rate = models.FloatField(default=0.00)
+    rating = models.FloatField(default=0.00)
 
     def __str__(self):
         return self.user.username

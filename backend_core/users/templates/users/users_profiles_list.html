@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'styles/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/main.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/dashboard.css' %}">
+{% endblock styles %}
+
+{% block container %}
+    {% for musician in musicians %}
+        <div class="row row-cols-1 row-cols-md-2">
+            <div class="col-12 w-100 mb-3">
+                <a class="card-link" href="/users/{{ musician.id }}">
+                    <div class="card mb-3 h-100 justify-content-center">
+                        <div class="row musicians-list-card">
+                            <div class="col-md-auto">
+                                {% if musician.avatar %}
+                                    <img src="{{ musician.avatar.url }}" class="rounded-circle img-fluid avatar"
+                                         alt="user_avatar">
+                                {% else %}
+                                    <img src="{% static 'images/dummy-avatar.jpg' %}" alt="avatar"
+                                         class="rounded-circle img-fluid avatar">
+                                {% endif %}
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ musician.user }}</h5>
+                                    <div class="musician-info">
+                                        <div class="col-3">
+                                            <p class="card-text">Instrument:</p>
+                                            <p class="card-text">Styles:</p>
+                                            <p class="card-text"><small>Rating:</small></p>
+                                        </div>
+                                        <div class="col-9">
+                                            {% if not musician.instrument %}
+                                                <p class="card-text">unknown</p>
+                                            {% else %}
+                                                <p class="card-text">{{ musician.instrument }}</p>
+                                            {% endif %}
+                                            {% if not musician.music_style %}
+                                                <p class="card-text">unknown</p>
+                                            {% else %}
+                                                <p class="card-text">{{ musician.music_style }}</p>
+                                            {% endif %}
+                                            {% if not musician.instrument %}
+                                                <p class="card-text">unknown</p>
+                                            {% else %}
+                                                <p class="card-text"><small>{{ musician.rating }}</small></p>
+                                            {% endif %}
+                                        </div>
+                                        <div class="col-2">
+                                            <h6 class="">Cut:</h6>
+                                            <hr>
+                                            <p class="card-text">{{ musician.cut }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    {% empty %}
+        <div>
+            <h6>There are no agents at the moment.</h6>
+        </div>
+    {% endfor %}
+{% endblock container %}
