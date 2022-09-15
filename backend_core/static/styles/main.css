@@ -1,3 +1,11 @@
+body {
+    color: white;
+}
+
+.contents {
+    margin-bottom: 200px;
+}
+
 .card {
     background: #1a1e21;
     color: white;
@@ -8,39 +16,6 @@
     transition: .3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow,.3s -webkit-transform cubic-bezier(.155,1.105,.295,1.12);
     padding: 10px;
     cursor: pointer;
-}
-
-.card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
-}
-
-.card-link {
-    text-decoration: none;
-}
-
-.card-images {
-    display: flex;
-    align-content: center;
-    justify-content: center;
-    height: 100%;
-}
-
-.center-contents {
-    position: absolute;
-    top: 200px;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin: auto;
-}
-
-.last-update {
-    position: absolute;
-    display: inline-flex;
-    color: #aaaaaa;
-    bottom: 10px;
-    right: 10px;
 }
 
 .logo {
