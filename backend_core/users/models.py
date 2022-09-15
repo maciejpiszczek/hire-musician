@@ -12,7 +12,7 @@ class CustomUser(AbstractUser):
 
 class UserProfile(models.Model):
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
-    avatar = models.ImageField(default="static/images/avatar_dummy.png", upload_to='user_avatar')
+    avatar = models.ImageField(blank=True, upload_to='user_avatar')
     bio = models.TextField(default="", blank=True)
     location = models.CharField(default="", blank=True, max_length=100)
     instrument = models.CharField(default="", blank=True, max_length=255)
