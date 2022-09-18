@@ -9,6 +9,9 @@
 {% endblock styles %}
 
 {% block container %}
+
+    {% include 'partials/musicians_filter.html' %}
+
     {% for musician in musicians %}
         <div class="row row-cols-1 row-cols-md-2">
             <div class="col-12 w-100 mb-3">
@@ -65,7 +68,7 @@
         </div>
     {% empty %}
         <div>
-            <h6>There are no agents at the moment.</h6>
+            <h6>There are no agents meeting your criteria at the moment.</h6>
         </div>
     {% endfor %}
 {% endblock container %}

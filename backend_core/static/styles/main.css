@@ -55,3 +55,29 @@ footer {
 .musician-info {
     display: flex;
 }
+
+.filter-panel {
+    display: inline-block;
+    width: 100%;
+}
+
+.filter-row {
+    display: flex;
+}
+
+.filter-item {
+    display: inline-block;
+    width: 100%;
+}
+
+.filter-toggle {
+    text-align: center;
+}
+
+.submit-filter {
+    float: right;
+}
+
+.search-filter {
+    display: flex;
+}

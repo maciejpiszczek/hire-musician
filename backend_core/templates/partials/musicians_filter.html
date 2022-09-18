@@ -1,0 +1,29 @@
+{% load crispy_forms_tags %}
+
+<div class="filter-toggle">
+    <p>
+        <button class="btn btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+            Filter options
+        </button>
+    </p>
+</div>
+
+<div class="collapse" id="collapseExample">
+    <form action="" method="get">
+        <div class="search-filter">
+            <div class="col-4">
+                Instrument:
+                {{ filter.form.instrument }}
+            </div>
+            <div class="col-4">
+                Musical style:
+                {{ filter.form.music_style }}
+            </div>
+            <div class="col-4" style="display: inline;">
+                Is mobile:
+                {{ filter.form.is_mobile }}
+            </div>
+            <input type="submit" class="btn btn-primary" value="Filter">
+        </div>
+    </form>
+</div>
