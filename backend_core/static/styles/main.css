@@ -81,3 +81,8 @@ footer {
 .search-filter {
     display: flex;
 }
+
+.musician-cut {
+    font-size: 1.5rem;
+    margin-bottom: 0;
+}

@@ -41,20 +41,30 @@
               {% endif %}
             </p>
           </div>
-          <div class="card-body">
-            <h6>Cut:</h6>
-            <p class="text-muted">
-              {% if not profile.cut %}
-                undisclosed
-              {% else %}
-                {{ profile.cut }}
-              {% endif %}
-            </p>
-          </div>
         </div>
       </div>
 
       <div class="col-lg-8 h-auto">
+        <div class="card mb-4">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-12" style="display: inline;">
+                <h6 class="mb-0" style="text-align: right;">Cut:</h6>
+                <hr>
+                <div style="text-align: right;">
+                  <div style="display: block;">
+                    {% if not profile.cut %}
+                      <p class="musician-cut">undisclosed</p>
+                    {% else %}
+                      <p class="musician-cut">{{ profile.cut }}$</p>
+                      <p class="text-muted">/song</p>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
         <div class="card mb-4">
           <div class="card-body">
             <div class="row">

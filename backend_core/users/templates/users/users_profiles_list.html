@@ -31,7 +31,20 @@
                             </div>
                             <div class="col-md-8">
                                 <div class="card-body">
-                                    <h5 class="card-title">{{ musician.user }}</h5>
+                                    <div style="display: flex;">
+                                        <div class="col-12">
+                                            <h5 class="card-title">{{ musician.user }}</h5>
+                                        </div>
+                                        <div class="col-auto" style="text-align: right;">
+                                            <h6 class="">Cut:</h6>
+                                            {% if not musician.cut %}
+                                                <p class="text-muted mb-0">undisclosed</p>
+                                            {% else %}
+                                                <p class="musician-cut mb-0">{{ musician.cut }} $</p>
+                                                <p class="text-muted">/song</p>
+                                            {% endif %}
+                                        </div>
+                                    </div>
                                     <div class="musician-info">
                                         <div class="col-3">
                                             <p class="card-text">Instrument:</p>
@@ -40,28 +53,23 @@
                                         </div>
                                         <div class="col-7">
                                             {% if not musician.instrument %}
-                                                <p class="card-text">unknown</p>
+                                                <p class="card-text">-</p>
                                             {% else %}
                                                 <p class="card-text">{{ musician.instrument }}</p>
                                             {% endif %}
                                             {% if not musician.music_style %}
-                                                <p class="card-text">unknown</p>
+                                                <p class="card-text">-</p>
                                             {% else %}
                                                 <p class="card-text">{{ musician.music_style }}</p>
                                             {% endif %}
                                             {% if not musician.rating %}
-                                                <p class="card-text">unknown</p>
+                                                <p class="card-text">-</p>
                                             {% else %}
                                                 <p class="card-text">
                                                     <i data-star="{{ musician.rating }}"></i>
                                                     <small>({{ musician.rating }})</small>
                                                 </p>
                                             {% endif %}
-                                        </div>
-                                        <div class="col-2" style="text-align: right;">
-                                            <h6 class="">Cut:</h6>
-                                            <hr>
-                                            <p class="card-text">{{ musician.cut }}</p>
                                         </div>
                                     </div>
                                 </div>
