@@ -12,6 +12,7 @@ class MusiciansProfilesListView(FilterView):
     template_name = 'users/users_profiles_list.html'
     context_object_name = 'musicians'
     filterset_class = MusicianFilter
+    paginate_by = 10
 
 
 class MusicianProfileView(DetailView):
