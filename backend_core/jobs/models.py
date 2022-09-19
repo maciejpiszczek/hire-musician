@@ -33,6 +33,9 @@ class Job(models.Model):
     class Meta:
         ordering = ('-added',)
 
+    def get_class(self):
+        return self.__class__.__name__
+
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.title)
