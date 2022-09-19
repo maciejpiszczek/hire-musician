@@ -8,22 +8,36 @@
     </p>
 </div>
 
-<div class="collapse" id="collapseExample">
+<div class="collapse filter-panel" id="collapseExample">
     <form action="" method="get">
-        <div class="search-filter">
-            <div class="col-4">
-                Instrument:
-                {{ filter.form.instrument }}
+        <div class="search-filter mb-3">
+            <div class="col-auto">
+                <div class="filter-item">
+                    Instrument:
+                </div>
+                <div class="filter-item">
+                    {{ filter.form.instrument }}
+                </div>
             </div>
-            <div class="col-4">
-                Musical style:
-                {{ filter.form.music_style }}
+            <div class="col-auto">
+                <div class="filter-item">
+                    Music styles:
+                </div>
+                <div class="filter-item">
+                    {{ filter.form.music_style }}
+                </div>
             </div>
-            <div class="col-4" style="display: inline;">
-                Is mobile:
-                {{ filter.form.is_mobile }}
+            <div class="col-auto">
+                <div class="filter-item">
+                    Is mobile:
+                </div>
+                <div>
+                    {{ filter.form.is_mobile }}
+                </div>
             </div>
-            <input type="submit" class="btn btn-primary" value="Filter">
+            <div class="col-auto m-2" style="text-align: right; align-content: end">
+                <input type="submit" class="btn btn-primary" value="Filter">
+            </div>
         </div>
     </form>
 </div>
