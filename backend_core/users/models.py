@@ -5,6 +5,8 @@ from django.db import models
 
 from decimal import Decimal
 
+from django.utils.text import slugify
+
 
 class CustomUser(AbstractUser):
     pass
@@ -21,9 +23,15 @@ class UserProfile(models.Model):
     is_mobile = models.BooleanField(default=False)
     cut = models.DecimalField(default=Decimal(0), max_digits=6, decimal_places=2)
     rating = models.FloatField(default=0.00)
+    slug = models.SlugField(max_length=200, unique=True, blank=True)
 
     def __str__(self):
         return self.user.username
 
     class Meta:
         ordering = ('-rating',)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.user)
+        super().save(*args, **kwargs)

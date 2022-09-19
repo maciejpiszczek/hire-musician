@@ -35,5 +35,5 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RunPython(create_superuser, delete_superuser)
+        migrations.RunPython(create_superuser)
     ]

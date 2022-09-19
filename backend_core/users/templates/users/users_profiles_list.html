@@ -6,6 +6,8 @@
     <link rel="stylesheet" href="{% static 'styles/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'styles/main.css' %}">
     <link rel="stylesheet" href="{% static 'styles/dashboard.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{% static 'styles/star_rating.css' %}">
 {% endblock styles %}
 
 {% block container %}
@@ -15,7 +17,7 @@
     {% for musician in musicians %}
         <div class="row row-cols-1 row-cols-md-2">
             <div class="col-12 w-100 mb-3">
-                <a class="card-link" href="/users/{{ musician.id }}">
+                <a class="card-link" href="/users/{{ musician.slug }}">
                     <div class="card mb-3 h-100 justify-content-center">
                         <div class="row musicians-list-card">
                             <div class="col-md-auto">
@@ -34,9 +36,9 @@
                                         <div class="col-3">
                                             <p class="card-text">Instrument:</p>
                                             <p class="card-text">Styles:</p>
-                                            <p class="card-text"><small>Rating:</small></p>
+                                            <p class="card-text">Rating:</p>
                                         </div>
-                                        <div class="col-9">
+                                        <div class="col-7">
                                             {% if not musician.instrument %}
                                                 <p class="card-text">unknown</p>
                                             {% else %}
@@ -50,10 +52,13 @@
                                             {% if not musician.rating %}
                                                 <p class="card-text">unknown</p>
                                             {% else %}
-                                                <p class="card-text"><small>{{ musician.rating }}</small></p>
+                                                <p class="card-text">
+                                                    <i data-star="{{ musician.rating }}"></i>
+                                                    <small>({{ musician.rating }})</small>
+                                                </p>
                                             {% endif %}
                                         </div>
-                                        <div class="col-2">
+                                        <div class="col-2" style="text-align: right;">
                                             <h6 class="">Cut:</h6>
                                             <hr>
                                             <p class="card-text">{{ musician.cut }}</p>

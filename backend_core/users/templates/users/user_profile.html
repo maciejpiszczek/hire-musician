@@ -106,15 +106,20 @@
               <div class="card-body">
               <div class="row">
               <div class="col-sm-12">
-                <h6 class="mb-0">Rates & opinions</h6>
+                <div style="display: inline;">
+                  <h6 class="mb-0">Rates & opinions</h6>
+                  <div style="text-align: right;">
+                    <p class="card-text">
+                    <small>Overall:</small>
+                    <i data-star="{{ profile.rating }}"></i>
+                    <small>({{ profile.rating }})</small>
+                    </p>
+                </div>
+                </div>
+
               </div>
             </div>
             <hr>
-                <p class="mb-1" style="font-size: .77rem;">Web Design</p>
-                <div class="progress rounded" style="height: 5px;">
-                  <div class="progress-bar" role="progressbar" style="width: 80%" aria-valuenow="80"
-                    aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
 
               </div>
             </div>
