@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block container %}
+    <section class="bg-dark contents">
+  <div class="container py-5">
+    <div class="row w-100 m-0">
+      <div class="card">
+      <div class="card-body">
+            <div class="row" style="display: block;">
+              <div class="col-auto">
+                  <h3 style="text-align: center;">{{ job.title }}</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="row mt-3">
+      <div class="col-lg-4">
+        <div class="card h-100">
+          <div class="card-body text-center">
+            <img src="{% static 'images/dummy-avatar.jpg' %}" alt="avatar"
+                 class="rounded-circle img-fluid" style="width: 150px; height: 150px;">
+            <h5 class="my-3">{{ job.title }}</h5>
+            <p class="text-muted mb-2">{{ job.location }}</p>
+            <div class="d-flex justify-content-center mb-2">
+              <button type="button" class="btn btn-primary">Apply</button>
+              <button type="button" class="btn btn-outline-primary ms-1">Message</button>
+            </div>
+          </div>
+          <div class="card-body">
+            <h6>Instrument:</h6>
+            <p class="text-muted">{{ job.instrument }}</p>
+          </div>
+          <div class="card-body">
+            <h6>Music style:</h6>
+            <p class="text-muted">{{ job.music_style }}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-8 h-auto">
+        <div class="card mb-4">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-12" style="display: inline;">
+                <h6 class="mb-0" style="text-align: right;">Cut:</h6>
+                <hr>
+                <div style="text-align: right;">
+                  <div style="display: block;">
+                    <p class="musician-cut">{{ job.cut }}$</p>
+                    <p class="text-muted">/{{ job.cut_unit }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card mb-4">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-12">
+                <h6 class="mb-0">Job details</h6>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-12">
+                <p class="text-muted mb-0">{{ job.description }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock container %}
