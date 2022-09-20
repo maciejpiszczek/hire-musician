@@ -17,12 +17,29 @@
             <div class="col-12 w-100 mb-3">
                 <a class="card-link" href="/jobs/{{ job.slug }}">
                     <div class="card mb-3 h-100 justify-content-center">
-                        <div class="row musicians-list-card">
-                            <div class="col-md-8">
+                        <div class="col-md-auto vertical-center">
+                            {% if job.get_class == 'StudioSession' %}
+                                <img src="{% static 'images/studio-session.png' %}" alt="avatar"
+                                     class="rounded-circle img-fluid avatar">
+                            {% elif job.get_class == 'Concert' %}
+                                <img src="{% static 'images/concert.png' %}" alt="avatar"
+                                     class="rounded-circle img-fluid avatar">
+                            {% else %}
+                                <img src="{% static 'images/tour.png' %}" alt="avatar"
+                                     class="rounded-circle img-fluid avatar">
+                            {% endif %}
+                        </div>
+                        <div class="col-md-auto">
+                            <div class="col-md-8 card-info">
                                 <div class="card-body">
                                     <div style="display: flex;">
                                         <div class="col-12">
-                                            <h5 class="card-title">{{ job.get_class }} - {{ job.title }}</h5>
+                                            <h5 class="card-title">{{ job.title }}</h5>
+                                            {% if job.event_start.date == job.event_end.date %}
+                                                <p class="mb-0"><small>Date: {{ job.event_start.date }}</small></p>
+                                            {% else %}
+                                                <p class="mb-0"><small>Date: {{ job.event_start.date }} - {{ job.event_end.date }}</small></p>
+                                            {% endif %}
                                         </div>
                                         <div class="col-auto" style="text-align: right;">
                                             <h6 class="">Cut:</h6>
@@ -32,10 +49,12 @@
                                     </div>
                                     <div class="musician-info">
                                         <div class="col-3">
+                                            <p class="card-text">Event type:</p>
                                             <p class="card-text">Instrument:</p>
                                             <p class="card-text">Style:</p>
                                         </div>
                                         <div class="col-7">
+                                            <p class="card-text">{{ job.get_class }}</p>
                                             <p class="card-text">{{ job.instrument }}</p>
                                             <p class="card-text">{{ job.music_style }}</p>
                                         </div>
@@ -52,5 +71,9 @@
             <h6>There are no jobs meeting your criteria at the moment.</h6>
         </div>
     {% endfor %}
+
+    <div style="text-align: center;">
+        {% include 'partials/pagination.html' %}
+    </div>
 
 {% endblock container %}

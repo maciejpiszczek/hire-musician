@@ -43,10 +43,6 @@ footer {
     height: 30px;
 }
 
-.musicians-list-card {
-    display: inline-flex;
-}
-
 .avatar {
     width: 150px;
     height: 150px;
@@ -85,4 +81,19 @@ footer {
 .musician-cut {
     font-size: 1.5rem;
     margin-bottom: 0;
+}
+
+.vertical-center {
+    display: inline-block;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+.card-info {
+    display: inline-block;
+    position: relative;
+    left: 20%;
 }
