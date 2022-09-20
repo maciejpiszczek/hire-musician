@@ -16,19 +16,32 @@
           </div>
         </div>
     </div>
-    <div class="row mt-3">
+    <div class="row mt-3 h-100">
       <div class="col-lg-4">
         <div class="card h-100">
           <div class="card-body text-center">
             <p class="text-muted">Owner:</p>
-            <img src="{{ owner_profile.avatar.url }}" alt="avatar"
-                 class="rounded-circle img-fluid" style="width: 150px; height: 150px;">
+            {% if profile.avatar %}
+              <img src="{{ owner_profile.avatar.url }}" alt="avatar"
+                  class="rounded-circle img-fluid" style="width: 150px; height: 150px;">
+            {% else %}
+              <img src="{% static 'images/dummy-avatar.jpg' %}" alt="avatar"
+                  class="rounded-circle img-fluid" style="width: 150px; height: 150px;">
+            {% endif %}
             <h5 class="my-3">{{ job.owner }}</h5>
-            <p class="text-muted mb-2">{{ job.location }}</p>
             <div class="d-flex justify-content-center mb-2">
               <button type="button" class="btn btn-primary">Apply</button>
               <button type="button" class="btn btn-outline-primary ms-1">Message</button>
             </div>
+          </div>
+          <div class="card-body">
+              {% if job_detailed.get_class == 'Tour' %}
+                <h6>Region:</h6>
+                <p class="text-muted">{{ job_detailed.region }}</p>
+              {% else %}
+                <h6>Location:</h6>
+                <p class="text-muted">{{ job_detailed.location }}</p>
+              {% endif %}
           </div>
           <div class="card-body">
             <h6>Instrument:</h6>
@@ -41,7 +54,7 @@
         </div>
       </div>
 
-      <div class="col-lg-8 h-auto">
+      <div class="col-lg-8">
         <div class="card mb-4">
           <div class="card-body">
             <div class="row">
@@ -58,7 +71,7 @@
             </div>
           </div>
         </div>
-        <div class="card mb-4">
+        <div class="card h-auto">
           <div class="card-body">
             <div class="row">
               <div class="col-sm-12">
