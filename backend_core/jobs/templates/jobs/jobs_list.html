@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'styles/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/main.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/dashboard.css' %}">
+{% endblock styles %}
+
+{% block container %}
+
+    {% include 'partials/jobs_filter.html' %}
+
+    {% for job in jobs %}
+        <div class="row row-cols-1 row-cols-md-2">
+            <div class="col-12 w-100 mb-3">
+                <a class="card-link" href="/jobs/{{ job.slug }}">
+                    <div class="card mb-3 h-100 justify-content-center">
+                        <div class="row musicians-list-card">
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <div style="display: flex;">
+                                        <div class="col-12">
+                                            <h5 class="card-title">{{ job.get_class }} - {{ job.title }}</h5>
+                                        </div>
+                                        <div class="col-auto" style="text-align: right;">
+                                            <h6 class="">Cut:</h6>
+                                            <p class="musician-cut mb-0">{{ job.cut }} $</p>
+                                            <p class="text-muted">/{{ job.cut_unit }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="musician-info">
+                                        <div class="col-3">
+                                            <p class="card-text">Instrument:</p>
+                                            <p class="card-text">Style:</p>
+                                        </div>
+                                        <div class="col-7">
+                                            <p class="card-text">{{ job.instrument }}</p>
+                                            <p class="card-text">{{ job.music_style }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    {% empty %}
+        <div>
+            <h6>There are no jobs meeting your criteria at the moment.</h6>
+        </div>
+    {% endfor %}
+
+{% endblock container %}
