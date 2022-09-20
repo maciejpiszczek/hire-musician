@@ -1,11 +1,11 @@
 from itertools import chain
 
-from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from braces.views import GroupRequiredMixin
 from django.urls import reverse_lazy
-from django.views.generic import DetailView, CreateView
+from django.views.generic import DetailView, FormView
 from django_filters.views import FilterView
 
-from . import models
+from . import models, forms
 
 from .filters import JobsFilter
 from users.models import UserProfile
@@ -38,13 +38,12 @@ class JobDetailView(DetailView):
         return context
 
 
-class CreateStudioSessionView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
+class CreateStudioSessionView(GroupRequiredMixin, FormView):
     model = models.StudioSession
-    fields = ('title', 'instrument', 'music_style', 'description', 'cut', 'cut_unit', 'event_start', 'event_end',
-              'location', 'studio_name')
+    form_class = forms.CreateStudioSessionForm
     template_name = 'jobs/create_studio_session.html'
     login_url = reverse_lazy('users:login')
-    permission_required = 'jobs.add_job'
+    group_required = "Musician"
     raise_exception = False
     success_url = reverse_lazy('jobs:jobs_list')
 

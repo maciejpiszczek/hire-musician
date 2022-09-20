@@ -1,3 +1,5 @@
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Submit
 from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import AuthenticationForm
@@ -13,6 +15,9 @@ class RegistrationForm(forms.ModelForm):
         'placeholder': 'Enter your email',
         'class': 'form-control',
     }))
+    helper = FormHelper()
+    helper.add_input(Submit('submit', 'Post', css_class='btn btn-primary'))
+    helper.form_method = 'POST'
 
     class Meta:
         model = get_user_model()

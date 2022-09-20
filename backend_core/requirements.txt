@@ -19,3 +19,4 @@ pytest-cov==3.0.0
 pytest-django==4.5.2
 sqlparse==0.4.2
 tomli==2.0.1
+django-braces==1.15.0

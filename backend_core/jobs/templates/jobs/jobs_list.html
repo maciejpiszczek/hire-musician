@@ -10,6 +10,11 @@
 
 {% block container %}
 
+    <a href="">
+        <button class="btn btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+            Add Job
+        </button>
+    </a>
     {% include 'partials/jobs_filter.html' %}
 
     {% for job in jobs %}

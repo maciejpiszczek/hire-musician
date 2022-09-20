@@ -2,14 +2,10 @@
 {% load crispy_forms_tags %}
 
 {% block container %}
+    <h3 class="text-center mt-3">Add a new Studio Session</h3>
     <form action="{% url 'jobs:new_session' %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        <h3 class="text-center mt-3">Add a new Studio Session</h3>
-        {% if form.errors %}
-            {{ form.errors }}
-        {% endif %}
-        {{ form|crispy }}
-        <button class="btn btn-success float-right btn-lg mb-3 mt-0" type="submit">Add Course</button>
+        {% crispy form %}
     </form>
 
 {% endblock container %}
