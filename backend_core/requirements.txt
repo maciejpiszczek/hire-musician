@@ -1,20 +1,15 @@
 asgiref==3.5.2
 attrs==22.1.0
-certifi==2022.9.14
 coverage==6.4.4
-distlib==0.3.6
 dj-database-url==1.0.0
 Django==4.1
 django-crispy-forms==1.14.0
 django-environ==0.9.0
 django-filter==22.1
-filelock==3.8.0
 gunicorn==20.1.0
 iniconfig==1.1.1
 packaging==21.3
 Pillow==9.2.0
-pipenv==2022.9.8
-platformdirs==2.5.2
 pluggy==1.0.0
 psycopg2==2.9.3
 py==1.11.0
@@ -24,5 +19,3 @@ pytest-cov==3.0.0
 pytest-django==4.5.2
 sqlparse==0.4.2
 tomli==2.0.1
-virtualenv==20.16.5
-virtualenv-clone==0.5.7

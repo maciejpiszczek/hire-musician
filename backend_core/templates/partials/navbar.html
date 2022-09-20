@@ -17,6 +17,7 @@
         </div>
 
         <div>
+            {% if user.is_authenticated %}
             <ul class="navbar-nav">
                 <li class="nav-item dropdown partials">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -27,10 +28,22 @@
                         <li><a class="dropdown-item" href="#">My job offers</a></li>
                         <li><a class="dropdown-item" href="#">Preferences</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#">Log out</a></li>
+                        <li><a class="dropdown-item" href="{% url 'users:logout' %}">Log out</a></li>
                     </ul>
                 </li>
             </ul>
+            {% else %}
+                <a href="{% url 'users:registration' %}">
+                    <button class="btn btn-outline-info" type="button" aria-expanded="false">
+                        Sign Up
+                    </button>
+                </a>
+                <a href="{% url 'users:login' %}">
+                    <button class="btn btn-outline-primary" type="button" aria-expanded="false">
+                        Sign In
+                    </button>
+                </a>
+            {% endif %}
         </div>
     </div>
 </nav>
