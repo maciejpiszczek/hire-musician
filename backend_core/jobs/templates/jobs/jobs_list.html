@@ -73,7 +73,9 @@
     {% endfor %}
 
     <div style="text-align: center;">
-        {% include 'partials/pagination.html' %}
+        {% if jobs|length >= 2 %}
+            {% include 'partials/pagination.html' %}
+        {% endif %}
     </div>
 
 {% endblock container %}
