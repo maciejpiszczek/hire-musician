@@ -29,10 +29,17 @@
                   class="rounded-circle img-fluid" style="width: 150px; height: 150px;">
             {% endif %}
             <h5 class="my-3">{{ job.owner }}</h5>
-            <div class="d-flex justify-content-center mb-2">
-              <button type="button" class="btn btn-primary">Apply</button>
-              <button type="button" class="btn btn-outline-primary ms-1">Message</button>
-            </div>
+            {% if job_owner %}
+                <div class="d-flex justify-content-center mb-2">
+                    <button type="button" class="btn btn-warning">Edit</button>
+                <button type="button" class="btn btn-danger ms-1">Delete</button>
+                </div>
+            {% else %}
+                <div class="d-flex justify-content-center mb-2">
+                    <button type="button" class="btn btn-primary">Apply</button>
+                    <button type="button" class="btn btn-outline-primary ms-1">Message</button>
+                </div>
+            {% endif %}
           </div>
           <div class="card-body">
               {% if job_detailed.get_class == 'Tour' %}

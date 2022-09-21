@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.base_user import BaseUserManager
+from django.contrib.auth.models import AbstractUser, Group
 
 from django.db import models
 
@@ -8,8 +9,52 @@ from decimal import Decimal
 from django.utils.text import slugify
 
 
+class CustomUserManager(BaseUserManager):
+    use_in_migrations = True
+
+    def create_user(self, email, username, password=None):
+        if not email:
+            raise ValueError('User must provide the email.')
+
+        user = self.model(
+            email=self.normalize_email(email),
+            username=username
+        )
+
+        user.set_password(password)
+        user.is_active = True
+        user.is_musician = True
+
+        user.save(using=self._db)
+
+        # if user.is_musician:
+        #     musicians_group = Group.objects.get(name='musicians')
+        #     user.groups.add(musicians_group)
+
+        # user.save(using=self._db)
+
+        return user
+
+    def create_superuser(self, email, username, password=None):
+        user = self.create_user(email=email, username=username, password=password)
+
+        user.is_admin = True
+        user.is_active = True
+        user.is_staff = True
+        user.is_superuser = True
+
+        user.save(using=self._db)
+
+        return user
+
+
 class CustomUser(AbstractUser):
-    pass
+    is_musician = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.username
+
+    objects = CustomUserManager()
 
 
 class UserProfile(models.Model):

@@ -30,6 +30,7 @@ def registration_view(request):
         if form.is_valid():
             user = form.save(commit=False)
             user.is_active = True
+            user.is_musician = True
             user.save()
             return redirect(reverse_lazy('users:login'))
     return render(request, 'users/registration.html', {'form': form})
@@ -56,4 +57,4 @@ def login_user_view(request):
 
 def logout_user(request):
     logout(request)
-    return redirect(reverse_lazy('users:login'))
+    return redirect(reverse_lazy('home:home'))
