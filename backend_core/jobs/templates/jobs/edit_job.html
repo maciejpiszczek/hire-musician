@@ -11,4 +11,7 @@
         {{ form|crispy }}
         <button class="btn btn-success float-right btn-lg mb-3 mt-0" type="submit">Update Job</button>
     </form>
+    <a href="/jobs/view/{{ job.slug }}">
+        <button class="btn btn-danger float-right btn-lg mb-3 mt-0">Cancel</button>
+    </a>
 {% endblock container %}

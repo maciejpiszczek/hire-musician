@@ -3,7 +3,7 @@ from itertools import chain
 from braces.views import GroupRequiredMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
-from django.views.generic import DetailView, FormView, UpdateView
+from django.views.generic import DetailView, FormView, UpdateView, DeleteView
 from django_filters.views import FilterView
 
 from . import models, forms
@@ -125,3 +125,28 @@ class EditTourView(EditJobView):
     model = models.Tour
     fields = ('title', 'instrument', 'music_style', 'description', 'cut', 'cut_unit', 'event_start', 'event_end',
               'region', 'concert_amount', 'days_off', 'rehearsals')
+
+
+class JobDeleteView(LoginRequiredMixin, GroupRequiredMixin, AuthorManageMixin, DeleteView):
+    template_name = 'jobs/delete_job.html'
+    login_url = reverse_lazy('users:login')
+    group_required = 'musicians'
+    success_url = reverse_lazy('jobs:jobs_list')
+    context_object_name = 'job'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['job_type'] = self.model.__name__
+        return context
+
+
+class StudioSessionDeleteView(JobDeleteView):
+    model = models.StudioSession
+
+
+class ConcertDeleteView(JobDeleteView):
+    model = models.Concert
+
+
+class TourDeleteView(JobDeleteView):
+    model = models.Tour

@@ -10,11 +10,17 @@
 
 {% block container %}
 
-    <a href="">
-        <button class="btn btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-            Add Job
+    <div class="btn-group">
+        <button type="button" class="btn btn-info dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+            Add new...
         </button>
-    </a>
+        <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url 'jobs:new_session' %}">Studio session</a></li>
+            <li><a class="dropdown-item" href="{% url 'jobs:new_concert' %}">Concert</a></li>
+            <li><a class="dropdown-item" href="{% url 'jobs:new_tour' %}">Tour</a></li>
+        </ul>
+    </div>
+
     {% include 'partials/jobs_filter.html' %}
 
     {% for job in jobs %}

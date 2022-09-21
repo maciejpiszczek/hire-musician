@@ -21,7 +21,7 @@
         <div class="card h-100">
           <div class="card-body text-center">
             <p class="text-muted">Owner:</p>
-            {% if profile.avatar %}
+            {% if owner_profile.avatar %}
               <img src="{{ owner_profile.avatar.url }}" alt="avatar"
                   class="rounded-circle img-fluid" style="width: 150px; height: 150px;">
             {% else %}
@@ -35,16 +35,24 @@
                         <a href="{% url 'jobs:edit_session' slug=job.slug %}">
                             <button type="button" class="btn btn-warning">Edit</button>
                         </a>
+                        <a href="{% url 'jobs:delete_session' slug=job.slug %}">
+                            <button type="button" class="btn btn-danger ms-1">Delete</button>
+                        </a>
                     {% elif job_detailed.get_class == 'Concert' %}
                         <a href="{% url 'jobs:edit_concert' slug=job.slug %}">
                             <button type="button" class="btn btn-warning">Edit</button>
+                        </a>
+                        <a href="{% url 'jobs:delete_concert' slug=job.slug %}">
+                            <button type="button" class="btn btn-danger ms-1">Delete</button>
                         </a>
                     {% else %}
                         <a href="{% url 'jobs:edit_tour' slug=job.slug %}">
                             <button type="button" class="btn btn-warning">Edit</button>
                         </a>
+                        <a href="{% url 'jobs:delete_tour' slug=job.slug %}">
+                            <button type="button" class="btn btn-danger ms-1">Delete</button>
+                        </a>
                     {% endif %}
-                    <button type="button" class="btn btn-danger ms-1">Delete</button>
                 </div>
             {% else %}
                 <div class="d-flex justify-content-center mb-2">
