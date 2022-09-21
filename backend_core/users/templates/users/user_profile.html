@@ -19,9 +19,16 @@
             <h5 class="my-3">{{ profile }}</h5>
             <p class="text-muted mb-2">{{ profile.location }}</p>
             <div class="d-block justify-content-center mb-2">
-              {% if profile_mod %}
-                <button type="button" class="btn btn-warning m-2">Edit profile</button>
-                <button type="button" class="btn btn-outline-primary ms-1">View Messages</button>
+              {% if profile_edit == 1 %}
+                  <a href="{% url 'users:edit_profile' slug=profile.slug %}">
+                    <button type="button" class="btn btn-warning m-2">Edit profile</button>
+                  </a>
+                  <button type="button" class="btn btn-outline-primary ms-1">View Messages</button>
+              {% elif profile_edit == 2 %}
+                  <a href="{% url 'users:edit_profile' slug=profile.slug %}">
+                    <button type="button" class="btn btn-warning m-2">Edit profile</button>
+                  </a>
+                  <button type="button" class="btn btn-outline-primary ms-1">Message</button>
               {% else %}
                 <button type="button" class="btn btn-primary m-2">Follow</button>
                 <button type="button" class="btn btn-outline-primary ms-1">Message</button>
