@@ -23,6 +23,12 @@ class MusicianProfileView(DetailView):
     template_name = 'users/user_profile.html'
     context_object_name = 'profile'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if context['profile'].user == self.request.user or self.request.user.is_superuser:
+            context['profile_mod'] = True
+        return context
+
 
 def registration_view(request):
     form = forms.RegistrationForm(request.POST or None, request.FILES or None)
