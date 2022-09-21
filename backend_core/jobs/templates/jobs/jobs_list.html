@@ -20,7 +20,7 @@
     {% for job in jobs %}
         <div class="row row-cols-1 row-cols-md-2">
             <div class="col-12 w-100 mb-3">
-                <a class="card-link" href="/jobs/{{ job.slug }}">
+                <a class="card-link" href="/jobs/view/{{ job.slug }}">
                     <div class="card mb-3 h-100 justify-content-center">
                         <div class="col-md-auto vertical-center">
                             {% if job.get_class == 'StudioSession' %}
@@ -71,9 +71,10 @@
                 </a>
             </div>
         </div>
+
     {% empty %}
         <div>
-            <h6>There are no jobs meeting your criteria at the moment.</h6>
+            <h6>{{ no_results_message }}</h6>
         </div>
     {% endfor %}
 

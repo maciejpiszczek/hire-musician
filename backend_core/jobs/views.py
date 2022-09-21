@@ -1,6 +1,7 @@
 from itertools import chain
 
 from braces.views import GroupRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import DetailView, FormView, UpdateView
 from django_filters.views import FilterView
@@ -22,6 +23,19 @@ class JobsListView(FilterView):
         context = super().get_context_data(**kwargs)
         context['jobs'] = list(chain(models.StudioSession.objects.all(), models.Concert.objects.all(),
                                      models.Tour.objects.all()))
+        context['no_results_message'] = "There are no job offers meeting your criteria."
+        return context
+
+
+class MyJobsListView(LoginRequiredMixin, JobsListView):
+    login_url = reverse_lazy('users:login')
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['jobs'] = chain(models.StudioSession.objects.filter(owner_id=self.request.user.id),
+                                models.Concert.objects.filter(owner_id=self.request.user.id),
+                                models.Tour.objects.filter(owner_id=self.request.user.id))
+        context['no_results_message'] = "You have no active job offers at the moment."
         return context
 
 
