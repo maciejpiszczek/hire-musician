@@ -76,3 +76,11 @@ class Tour(Job):
     def __str__(self):
         return f'TOUR - {self.event_start.date()} - {self.event_end.date()} ' \
                f'- {self.title} ({self.concert_amount} concerts)'
+
+
+class JobAccess(models.Model):
+    candidate = models.ForeignKey(get_user_model(), related_name='candidate', on_delete=models.CASCADE)
+    job = models.ForeignKey('Job', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.candidate} - {self.job.title}'

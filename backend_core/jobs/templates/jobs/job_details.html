@@ -115,6 +115,31 @@
             </div>
           </div>
         </div>
+        {% if job_owner %}
+            <div class="card h-auto mt-4">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-sm-12">
+                    <h6 class="mb-0">Accesses:</h6>
+                  </div>
+                </div>
+                <hr>
+                {% for candidate in candidates %}
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <a href="/users/{{ candidate.candidate }}" class="text-muted mb-0">{{ candidate.candidate }}</a>
+                      </div>
+                    </div>
+                {% empty %}
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <p class="text-muted mb-0">No candidates yet.</p>
+                      </div>
+                    </div>
+                {% endfor %}
+              </div>
+            </div>
+        {% endif %}
       </div>
     </div>
   </div>

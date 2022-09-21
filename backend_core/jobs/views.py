@@ -49,6 +49,7 @@ class JobDetailView(DetailView):
         jobs = list(chain(models.StudioSession.objects.all(), models.Concert.objects.all(), models.Tour.objects.all()))
         context['job_detailed'] = [job for job in jobs if job.title == context['job'].title][0]
         context['owner_profile'] = UserProfile.objects.get(user_id=context['job'].owner_id)
+        context['candidates'] = models.JobAccess.objects.filter(job=context['job'].id)
         if context['job'].owner == self.request.user or self.request.user.is_superuser:
             context['job_owner'] = True
         return context
