@@ -2,6 +2,7 @@ from itertools import chain
 
 from braces.views import GroupRequiredMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.views.generic import DetailView, FormView, UpdateView, DeleteView
 from django_filters.views import FilterView
@@ -151,3 +152,20 @@ class ConcertDeleteView(JobDeleteView):
 
 class TourDeleteView(JobDeleteView):
     model = models.Tour
+
+
+class JobAccessView(GroupRequiredMixin, FormView):
+    template_name = 'jobs/apply.html'
+    form_class = forms.JobAccessForm
+    group_required = 'musicians'
+
+    def get_context_data(self, **kwargs):
+        context = super().get(**kwargs)
+        context['job'] = models.Job.objects.get(slug=self.kwargs['slug'])
+        return context
+
+    def form_valid(self, form):
+        job = models.Job.objects.get(slug=self.kwargs['slug'])
+        new_access = models.JobAccess.objects.create(candidate=self.request.user, job=job)
+        new_access.save()
+        return HttpResponseRedirect('/jobs/')

@@ -16,4 +16,5 @@ urlpatterns = [
     path('studiosession/delete/<slug:slug>/', views.StudioSessionDeleteView.as_view(), name='delete_session'),
     path('concert/delete/<slug:slug>/', views.ConcertDeleteView.as_view(), name='delete_concert'),
     path('tour/delete/<slug:slug>/', views.TourDeleteView.as_view(), name='delete_tour'),
+    path('apply/<slug:slug>', views.JobAccessView.as_view(), name='apply'),
 ]
