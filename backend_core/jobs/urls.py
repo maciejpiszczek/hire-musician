@@ -9,4 +9,7 @@ urlpatterns = [
     path('studiosession/new/', views.CreateStudioSessionView.as_view(), name='new_session'),
     path('concert/new/', views.CreateConcertView.as_view(), name='new_concert'),
     path('tour/new/', views.CreateTourView.as_view(), name='new_tour'),
+    path('studiosession/edit/<slug:slug>/', views.EditStudioSessionView.as_view(), name='edit_session'),
+    path('concert/edit/<slug:slug>/', views.EditConcertView.as_view(), name='edit_concert'),
+    path('tour/edit/<slug:slug>/', views.EditTourView.as_view(), name='edit_tour'),
 ]

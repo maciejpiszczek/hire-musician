@@ -29,3 +29,4 @@ class CreateTourForm(CreateJobForm):
         model = models.Tour
         fields = ('title', 'instrument', 'music_style', 'description', 'cut', 'cut_unit', 'event_start', 'event_end',
                   'region', 'concert_amount', 'days_off', 'rehearsals')
+
