@@ -39,15 +39,34 @@ class JobDetailView(DetailView):
         return context
 
 
-class CreateStudioSessionView(GroupRequiredMixin, FormView):
-    model = models.StudioSession
-    form_class = forms.CreateStudioSessionForm
-    template_name = 'jobs/create_studio_session.html'
+class CreateJobView(GroupRequiredMixin, FormView):
+    template_name = 'jobs/new_job.html'
     login_url = reverse_lazy('users:login')
     group_required = "musicians"
     raise_exception = False
     success_url = reverse_lazy('jobs:jobs_list')
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['job_type'] = self.model.__name__
+        return context
+
     def form_valid(self, form):
         form.instance.owner = self.request.user
+        form.save()
         return super().form_valid(form)
+
+
+class CreateStudioSessionView(CreateJobView):
+    model = models.StudioSession
+    form_class = forms.CreateStudioSessionForm
+
+
+class CreateConcertView(CreateJobView):
+    model = models.Concert
+    form_class = forms.CreateConcertForm
+
+
+class CreateTourView(CreateJobView):
+    model = models.Tour
+    form_class = forms.CreateTourForm
