@@ -16,10 +16,10 @@
           </div>
         </div>
     </div>
-    <div class="row mt-3 h-100">
+    <div class="row mt-3">
       <div class="col-lg-4">
-        <div class="card h-100">
-          <div class="card-body text-center">
+        <div class="card h-100 d-block">
+          <div class="card-body text-center h-auto">
             {% if applied %}
                 <h6>You applied for this job.</h6>
             {% endif %}
@@ -78,6 +78,34 @@
                     </div>
             {% endif %}
           </div>
+
+          {% if job_owner %}
+              <div class="card-body">
+                  <div class="row">
+                      <div class="col-sm-12">
+                        <h6 class="mb-0">Accesses
+                            {% if access_count > 0 %}
+                                (total {{ access_count }})
+                            {% endif %}
+                        </h6>
+                      </div>
+                    </div>
+                    <hr>
+                    {% for candidate in candidates %}
+                        <div class="row">
+                          <div class="col-sm-12">
+                            <a href="/users/{{ candidate }}" class="text-muted mb-0">{{ candidate }}</a>
+                          </div>
+                        </div>
+                    {% empty %}
+                        <div class="row">
+                          <div class="col-sm-12">
+                            <p class="text-muted mb-0">No candidates yet.</p>
+                          </div>
+                        </div>
+                    {% endfor %}
+              </div>
+          {% endif %}
         </div>
       </div>
 
@@ -98,7 +126,11 @@
             </div>
           </div>
         </div>
-        <div class="card mb-4">
+        <div class="card mb-4 job-attrs">
+            <div class="card-body">
+              <h6>Job type:</h6>
+              <p class="text-muted">{{ job_detailed.get_class }}</p>
+            </div>
             <div class="card-body">
               {% if job_detailed.get_class == 'Tour' %}
                 <h6>Region:</h6>
@@ -107,7 +139,13 @@
                 <h6>Location:</h6>
                 <p class="text-muted">{{ job_detailed.location }}</p>
               {% endif %}
-          </div>
+            </div>
+            {% if job_detailed.get_class == 'StudioSession' and job_detailed.studio_name %}
+              <div class="card-body">
+                  <h6>Studio:</h6>
+                  <p class="text-muted">{{ job_detailed.studio_name }}</p>
+              </div>
+            {% endif %}
           <div class="card-body">
             <h6>Instrument:</h6>
             <p class="text-muted">{{ job.instrument }}</p>
@@ -132,31 +170,6 @@
             </div>
           </div>
         </div>
-        {% if job_owner %}
-            <div class="card h-auto mt-4">
-              <div class="card-body">
-                <div class="row">
-                  <div class="col-sm-12">
-                    <h6 class="mb-0">Accesses:</h6>
-                  </div>
-                </div>
-                <hr>
-                {% for candidate in candidates %}
-                    <div class="row">
-                      <div class="col-sm-12">
-                        <a href="/users/{{ candidate.candidate }}" class="text-muted mb-0">{{ candidate.candidate }}</a>
-                      </div>
-                    </div>
-                {% empty %}
-                    <div class="row">
-                      <div class="col-sm-12">
-                        <p class="text-muted mb-0">No candidates yet.</p>
-                      </div>
-                    </div>
-                {% endfor %}
-              </div>
-            </div>
-        {% endif %}
       </div>
     </div>
   </div>

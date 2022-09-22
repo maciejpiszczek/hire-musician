@@ -1,0 +1,26 @@
+.pagination-center {
+    justify-content: space-evenly;
+}
+
+.pagination > li > a {
+    background-color: #1a1e21;;
+    border-color: #ddd;
+    color: #dee2e6;
+}
+
+.pagination > li > a:focus,
+.pagination > li > a:hover,
+.pagination > li > span:focus,
+.pagination > li > span:hover {
+    z-index: 3;
+    color: #dee2e6;;
+    background-color: #41464b;
+    border-color: #ddd;
+}
+
+.pagination > .active
+{
+    color: #dee2e6;
+    background-color: #41464b; !Important;
+    border-color: #ddd; !Important;
+}

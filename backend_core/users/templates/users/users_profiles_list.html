@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="{% static 'styles/dashboard.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="{% static 'styles/star_rating.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/pagination.css' %}">
 {% endblock styles %}
 
 {% block container %}
@@ -90,9 +91,7 @@
             <h6>There are no agents meeting your criteria at the moment.</h6>
         </div>
     {% endfor %}
-    <div style="text-align: center;">
-        {% if musicians|length >= 2 %}
-            {% include 'partials/pagination.html' %}
-        {% endif %}
-    </div>
+    {% if musicians|length >= 2 %}
+        {% include 'partials/pagination.html' %}
+    {% endif %}
 {% endblock container %}

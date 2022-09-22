@@ -18,6 +18,7 @@ from .permissions import AuthorManageMixin
 
 
 class JobsListView(FilterView):
+    model = models.Job
     template_name = 'jobs/jobs_list.html'
     context_object_name = 'jobs'
     filterset_class = JobsFilter
@@ -25,8 +26,8 @@ class JobsListView(FilterView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['jobs'] = list(chain(models.StudioSession.objects.all(), models.Concert.objects.all(),
-                                     models.Tour.objects.all()))
+        # context['jobs'] = list(chain(models.StudioSession.objects.all(), models.Concert.objects.all(),
+        #                              models.Tour.objects.all()))
         context['no_results_message'] = "There are no job offers meeting your criteria."
         return context
 
@@ -53,7 +54,9 @@ class JobDetailView(DetailView):
         jobs = list(chain(models.StudioSession.objects.all(), models.Concert.objects.all(), models.Tour.objects.all()))
         context['job_detailed'] = [job for job in jobs if job.title == context['job'].title][0]
         context['owner_profile'] = UserProfile.objects.get(user_id=context['job'].owner_id)
-        context['candidates'] = models.JobAccess.objects.filter(job=context['job'].id)
+        accesses = models.JobAccess.objects.filter(job=context['job'].id)
+        context['candidates'] = [access.candidate for access in accesses]
+        context['access_count'] = len(accesses)
         context['job_owner'] = True if (context['job'].owner == self.request.user or self.request.user.is_superuser) \
             else False
         context['applied'] = True if models.JobAccess.objects.filter(candidate=self.request.user, job=self.object) \

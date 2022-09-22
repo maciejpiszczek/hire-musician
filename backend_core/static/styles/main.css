@@ -97,3 +97,8 @@ footer {
     position: relative;
     left: 20%;
 }
+
+.job-attrs > div {
+    display: inline-flex;
+    justify-content: space-between;
+}

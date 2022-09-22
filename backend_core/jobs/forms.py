@@ -35,10 +35,10 @@ class JobAccessForm(forms.ModelForm):
     helper = FormHelper()
     helper.add_input(Submit('submit', 'Post', css_class='btn btn-primary'))
     helper.form_method = 'POST'
-    
+
     class Meta:
         model = models.JobAccess
-        fields = ('candidate', 'job')
+        exclude = ('candidate', 'job')
 
     # def __init__(self, *args, **kwargs):
     #     candidate = kwargs.pop('candidate')
