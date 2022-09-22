@@ -200,3 +200,34 @@ class ConcertAccessView(JobAccessView):
 
 class TourAccessView(JobAccessView):
     model = models.Tour
+
+
+class MyJobAccessesListView(LoginRequiredMixin, FilterView):
+    model = models.JobAccess
+    template_name = 'jobs/jobs_list.html'
+    context_object_name = 'jobs'
+    paginate_by = 20
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['accesses'] = models.JobAccess.objects.filter(candidate=self.request.user)
+        context['jobs'] = []
+
+        for access in context['accesses']:
+            find_ss = models.StudioSession.objects.filter(job_ptr_id=access.job.id)
+            if len(find_ss) > 0:
+                for el in find_ss:
+                    context['jobs'].append(el)
+
+            find_con = models.Concert.objects.filter(job_ptr_id=access.job.id)
+            if len(find_con) > 0:
+                for el in find_con:
+                    context['jobs'].append(el)
+
+            find_tour = models.Tour.objects.filter(job_ptr_id=access.job.id)
+            if len(find_tour) > 0:
+                for el in find_tour:
+                    context['jobs'].append(el)
+
+        context['no_results_message'] = "You have no job accesses."
+        return context

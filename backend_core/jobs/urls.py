@@ -19,4 +19,5 @@ urlpatterns = [
     path('apply_studiosession/<slug:slug>/', views.StudioSessionAccessView.as_view(), name='apply_session'),
     path('apply_concert/<slug:slug>/', views.ConcertAccessView.as_view(), name='apply_concert'),
     path('apply_tour/<slug:slug>/', views.TourAccessView.as_view(), name='apply_tour'),
+    path('my_accesses/', views.MyJobAccessesListView.as_view(), name='my_accesses'),
 ]

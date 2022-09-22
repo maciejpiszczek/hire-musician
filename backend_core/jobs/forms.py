@@ -39,12 +39,3 @@ class JobAccessForm(forms.ModelForm):
     class Meta:
         model = models.JobAccess
         exclude = ('candidate', 'job')
-
-    # def __init__(self, *args, **kwargs):
-    #     candidate = kwargs.pop('candidate')
-    #     job = kwargs.pop('job')
-    #     super(JobAccessForm, self).__init__(*args, **kwargs)
-    #     self.fields['candidate'] = candidate
-    #     self.fields['job'] = job
-
-
