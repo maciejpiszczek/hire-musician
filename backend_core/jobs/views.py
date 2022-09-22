@@ -17,9 +17,11 @@ from users.models import UserProfile
 from .permissions import AuthorManageMixin
 
 
-class JobsListView(FilterView):
+class JobsListView(LoginRequiredMixin, FilterView):
     model = models.Job
     template_name = 'jobs/jobs_list.html'
+    login_url = reverse_lazy('users:login')
+    raise_exception = False
     context_object_name = 'jobs'
     filterset_class = JobsFilter
     paginate_by = 20
@@ -32,9 +34,7 @@ class JobsListView(FilterView):
         return context
 
 
-class MyJobsListView(LoginRequiredMixin, JobsListView):
-    login_url = reverse_lazy('users:login')
-
+class MyJobsListView(JobsListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['jobs'] = chain(models.StudioSession.objects.filter(owner_id=self.request.user.id),
@@ -206,6 +206,7 @@ class MyJobAccessesListView(LoginRequiredMixin, FilterView):
     model = models.JobAccess
     template_name = 'jobs/jobs_list.html'
     context_object_name = 'jobs'
+    filterset_fields = ['job']
     paginate_by = 20
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -214,20 +215,14 @@ class MyJobAccessesListView(LoginRequiredMixin, FilterView):
         context['jobs'] = []
 
         for access in context['accesses']:
-            find_ss = models.StudioSession.objects.filter(job_ptr_id=access.job.id)
-            if len(find_ss) > 0:
-                for el in find_ss:
-                    context['jobs'].append(el)
+            studio = models.StudioSession.objects.filter(job_ptr_id=access.job.id)
+            concerts = models.Concert.objects.filter(job_ptr_id=access.job.id)
+            tours = models.Tour.objects.filter(job_ptr_id=access.job.id)
 
-            find_con = models.Concert.objects.filter(job_ptr_id=access.job.id)
-            if len(find_con) > 0:
-                for el in find_con:
-                    context['jobs'].append(el)
-
-            find_tour = models.Tour.objects.filter(job_ptr_id=access.job.id)
-            if len(find_tour) > 0:
-                for el in find_tour:
-                    context['jobs'].append(el)
+            if not context['jobs']:
+                context['jobs'] = list(chain(studio, concerts, tours))
+            else:
+                context['jobs'] += list(chain(studio, concerts, tours))
 
         context['no_results_message'] = "You have no job accesses."
         return context

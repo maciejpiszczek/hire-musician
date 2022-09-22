@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'home.apps.HomeConfig',
     'jobs.apps.JobsConfig',
+    'messenger.apps.MessengerConfig',
 ]
 
 MIDDLEWARE = [

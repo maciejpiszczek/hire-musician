@@ -24,6 +24,7 @@ urlpatterns = [
     path('', include('home.urls')),
     path('users/', include('users.urls')),
     path('jobs/', include('jobs.urls')),
+    path('messenger/', include('messenger.urls')),
 ]
 
 if settings.DEBUG:

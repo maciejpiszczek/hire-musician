@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block container %}
+    {% for message in my_messages %}
+        <p>{{ message }}</p>
+    {% empty %}
+        <p>You have no messages yet.</p>
+    {% endfor %}
+{% endblock container %}

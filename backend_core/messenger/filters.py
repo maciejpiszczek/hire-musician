@@ -1,13 +1,12 @@
 from django.db import models
-
-from .models import UserProfile
+from .models import PrivateMessage
 import django_filters
 
 
-class MusicianFilter(django_filters.FilterSet):
+class PrivMessagesFilter(django_filters.FilterSet):
     class Meta:
-        model = UserProfile
-        fields = ['instrument', 'music_style', 'is_mobile']
+        model = PrivateMessage
+        fields = ['message_text', ]
         filter_overrides = {
             models.CharField: {
                 'filter_class': django_filters.CharFilter,

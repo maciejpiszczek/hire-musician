@@ -11,9 +11,11 @@ from django.views.generic import DetailView, UpdateView
 from .filters import MusicianFilter
 
 
-class MusiciansProfilesListView(FilterView):
+class MusiciansProfilesListView(LoginRequiredMixin, FilterView):
     model = models.UserProfile
     template_name = 'users/users_profiles_list.html'
+    login_url = reverse_lazy('users:login')
+    raise_exception = False
     context_object_name = 'musicians'
     filterset_class = MusicianFilter
     paginate_by = 10

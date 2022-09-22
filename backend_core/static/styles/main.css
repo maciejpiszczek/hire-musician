@@ -102,3 +102,8 @@ footer {
     display: inline-flex;
     justify-content: space-between;
 }
+
+.success-check {
+    height: 20px;
+    color: #00363a;
+}
