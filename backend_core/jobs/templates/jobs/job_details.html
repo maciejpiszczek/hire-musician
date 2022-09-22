@@ -105,6 +105,13 @@
                         </div>
                     {% endfor %}
               </div>
+          {% else %}
+              <div class="row job-attrs">
+                  <div class="col-sm-12 justify-content-around">
+                      <h6>Access count:</h6>
+                      <h6>{{ access_count }}</h6>
+                  </div>
+              </div>
           {% endif %}
         </div>
       </div>
