@@ -2,9 +2,10 @@
 {% load crispy_forms_tags %}
 
 {% block container %}
-    <form action="/jobs/apply/<slug:slug>/" method="post" enctype="multipart/form-data">
+    <h2 class="text-center mt-3">Are you sure you want to apply for <b>{{ job.title }}</b>?</h2>
+    <form action="/jobs/apply_{{ job_type.lower }}/{{ job.slug }}/" method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        <h2 class="text-center mt-3">Are you sure you want to apply for <b>{{ job.title }}</b>?</h2>
+        {{ form|crispy }}
         <div style="display: inline;">
             <button class="btn btn-success float-right btn-lg mb-3 mt-0" type="submit">Confirm</button>
         </div>

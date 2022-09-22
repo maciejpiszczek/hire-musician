@@ -31,7 +31,20 @@ class CreateTourForm(CreateJobForm):
                   'region', 'concert_amount', 'days_off', 'rehearsals')
 
 
-class JobAccessForm(forms.Form):
-    def clean(self):
-        if 'apply' in self.data:
-            return models.JobAccess()
+class JobAccessForm(forms.ModelForm):
+    helper = FormHelper()
+    helper.add_input(Submit('submit', 'Post', css_class='btn btn-primary'))
+    helper.form_method = 'POST'
+    
+    class Meta:
+        model = models.JobAccess
+        fields = ('candidate', 'job')
+
+    # def __init__(self, *args, **kwargs):
+    #     candidate = kwargs.pop('candidate')
+    #     job = kwargs.pop('job')
+    #     super(JobAccessForm, self).__init__(*args, **kwargs)
+    #     self.fields['candidate'] = candidate
+    #     self.fields['job'] = job
+
+

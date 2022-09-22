@@ -2,11 +2,14 @@ from itertools import chain
 
 from braces.views import GroupRequiredMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponseRedirect
-from django.urls import reverse_lazy
+from django.http import HttpResponseRedirect, HttpResponseForbidden
+from django.urls import reverse_lazy, reverse
 from django.views.generic import DetailView, FormView, UpdateView, DeleteView
+from django.views.generic.detail import SingleObjectMixin
+from django.views.generic.edit import FormMixin
 from django_filters.views import FilterView
 
+import users.models
 from . import models, forms
 
 from .filters import JobsFilter
@@ -51,8 +54,10 @@ class JobDetailView(DetailView):
         context['job_detailed'] = [job for job in jobs if job.title == context['job'].title][0]
         context['owner_profile'] = UserProfile.objects.get(user_id=context['job'].owner_id)
         context['candidates'] = models.JobAccess.objects.filter(job=context['job'].id)
-        if context['job'].owner == self.request.user or self.request.user.is_superuser:
-            context['job_owner'] = True
+        context['job_owner'] = True if (context['job'].owner == self.request.user or self.request.user.is_superuser) \
+            else False
+        context['applied'] = True if models.JobAccess.objects.filter(candidate=self.request.user, job=self.object) \
+            else False
         return context
 
 
@@ -154,18 +159,41 @@ class TourDeleteView(JobDeleteView):
     model = models.Tour
 
 
-class JobAccessView(GroupRequiredMixin, FormView):
+class JobAccessView(GroupRequiredMixin, FormMixin, DetailView):
     template_name = 'jobs/apply.html'
     form_class = forms.JobAccessForm
     group_required = 'musicians'
 
     def get_context_data(self, **kwargs):
-        context = super().get(**kwargs)
+        context = super().get_context_data(**kwargs)
         context['job'] = models.Job.objects.get(slug=self.kwargs['slug'])
+        context['job_type'] = self.model.__name__
         return context
 
+    def post(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return HttpResponseForbidden()
+        self.object = self.get_object()
+        form = self.get_form()
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
     def form_valid(self, form):
-        job = models.Job.objects.get(slug=self.kwargs['slug'])
-        new_access = models.JobAccess.objects.create(candidate=self.request.user, job=job)
-        new_access.save()
+        form.instance.candidate = self.request.user
+        form.instance.job = self.object
+        form.save()
         return HttpResponseRedirect('/jobs/')
+
+
+class StudioSessionAccessView(JobAccessView):
+    model = models.StudioSession
+
+
+class ConcertAccessView(JobAccessView):
+    model = models.Concert
+
+
+class TourAccessView(JobAccessView):
+    model = models.Tour
