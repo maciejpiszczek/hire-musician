@@ -6,12 +6,12 @@ import django_filters
 class PrivMessagesFilter(django_filters.FilterSet):
     class Meta:
         model = PrivateMessage
-        fields = ['message_text', ]
+        fields = ['sender', 'receiver']
         filter_overrides = {
-            models.CharField: {
+            models.ForeignKey: {
                 'filter_class': django_filters.CharFilter,
                 'extra': lambda f: {
-                    'lookup_expr': 'icontains',
+                    'lookup_expr': '',
                 },
             }
         }

@@ -107,3 +107,12 @@ footer {
     height: 20px;
     color: #00363a;
 }
+
+.msg-datetime {
+    text-align: end;
+    width: 25%;
+}
+
+.msg-datetime > p {
+    margin: 0;
+}
