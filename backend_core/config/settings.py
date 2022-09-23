@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'crispy_forms',
+    'star_ratings',
 
     'users.apps.UsersConfig',
     'home.apps.HomeConfig',
@@ -151,3 +152,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'users.CustomUser'
+
+STAR_RATINGS_ANONYMOUS = False

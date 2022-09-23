@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% load static %}
+{% load ratings %}
 
 {% block container %}
     <section class="bg-dark contents">
@@ -129,19 +130,14 @@
               <div class="row">
               <div class="col-sm-12">
                 <div style="display: inline;">
-                  <h6 class="mb-0">Rates & opinions</h6>
+                  <h6 class="mb-0">Rating</h6>
+                  <hr>
                   <div style="text-align: right;">
-                    <p class="card-text">
-                    <small>Overall:</small>
-                    <i data-star="{{ profile.rating }}"></i>
-                    <small>({{ profile.rating }})</small>
-                    </p>
+                      {% ratings object %}
+                  </div>
                 </div>
-                </div>
-
               </div>
             </div>
-            <hr>
 
               </div>
             </div>

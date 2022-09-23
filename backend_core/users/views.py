@@ -28,12 +28,14 @@ class MusicianProfileView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+
         if context['profile'].user == self.request.user:
             context['profile_edit'] = 1
         elif self.request.user.is_superuser:
             context['profile_edit'] = 2
         else:
             context['profile_edit'] = 0
+
         return context
 
 
