@@ -7,4 +7,7 @@
         {% csrf_token %}
         {% crispy form %}
     </form>
+    <a href="{% url 'jobs:jobs_list' %}">
+        <button class="btn btn-outline-info">Cancel</button>
+    </a>
 {% endblock container %}

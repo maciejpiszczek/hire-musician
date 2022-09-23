@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block container %}
+        <div class="btn-group">
+        <div class="d-inline">
+            <a href="{% url 'messenger:new-message' %}">
+                <button type="button" class="btn btn-info" aria-expanded="false">
+                    New message
+                </button>
+            </a>
+        </div>
+    </div>
+    <div style="text-align: center;">
+        <h3>Your conversations</h3>
+    </div>
+    {% for addresate in addresates %}
+        <div class="row row-cols-1 row-cols-md-2">
+            <div class="col-12 w-100 mb-3">
+                <a class="card-link" href="/messenger/conversation/{{ addresate.0 }}">
+                    <div class="card mb-3 h-100 d-flex justify-content-center">
+                        <div class="col-md-auto vertical-center">
+                            {% if addresate.1.avatar %}
+                                <img src="{{ addresate.1.avatar.url }}" alt="avatar"
+                                     class="rounded-circle img-fluid avatar-msg">
+                            {% else %}
+                                <img src="{% static 'images/dummy-avatar.jpg' %}" alt="avatar"
+                                     class="rounded-circle img-fluid avatar-msg">
+                            {% endif %}
+                        </div>
+                        <div class="col-md-10 d-inline-block w-100">
+                            <div class="col-md-10 card-info">
+                                <div class="card-body">
+                                    <div class="d-flex">
+                                        <div style="width: 70%;">
+                                            <div class="">
+                                                <div class="col-12">
+                                                    <div class="d-inline-block">
+                                                        <h6>{{ addresate.1 }}</h6>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    {% empty %}
+        <p>This conversation is empty.</p>
+    {% endfor %}
+{% endblock container %}

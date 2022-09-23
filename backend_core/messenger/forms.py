@@ -1,7 +1,6 @@
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Submit, Button
+from crispy_forms.layout import Submit
 from django import forms
-from django.urls import reverse
 
 from . import models
 
@@ -13,4 +12,4 @@ class NewMessageForm(forms.ModelForm):
 
     class Meta:
         model = models.PrivateMessage
-        fields = ['receiver', 'thread_title', 'message_text']
+        fields = ['receiver', 'message_text']
