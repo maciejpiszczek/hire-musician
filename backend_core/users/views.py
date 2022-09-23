@@ -1,3 +1,4 @@
+import star_ratings.models
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django_filters.views import FilterView
 from django.contrib.auth import authenticate, login, logout
@@ -19,6 +20,21 @@ class MusiciansProfilesListView(LoginRequiredMixin, FilterView):
     context_object_name = 'musicians'
     filterset_class = MusicianFilter
     paginate_by = 10
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        mus_list = []
+        for musician in context['musicians']:
+            mus_user = models.UserProfile.objects.get(slug=musician.slug)
+            if not star_ratings.models.Rating.objects.filter(object_id=mus_user.id):
+                mus_rating = None
+            else:
+                mus_rate = star_ratings.models.Rating.objects.get(object_id=mus_user.id)
+                mus_rating = mus_rate.average
+            mus_list.append((musician, mus_rating))
+        context['mus_list'] = mus_list
+
+        return context
 
 
 class MusicianProfileView(DetailView):
