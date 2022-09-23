@@ -2,7 +2,9 @@ from itertools import chain
 
 from braces.views import GroupRequiredMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponseRedirect, HttpResponseForbidden
+from django.db.models import Q
+from django.http import HttpResponseRedirect, HttpResponseForbidden, HttpResponse
+from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
 from django.views.generic import DetailView, FormView, UpdateView, DeleteView
 from django.views.generic.detail import SingleObjectMixin
@@ -226,3 +228,4 @@ class MyJobAccessesListView(LoginRequiredMixin, FilterView):
 
         context['no_results_message'] = "You have no job accesses."
         return context
+

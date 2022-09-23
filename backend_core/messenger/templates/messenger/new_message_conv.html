@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block container %}
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+            <h3 class="text-center mt-3">{{ thread.title }}</h3>
+        {% if formset.errors %}
+            {{ formset.errors }}
+        {% endif %}
+        {{ formset|crispy }}
+        {{ formset.management_form|crispy }}
+        <button class="btn btn-danger float-right btn-lg mb-3 mt-0" type="submit">Send</button>
+    </form>
+{% endblock %}
