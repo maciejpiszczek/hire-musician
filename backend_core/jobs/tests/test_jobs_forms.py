@@ -47,7 +47,6 @@ def create_user_and_job(django_user_model):
 def test_apply_for_job(client, create_user, create_user_and_job):
     candidate = create_user
     job_pack = create_user_and_job
-    job_owner = job_pack[0]
     job = job_pack[1]
     form = JobAccessForm(data={
         'candidate': candidate,

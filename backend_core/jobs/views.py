@@ -2,16 +2,12 @@ from itertools import chain
 
 from braces.views import GroupRequiredMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.db.models import Q
-from django.http import HttpResponseRedirect, HttpResponseForbidden, HttpResponse
-from django.shortcuts import render
-from django.urls import reverse_lazy, reverse
+from django.http import HttpResponseRedirect, HttpResponseForbidden
+from django.urls import reverse_lazy
 from django.views.generic import DetailView, FormView, UpdateView, DeleteView
-from django.views.generic.detail import SingleObjectMixin
 from django.views.generic.edit import FormMixin
 from django_filters.views import FilterView
 
-import users.models
 from . import models, forms
 
 from .filters import JobsFilter
@@ -30,8 +26,6 @@ class JobsListView(LoginRequiredMixin, FilterView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        # context['jobs'] = list(chain(models.StudioSession.objects.all(), models.Concert.objects.all(),
-        #                              models.Tour.objects.all()))
         context['no_results_message'] = "There are no job offers meeting your criteria."
         return context
 
@@ -127,7 +121,6 @@ class EditStudioSessionView(EditJobView):
               'location', 'studio_name')
 
 
-
 class EditConcertView(EditJobView):
     model = models.Concert
     fields = ('title', 'instrument', 'music_style', 'description', 'cut', 'cut_unit', 'event_start', 'event_end',
@@ -201,4 +194,3 @@ class MyJobAccessesListView(LoginRequiredMixin, FilterView):
 
         context['no_results_message'] = "You have no job accesses."
         return context
-
