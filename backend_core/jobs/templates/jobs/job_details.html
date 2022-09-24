@@ -38,41 +38,25 @@
                         <a href="{% url 'jobs:edit_session' slug=job.slug %}">
                             <button type="button" class="btn btn-warning">Edit Job</button>
                         </a>
-                        <a href="{% url 'jobs:delete_session' slug=job.slug %}">
-                            <button type="button" class="btn btn-danger ms-1">Delete</button>
-                        </a>
                     {% elif job_detailed.get_class == 'Concert' %}
                         <a href="{% url 'jobs:edit_concert' slug=job.slug %}">
                             <button type="button" class="btn btn-warning">Edit Job</button>
-                        </a>
-                        <a href="{% url 'jobs:delete_concert' slug=job.slug %}">
-                            <button type="button" class="btn btn-danger ms-1">Delete</button>
                         </a>
                     {% elif job_detailed.get_class == 'Tour' %}
                         <a href="{% url 'jobs:edit_tour' slug=job.slug %}">
                             <button type="button" class="btn btn-warning">Edit Job</button>
                         </a>
-                        <a href="{% url 'jobs:delete_tour' slug=job.slug %}">
+                    {% endif %}
+                        <a href="{% url 'jobs:delete-job' slug=job.slug %}">
                             <button type="button" class="btn btn-danger ms-1">Delete</button>
                         </a>
-                    {% endif %}
                 </div>
             {% else %}
                     <div class="d-flex justify-content-center mb-2">
                         {% if not applied %}
-                            {% if job_detailed.get_class == 'StudioSession' %}
-                                <a href="{% url 'jobs:apply_session' slug=job.slug %}">
-                                    <button type="button" class="btn btn-primary ms-1">Apply</button>
-                                </a>
-                            {% elif job_detailed.get_class == 'Concert' %}
-                                <a href="{% url 'jobs:apply_concert' slug=job.slug %}">
-                                    <button type="button" class="btn btn-primary ms-1">Apply</button>
-                                </a>
-                            {% elif job_detailed.get_class == 'Tour' %}
-                                <a href="{% url 'jobs:apply_tour' slug=job.slug %}">
-                                    <button type="button" class="btn btn-primary ms-1">Apply</button>
-                                </a>
-                            {% endif %}
+                            <a href="{% url 'jobs:apply' slug=job.slug %}">
+                                <button type="button" class="btn btn-primary ms-1">Apply</button>
+                            </a>
                         {% endif %}
                         <button type="button" class="btn btn-outline-primary ms-1">Message</button>
                     </div>

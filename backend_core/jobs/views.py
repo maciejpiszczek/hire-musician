@@ -127,6 +127,7 @@ class EditStudioSessionView(EditJobView):
               'location', 'studio_name')
 
 
+
 class EditConcertView(EditJobView):
     model = models.Concert
     fields = ('title', 'instrument', 'music_style', 'description', 'cut', 'cut_unit', 'event_start', 'event_end',
@@ -139,7 +140,8 @@ class EditTourView(EditJobView):
               'region', 'concert_amount', 'days_off', 'rehearsals')
 
 
-class JobDeleteView(LoginRequiredMixin, GroupRequiredMixin, AuthorManageMixin, DeleteView):
+class JobDeleteView(GroupRequiredMixin, AuthorManageMixin, DeleteView):
+    model = models.Job
     template_name = 'jobs/delete_job.html'
     login_url = reverse_lazy('users:login')
     group_required = 'musicians'
@@ -152,28 +154,11 @@ class JobDeleteView(LoginRequiredMixin, GroupRequiredMixin, AuthorManageMixin, D
         return context
 
 
-class StudioSessionDeleteView(JobDeleteView):
-    model = models.StudioSession
-
-
-class ConcertDeleteView(JobDeleteView):
-    model = models.Concert
-
-
-class TourDeleteView(JobDeleteView):
-    model = models.Tour
-
-
 class JobAccessView(GroupRequiredMixin, FormMixin, DetailView):
+    model = models.Job
     template_name = 'jobs/apply.html'
     form_class = forms.JobAccessForm
     group_required = 'musicians'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['job'] = models.Job.objects.get(slug=self.kwargs['slug'])
-        context['job_type'] = self.model.__name__
-        return context
 
     def post(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
@@ -190,18 +175,6 @@ class JobAccessView(GroupRequiredMixin, FormMixin, DetailView):
         form.instance.job = self.object
         form.save()
         return HttpResponseRedirect('/jobs/')
-
-
-class StudioSessionAccessView(JobAccessView):
-    model = models.StudioSession
-
-
-class ConcertAccessView(JobAccessView):
-    model = models.Concert
-
-
-class TourAccessView(JobAccessView):
-    model = models.Tour
 
 
 class MyJobAccessesListView(LoginRequiredMixin, FilterView):

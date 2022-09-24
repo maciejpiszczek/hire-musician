@@ -2,7 +2,7 @@
 {% load crispy_forms_tags %}
 
 {% block container %}
-    <form action="/jobs/{{ job_type.lower }}/delete/{{ job.slug }}/" method="post" enctype="multipart/form-data">
+    <form action="/jobs/delete/{{ job.slug }}/" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <h2 class="text-center mt-3">Are you sure you want to delete <b>{{ job.title }}</b>?</h2>
         <div style="display: inline;">

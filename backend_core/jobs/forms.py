@@ -13,29 +13,22 @@ class CreateJobForm(forms.ModelForm):
 class CreateStudioSessionForm(CreateJobForm):
     class Meta:
         model = models.StudioSession
-        fields = ('title', 'instrument', 'music_style', 'description', 'cut', 'cut_unit', 'event_start', 'event_end',
-                  'location', 'studio_name')
+        exclude = ('added', 'updated', 'is_active')
 
 
 class CreateConcertForm(CreateJobForm):
     class Meta:
         model = models.Concert
-        fields = ('title', 'instrument', 'music_style', 'description', 'cut', 'cut_unit', 'event_start', 'event_end',
-                  'location', 'venue', 'capacity', 'duration', 'rehearsals', 'includes_transfer')
+        exclude = ('added', 'updated', 'is_active')
 
 
 class CreateTourForm(CreateJobForm):
     class Meta:
         model = models.Tour
-        fields = ('title', 'instrument', 'music_style', 'description', 'cut', 'cut_unit', 'event_start', 'event_end',
-                  'region', 'concert_amount', 'days_off', 'rehearsals')
+        exclude = ('added', 'updated', 'is_active')
 
 
-class JobAccessForm(forms.ModelForm):
-    helper = FormHelper()
-    helper.add_input(Submit('submit', 'Post', css_class='btn btn-primary'))
-    helper.form_method = 'POST'
-
+class JobAccessForm(CreateJobForm):
     class Meta:
         model = models.JobAccess
         exclude = ('candidate', 'job')
