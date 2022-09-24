@@ -1,18 +1,6 @@
 import pytest
-from django.contrib.auth import get_user_model
 
 from users.forms import RegistrationForm, LoginForm
-
-
-@pytest.fixture
-def create_user(name, mail, passw):
-    User = get_user_model()
-    user = User.objects.create(
-        username=name,
-        email=mail,
-        password=passw
-    )
-    return user
 
 
 @pytest.mark.parametrize(
@@ -38,7 +26,7 @@ def test_user_registration_form(username, email, password, password_confirmation
 
 @pytest.mark.parametrize(
     'username, password, valid',
-    [('albicc', 'zaq12wsx', True),
+    [('albicc', 'zaq12wsx', False),
      ('albicc', 'zaq12', False),
      ('albic', 'zaq12wsx', False),
      ])
