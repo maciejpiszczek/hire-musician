@@ -14,8 +14,8 @@ class HomeView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['users_count'] = UserProfile.objects.count()
-        context['jobs_count'] = Job.objects.count()
+        context['users_count'] = len(UserProfile.objects.all())
+        context['jobs_count'] = len(Job.objects.all())
         return context
 
 

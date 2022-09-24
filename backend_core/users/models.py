@@ -27,11 +27,9 @@ class CustomUserManager(BaseUserManager):
 
         user.save(using=self._db)
 
-        # if user.is_musician:
-        #     musicians_group = Group.objects.get(name='musicians')
-        #     user.groups.add(musicians_group)
-
-        # user.save(using=self._db)
+        if user.is_musician:
+            musicians_group = Group.objects.get(name='musicians')
+            musicians_group.user_set.add(user)
 
         return user
 

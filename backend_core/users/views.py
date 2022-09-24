@@ -37,10 +37,12 @@ class MusiciansProfilesListView(LoginRequiredMixin, FilterView):
         return context
 
 
-class MusicianProfileView(DetailView):
+class MusicianProfileView(LoginRequiredMixin, DetailView):
     model = models.UserProfile
     template_name = 'users/user_profile.html'
     context_object_name = 'profile'
+    login_url = reverse_lazy('users:login')
+    raise_exception = False
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
