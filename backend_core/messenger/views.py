@@ -6,11 +6,9 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import FormView
-from django_filters.views import FilterView
 
 import users.models
 from . import models, forms
-from .filters import PrivMessagesFilter
 
 
 class ConversationsListView(LoginRequiredMixin, ListView):
@@ -28,7 +26,7 @@ class ConversationsListView(LoginRequiredMixin, ListView):
 
         for msg in msgs_in:
             sender_profile = users.models.UserProfile.objects.get(user=msg.sender)
-            sender_id = get_user_model().objects.get(username=sender_profile.user.username).id
+            sender_id = msg.sender.id
             sender_set = (sender_id, sender_profile)
             senders.append(sender_set)
 
