@@ -17,7 +17,7 @@ def test_redirect_from_jobs_list_view_if_not_authenticated(client):
 
 @pytest.mark.django_db
 def test_jobs_list_view_if_authenticated(client, django_user_model):
-    user = django_user_model.objects.create(username='peter123', email='p@p.pl', password='zaq12wsx')
+    user = django_user_model.objects.create_user(username='peter123', email='p@p.pl', password='zaq12wsx')
     client.force_login(user)
     url = reverse('jobs:jobs_list')
     response = client.get(url)
@@ -47,7 +47,7 @@ def test_tour_creation_view_if_unauthorized(client):
 
 @pytest.mark.django_db
 def test_studio_session_creation_view_if_authorized(client, django_user_model):
-    user = django_user_model.objects.create(username='peter123', email='p@p.pl', password='zaq12wsx')
+    user = django_user_model.objects.create_user(username='peter123', email='p@p.pl', password='zaq12wsx')
     user.groups.add(Group.objects.get(name='musicians'))
     client.force_login(user)
     url = reverse('jobs:new_session')
@@ -57,7 +57,7 @@ def test_studio_session_creation_view_if_authorized(client, django_user_model):
 
 @pytest.mark.django_db
 def test_concert_creation_view_if_authorized(client, django_user_model):
-    user = django_user_model.objects.create(username='peter123', email='p@p.pl', password='zaq12wsx')
+    user = django_user_model.objects.create_user(username='peter123', email='p@p.pl', password='zaq12wsx')
     user.groups.add(Group.objects.get(name='musicians'))
     client.force_login(user)
     url = reverse('jobs:new_concert')
@@ -67,7 +67,7 @@ def test_concert_creation_view_if_authorized(client, django_user_model):
 
 @pytest.mark.django_db
 def test_tour_creation_view_if_authorized(client, django_user_model):
-    user = django_user_model.objects.create(username='peter123', email='p@p.pl', password='zaq12wsx')
+    user = django_user_model.objects.create_user(username='peter123', email='p@p.pl', password='zaq12wsx')
     user.groups.add(Group.objects.get(name='musicians'))
     client.force_login(user)
     url = reverse('jobs:new_tour')
@@ -77,7 +77,7 @@ def test_tour_creation_view_if_authorized(client, django_user_model):
 
 @pytest.fixture
 def create_user_and_jobs(django_user_model):
-    user = django_user_model.objects.create(
+    user = django_user_model.objects.create_user(
         username='albic',
         email='a@a.pl',
         password='zaq12wsx',
