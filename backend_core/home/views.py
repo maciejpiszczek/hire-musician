@@ -35,3 +35,7 @@ def search(request):
 
     else:
         return HttpResponse('Please submit a search term.')
+
+
+class CalendarView(TemplateView):
+    template_name = 'home/calendar.html'
