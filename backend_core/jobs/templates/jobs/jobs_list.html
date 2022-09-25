@@ -10,7 +10,7 @@
 {% endblock styles %}
 
 {% block container %}
-    <div class="btn-group">
+    <div class="d-flex btn-group justify-content-between">
         <div class="d-inline">
             <button type="button" class="btn btn-info dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                 Add new...
@@ -20,6 +20,11 @@
                 <li><a class="dropdown-item" href="{% url 'jobs:new_concert' %}">Concert</a></li>
                 <li><a class="dropdown-item" href="{% url 'jobs:new_tour' %}">Tour</a></li>
             </ul>
+        </div>
+        <div class="filter-toggle">
+            <button class="btn btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                Filter options
+            </button>
         </div>
     </div>
     {% include 'partials/jobs_filter.html' %}

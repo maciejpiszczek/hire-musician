@@ -2,20 +2,48 @@ from itertools import chain
 
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView
-from django.views.generic.edit import FormView
+from django.views.generic.edit import FormView, FormMixin
 
 import users.models
 from . import models, forms
 
 
-class ConversationsListView(LoginRequiredMixin, ListView):
+class MessengerListView(LoginRequiredMixin, ListView):
     model = models.PrivateMessage
-    template_name = 'messenger/conversations.html'
     login_url = reverse_lazy('users:login')
     raise_exception = False
+
+
+class InboxView(MessengerListView):
+    template_name = 'messenger/messages_list.html'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        msgs = models.PrivateMessage.objects.filter(receiver=self.request.user).order_by('-sent')
+        context['msgs'] = msgs
+        context['inbox'] = True
+
+        return context
+
+
+class OutboxView(MessengerListView):
+    template_name = 'messenger/messages_list.html'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        msgs = models.PrivateMessage.objects.filter(sender=self.request.user).order_by('-sent')
+        context['msgs'] = msgs
+        context['inbox'] = False
+
+        return context
+
+
+class ConversationsListView(MessengerListView):
+    template_name = 'messenger/conversations.html'
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -64,11 +92,29 @@ class NewMessageView(LoginRequiredMixin, FormView):
     login_url = reverse_lazy('users:login')
     raise_exception = False
     form_class = forms.NewMessageForm
-    success_url = reverse_lazy('messages:list')
+    success_url = reverse_lazy('messenger:inbox')
 
     def form_valid(self, form):
         form.instance.sender = self.request.user
         form.instance.receiver = form.cleaned_data['receiver']
         form.instance.message_text = form.cleaned_data['message_text']
         form.save()
-        return HttpResponseRedirect('/messenger/')
+        return HttpResponseRedirect('/messenger/outbox')
+
+
+class NewPersonalMessageView(LoginRequiredMixin, FormMixin, DetailView):
+    model = get_user_model()
+    template_name = 'messenger/new_message.html'
+    login_url = reverse_lazy('users:login')
+    raise_exception = False
+    form_class = forms.PersonalMessageForm
+
+    def get_success_url(self):
+        user = self.object
+        return reverse_lazy('messenger:conversation', kwargs={'id': user.id})
+
+    def form_valid(self, form):
+        form.instance.sender = self.request.user
+        form.instance.receiver = self.object
+        form.save()
+        return super().form_valid(form)

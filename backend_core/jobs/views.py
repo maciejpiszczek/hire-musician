@@ -60,10 +60,9 @@ class JobDetailView(DetailView):
         return context
 
 
-class CreateJobView(GroupRequiredMixin, FormView):
+class CreateJobView(LoginRequiredMixin, FormView):
     template_name = 'jobs/new_job.html'
     login_url = reverse_lazy('users:login')
-    group_required = "musicians"
     raise_exception = False
     success_url = reverse_lazy('jobs:jobs_list')
 
@@ -147,11 +146,10 @@ class JobDeleteView(GroupRequiredMixin, AuthorManageMixin, DeleteView):
         return context
 
 
-class JobAccessView(GroupRequiredMixin, FormMixin, DetailView):
+class JobAccessView(LoginRequiredMixin, FormMixin, DetailView):
     model = models.Job
     template_name = 'jobs/apply.html'
     form_class = forms.JobAccessForm
-    group_required = 'musicians'
 
     def post(self, request, *args, **kwargs):
         if not request.user.is_authenticated:

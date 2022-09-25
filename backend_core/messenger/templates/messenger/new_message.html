@@ -7,7 +7,7 @@
         {% csrf_token %}
         {% crispy form %}
     </form>
-    <a href="/jobs/view/{{ job.slug }}">
+    <a href="{% url 'messenger:inbox' %}">
         <button class="btn btn-danger float-right mt-3">Cancel</button>
     </a>
 {% endblock container %}

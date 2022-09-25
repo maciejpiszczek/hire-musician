@@ -1,6 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.base_user import BaseUserManager
-from django.contrib.auth.models import AbstractUser, Group
+from django.contrib.auth.models import AbstractUser, Group, GroupManager
 
 from django.db import models
 
@@ -27,9 +27,12 @@ class CustomUserManager(BaseUserManager):
 
         user.save(using=self._db)
 
-        if user.is_musician:
-            musicians_group = Group.objects.get(name='musicians')
-            musicians_group.user_set.add(user)
+        # if user.is_musician:
+        # musicians_group = Group.objects.get(name='musicians')
+        # # user.groups.add(musicians_group)
+        # musicians_group.user_set.add(user)
+        #
+        # user.save(using=self._db)
 
         return user
 
