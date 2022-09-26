@@ -14,6 +14,7 @@ services:
       - backend_core_db_network
     volumes:
       - ./backend_core:/app
+
   backend_core_db:
     image: postgres:14-alpine
     volumes:
@@ -25,8 +26,21 @@ services:
     networks:
       - backend_core_db_network
 
+  redis:
+    image: redis:5
+    ports:
+      - 6379:6379
+    volumes:
+      - redis_volume:/cache/redis/data
+    restart: unless-stopped
+    env_file:
+      - ./backend_core/env/.env
+    networks:
+      - backend_core_db_network
+
 volumes:
   backend_core_db_volume:
+  redis_volume:
 
 networks:
   backend_core_db_network:

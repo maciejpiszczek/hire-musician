@@ -26,6 +26,7 @@ urlpatterns = [
     path('jobs/', include('jobs.urls')),
     path('messenger/', include('messenger.urls')),
     path('ratings/', include('star_ratings.urls', namespace='ratings')),
+    path('chat/', include('chat.urls')),
 ]
 
 if settings.DEBUG:

@@ -29,6 +29,8 @@ sqlparse = "==0.4.2"
 tomli = "==2.0.1"
 django-star-ratings = "==0.9.2"
 whitenoise = "==6.2.0"
+channels = "==3.0.5"
+channels-redis = "==3.4.1"
 
 [dev-packages]
 

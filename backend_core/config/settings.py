@@ -45,11 +45,13 @@ INSTALLED_APPS = [
 
     'crispy_forms',
     'star_ratings',
+    'channels',
 
     'users.apps.UsersConfig',
     'home.apps.HomeConfig',
     'jobs.apps.JobsConfig',
     'messenger.apps.MessengerConfig',
+    'chat.apps.ChatConfig',
 ]
 
 MIDDLEWARE = [
@@ -83,7 +85,17 @@ TEMPLATES = [
     },
 ]
 
+ASGI_APPLICATION = 'config.asgi.application'
 WSGI_APPLICATION = 'config.wsgi.application'
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('redis', 6379)],
+        },
+    },
+}
 
 
 # Database
