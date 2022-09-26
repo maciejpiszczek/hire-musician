@@ -28,13 +28,8 @@
                     Filter messages
                 </button>
                 <ul class="dropdown-menu dropdown-menu-dark">
-                    {% if inbox %}
-                        <li><a class="dropdown-item active" href="{% url 'messenger:inbox' %}">Inbox</a></li>
-                        <li><a class="dropdown-item" href="{% url 'messenger:outbox' %}">Outbox</a></li>
-                    {% else %}
-                        <li><a class="dropdown-item" href="{% url 'messenger:inbox' %}">Inbox</a></li>
-                        <li><a class="dropdown-item active" href="{% url 'messenger:outbox' %}">Outbox</a></li>
-                    {% endif %}
+                    <li><a class="dropdown-item" href="{% url 'messenger:inbox' %}">Inbox</a></li>
+                    <li><a class="dropdown-item" href="{% url 'messenger:outbox' %}">Outbox</a></li>
                 </ul>
             </div>
         </div>

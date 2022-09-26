@@ -6,10 +6,15 @@
     <link rel="stylesheet" href="{% static 'styles/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'styles/main.css' %}">
     <link rel="stylesheet" href="{% static 'styles/dashboard.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/carousel.css' %}">
 {% endblock styles %}
 
 {% block title %}
-    Dashboard
+    {% if user.is_authenticated %}
+        Dashboard
+    {% else %}
+        Welcome
+    {% endif %}
 {% endblock title %}
 
 {% block container %}
@@ -22,80 +27,11 @@
             <h3>Join us and explore!</h3>
         {% endif %}
     </div>
-    <div class="row row-cols-1 row-cols-md-2 g-4">
-        <div class="col-6">
-            <a class="card-link" href="{% url 'jobs:jobs_list' %}">
-                <div class="card mb-3 h-100 justify-content-center">
-                    <div class="row g-0 card-elements">
-                        <div class="col-md-4 card-images">
-                            <img src="{% static '/images/jobs.svg' %}" class="img-fluid rounded-start" alt="...">
-                        </div>
-                        <div class="col-md-8">
-                            <div class="card-body">
-                                <h5 class="card-title">Jobs</h5>
-                                <p class="card-text">Search for job opportunities - both live and in studio, add offers and grow.</p>
-                                <p class="card-text last-update"><small>Last updated 3 mins ago</small></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </a>
-        </div>
-        <div class="col-6">
-            <a class="card-link" href="/users">
-                <div class="card mb-3 h-100 justify-content-center">
-                    <div class="row g-0">
-                        <div class="col-md-4 card-images">
-                            <img src="{% static '/images/musicians.svg' %}" class="img-fluid rounded-start" alt="...">
-                        </div>
-                        <div class="col-md-8">
-                            <div class="card-body">
-                                <h5 class="card-title">Musicians</h5>
-                                <p class="card-text">Find a right man for the job.</p>
-                                <p class="card-text"><small class="last-update">Last updated 20 mins ago</small></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </a>
-        </div>
-        <div class="col-6">
-            <a class="card-link" href="{% url 'messenger:conversations-list' %}">
-                <div class="card mb-3 h-100 justify-content-center">
-                    <div class="row g-0">
-                        <div class="col-md-4 card-images">
-                            <img src="{% static '/images/messages.svg' %}" class="img-fluid rounded-start" alt="...">
-                        </div>
-                        <div class="col-md-8">
-                            <div class="card-body">
-                                <h5 class="card-title">Messages</h5>
-                                <p class="card-text">Check your inbox.</p>
-                                <p class="card-text"><small class="last-update">New messages!</small></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </a>
-        </div>
-        <div class="col-6">
-            <a class="card-link" href="{% url 'home:calendar' %}">
-                <div class="card mb-3 h-100 justify-content-center">
-                    <div class="row g-0">
-                        <div class="col-md-4 card-images">
-                            <img src="{% static '/images/calendar.svg' %}" class="img-fluid rounded-start" alt="...">
-                        </div>
-                        <div class="col-md-8">
-                            <div class="card-body">
-                                <h5 class="card-title">Calendar</h5>
-                                <p class="card-text">Time management is the key - use a featured calendar to keep up with your schedule.</p>
-                                <p class="card-text"><small class="last-update">Last updated 3 mins ago</small></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </a>
-        </div>
-    </div>
+    {% if user.is_authenticated %}
+        {% include 'partials/dashboard.html' %}
+    {% else %}
+        {% include 'partials/carousel.html' %}
+    {% endif %}
     <div class="d-flex justify-content-around mt-5">
         <h3>Registered users: {{ users_count }}</h3>
         <h3>Active job offers: {{ jobs_count }}</h3>
