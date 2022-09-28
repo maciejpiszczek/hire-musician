@@ -88,14 +88,13 @@
                 </a>
             </div>
         </div>
-
     {% empty %}
         <div>
             <h6>{{ no_results_message }}</h6>
         </div>
     {% endfor %}
 
-    {% if jobs|length >= 2 %}
+    {% if jobs|length >= 10 %}
         {% include 'partials/pagination.html' %}
     {% endif %}
 
