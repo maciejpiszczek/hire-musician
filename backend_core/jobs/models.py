@@ -37,6 +37,14 @@ class Job(models.Model):
     def get_class(self):
         return self.__class__.__name__
 
+    def get_matching_subclass_object(self):
+        obj = None
+        for klass in self.__class__.__subclasses__():
+            obj = klass.objects.filter(title=self.title)
+            if obj:
+                break
+        return obj[0]
+
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.title)

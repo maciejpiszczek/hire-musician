@@ -27,16 +27,17 @@ class JobsListView(LoginRequiredMixin, FilterView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['no_results_message'] = "There are no job offers meeting your criteria."
+
         return context
 
 
 class MyJobsListView(JobsListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['jobs'] = chain(models.StudioSession.objects.filter(owner_id=self.request.user.id),
-                                models.Concert.objects.filter(owner_id=self.request.user.id),
-                                models.Tour.objects.filter(owner_id=self.request.user.id))
+        context['jobs'] = models.Job.objects.filter(owner=self.request.user)
+        context['my_jobs'] = True
         context['no_results_message'] = "You have no active job offers at the moment."
+
         return context
 
 

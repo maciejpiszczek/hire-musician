@@ -10,7 +10,7 @@
 {% endblock styles %}
 
 {% block container %}
-    <div class="d-flex btn-group justify-content-between">
+    <div class="d-flex btn-group justify-content-between mb-3">
         <div class="d-inline">
             <button type="button" class="btn btn-info dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                 Add new...
@@ -21,13 +21,18 @@
                 <li><a class="dropdown-item" href="{% url 'jobs:new_tour' %}">Tour</a></li>
             </ul>
         </div>
-        <div class="filter-toggle">
-            <button class="btn btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                Filter options
-            </button>
-        </div>
+        {% if not my_jobs %}
+            <div class="filter-toggle">
+                <button class="btn btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                    Filter options
+                </button>
+            </div>
+        {% endif %}
     </div>
-    {% include 'partials/jobs_filter.html' %}
+
+    {% if not my_jobs %}
+        {% include 'partials/jobs_filter.html' %}
+    {% endif %}
 
     {% for job in jobs %}
         <div class="row row-cols-1 row-cols-md-2">
@@ -35,10 +40,10 @@
                 <a class="card-link" href="/jobs/view/{{ job.slug }}">
                     <div class="card mb-3 h-100 justify-content-center">
                         <div class="col-md-auto vertical-center">
-                            {% if job.get_class == 'StudioSession' %}
+                            {% if job.get_matching_subclass_object.get_class == 'StudioSession' %}
                                 <img src="{% static 'images/studio-session.png' %}" alt="avatar"
                                      class="rounded-circle img-fluid avatar">
-                            {% elif job.get_class == 'Concert' %}
+                            {% elif job.get_matching_subclass_object.get_class == 'Concert' %}
                                 <img src="{% static 'images/concert.png' %}" alt="avatar"
                                      class="rounded-circle img-fluid avatar">
                             {% else %}
@@ -71,7 +76,7 @@
                                             <p class="card-text">Style:</p>
                                         </div>
                                         <div class="col-7">
-                                            <p class="card-text">{{ job.get_class }}</p>
+                                            <p class="card-text">{{ job.get_matching_subclass_object.get_class }}</p>
                                             <p class="card-text">{{ job.instrument }}</p>
                                             <p class="card-text">{{ job.music_style }}</p>
                                         </div>
