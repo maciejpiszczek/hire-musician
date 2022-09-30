@@ -61,8 +61,9 @@ class JobDetailView(DetailView):
         return context
 
 
-class CreateJobView(LoginRequiredMixin, FormView):
+class CreateJobView(GroupRequiredMixin, FormView):
     template_name = 'jobs/new_job.html'
+    group_required = 'musicians'
     login_url = reverse_lazy('users:login')
     raise_exception = False
     success_url = reverse_lazy('jobs:jobs_list')

@@ -2,6 +2,7 @@ import star_ratings.models
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django_filters.views import FilterView
 from django.contrib.auth import authenticate, login, logout, get_user_model
+from django.contrib.auth.models import Group
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 
@@ -64,9 +65,8 @@ def registration_view(request):
     if request.method == 'POST':
         if form.is_valid():
             user = form.save(commit=False)
-            user.is_active = True
-            user.is_musician = True
             user.save()
+            user.groups.add(Group.objects.get(name='musicians'))
             return redirect(reverse_lazy('users:login'))
     return render(request, 'users/registration.html', {'form': form})
 
@@ -84,6 +84,7 @@ def login_user_view(request):
                 if user.is_active:
                     login(request, user)
                     return redirect(reverse_lazy('home:home'))
+
     else:
         form = forms.LoginForm()
 
