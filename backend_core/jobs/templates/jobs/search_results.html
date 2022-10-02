@@ -141,5 +141,7 @@
     {% endfor %}
     {% if no_results %}
         <p>Nothing was found. :(</p>
+    {% elif not query %}
+        <p>You must enter search term.</p>
     {% endif %}
 {% endblock container %}
