@@ -16,7 +16,7 @@ class RegistrationForm(forms.ModelForm):
         'class': 'form-control',
     }))
     helper = FormHelper()
-    helper.add_input(Submit('submit', 'Post', css_class='btn btn-primary'))
+    helper.add_input(Submit('submit', 'Post', css_class='btn btn-danger'))
     helper.form_method = 'POST'
 
     class Meta:

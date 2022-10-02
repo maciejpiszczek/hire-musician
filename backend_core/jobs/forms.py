@@ -6,7 +6,7 @@ from . import models
 
 class CreateJobForm(forms.ModelForm):
     helper = FormHelper()
-    helper.add_input(Submit('submit', 'Post', css_class='btn btn-primary'))
+    helper.add_input(Submit('submit', 'Post', css_class='btn btn-danger'))
     helper.form_method = 'POST'
 
 

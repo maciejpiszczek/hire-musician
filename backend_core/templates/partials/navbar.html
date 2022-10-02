@@ -9,13 +9,16 @@
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
+
+        {% if user.is_authenticated %}
         <div class="collapse navbar-collapse" id="searchbar">
             <form class="d-flex" action="/search/" method="get" role="search">
                 <input class="form-control me-2" type="search" name="query" placeholder="Search for jobs and musicians..."
                        aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
+                <button class="btn btn-outline-danger" type="submit">Search</button>
             </form>
         </div>
+        {% endif %}
 
         <div>
             {% if user.is_authenticated %}
@@ -35,12 +38,12 @@
             </ul>
             {% else %}
                 <a href="{% url 'users:registration' %}">
-                    <button class="btn btn-outline-info" type="button" aria-expanded="false">
+                    <button class="btn btn-danger" type="button" aria-expanded="false">
                         Sign Up
                     </button>
                 </a>
                 <a href="{% url 'users:login' %}">
-                    <button class="btn btn-outline-primary" type="button" aria-expanded="false">
+                    <button class="btn btn-outline-danger" type="button" aria-expanded="false">
                         Sign In
                     </button>
                 </a>
