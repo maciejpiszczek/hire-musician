@@ -6,7 +6,6 @@
     <link rel="stylesheet" href="{% static 'styles/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'styles/main.css' %}">
     <link rel="stylesheet" href="{% static 'styles/dashboard.css' %}">
-    <link rel="stylesheet" href="{% static 'styles/carousel.css' %}">
 {% endblock styles %}
 
 {% block title %}
@@ -24,15 +23,14 @@
             <h3>{{ user }}! :)</h3>
         {% else %}
             <h1>Welcome to Hire A Musician!</h1>
-            <h3>Join us and explore!</h3>
         {% endif %}
     </div>
     {% if user.is_authenticated %}
         {% include 'partials/dashboard.html' %}
     {% else %}
-        {% include 'partials/carousel.html' %}
+        {% include 'partials/invite.html' %}
     {% endif %}
-    <div class="d-flex justify-content-around mt-5">
+    <div class="d-inline justify-content-around mt-5" style="text-align: center;">
         <h3>Registered users: {{ users_count }}</h3>
         <h3>Active job offers: {{ jobs_count }}</h3>
     </div>

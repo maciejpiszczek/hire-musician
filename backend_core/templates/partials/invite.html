@@ -1,0 +1,16 @@
+{% load static %}
+
+<div class="d-inline-flex mt-5 mb-5">
+    <div class="d-inline-flex">
+        <img src="{% static 'images/invite_img.png' %}"
+             alt="home_picture" style="width: 420px;">
+    </div>
+    <div class="d-inline-block" style="margin: auto;">
+        <h4>Join the place where professionals connect!</h4>
+        <p>Manage your musical duties with ease, save time and take your career to a new level!<br>
+            {% if users_count > 3 and jobs_count > 5 %}
+            Join {{ users_count }}
+            satisfied users and find something for yourself among {{ jobs_count }} job offers! {% endif %}</p>
+        <h6>Sign up for free today!</h6>
+    </div>
+</div>
