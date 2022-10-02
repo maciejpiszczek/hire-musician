@@ -126,3 +126,10 @@ footer {
 .msg-datetime > p {
     margin: 0;
 }
+
+.sign-in {
+    position: absolute;
+    margin-top: 10%;
+    padding-left: 10%;
+    padding-right: 10%;
+}
