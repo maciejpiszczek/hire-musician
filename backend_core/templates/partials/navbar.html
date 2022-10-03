@@ -20,7 +20,7 @@
         </div>
         {% endif %}
 
-        <div>
+        <div class="d-inline-flex">
             {% if user.is_authenticated %}
             <ul class="navbar-nav">
                 <li class="nav-item dropdown partials">
@@ -37,16 +37,20 @@
                 </li>
             </ul>
             {% else %}
-                <a href="{% url 'users:registration' %}">
-                    <button class="btn btn-danger" type="button" aria-expanded="false">
-                        Sign Up
-                    </button>
-                </a>
-                <a href="{% url 'users:login' %}">
-                    <button class="btn btn-outline-danger" type="button" aria-expanded="false">
-                        Sign In
-                    </button>
-                </a>
+                <div class="m-1">
+                    <a href="{% url 'users:registration' %}">
+                        <button class="btn btn-danger" type="button" aria-expanded="false">
+                            Sign Up
+                        </button>
+                    </a>
+                </div>
+                <div class="m-1">
+                    <a href="{% url 'users:login' %}">
+                        <button class="btn btn-outline-danger" type="button" aria-expanded="false">
+                            Sign In
+                        </button>
+                    </a>
+                </div>
             {% endif %}
         </div>
     </div>

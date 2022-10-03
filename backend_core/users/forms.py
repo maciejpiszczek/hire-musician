@@ -4,16 +4,23 @@ from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import AuthenticationForm
 from django.core.exceptions import ValidationError
+from django.core.validators import EmailValidator
 
 
 class RegistrationForm(forms.ModelForm):
-    password = forms.CharField(widget=forms.PasswordInput(attrs={
-        'minlength': 5
+    username = forms.CharField(widget=forms.TextInput(attrs={
+        'placeholder': 'Username',
     }))
-    password_confirmation = forms.CharField(label='Password confirmation', widget=forms.PasswordInput)
-    email = forms.CharField(widget=forms.EmailInput(attrs={
+    password = forms.CharField(widget=forms.PasswordInput(attrs={
+        'minlength': 5,
+        'placeholder': 'Enter password'
+    }))
+    password_confirmation = forms.CharField(label='Password confirmation', widget=forms.PasswordInput(attrs={
+        'placeholder': 'Confirm password'
+    }))
+    email = forms.CharField(widget=forms.TextInput(attrs={
         'placeholder': 'Enter your email',
-        'class': 'form-control',
+        'validators': EmailValidator,
     }))
     helper = FormHelper()
     helper.add_input(Submit('submit', 'Post', css_class='btn btn-danger'))
@@ -52,7 +59,7 @@ class RegistrationForm(forms.ModelForm):
 
 
 class LoginForm(AuthenticationForm):
-    username = forms.CharField(label='Username', widget=forms.TextInput(attrs={
+    username = forms.CharField(widget=forms.TextInput(attrs={
         'name': 'username',
         'placeholder': 'Username',
     }))

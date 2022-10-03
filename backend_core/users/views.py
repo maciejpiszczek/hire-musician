@@ -1,5 +1,6 @@
 import star_ratings.models
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib import messages
 from django_filters.views import FilterView
 from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.shortcuts import render, redirect

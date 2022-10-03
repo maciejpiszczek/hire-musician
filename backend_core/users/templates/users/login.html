@@ -7,7 +7,12 @@
 {% endblock %}
 
 {% block container %}
-
+{% if form.errors %}
+    <div class="alert alert-danger">
+        Please enter valid username and password.
+        <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+{% endif %}
 <div class="sign-in" style="text-align: center;">
     <div class="card mb-3 h-100">
         <div class="row g-0 card-elements">

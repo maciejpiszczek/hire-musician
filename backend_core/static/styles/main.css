@@ -128,8 +128,10 @@ footer {
 }
 
 .sign-in {
-    position: absolute;
-    margin-top: 10%;
-    padding-left: 10%;
-    padding-right: 10%;
+    position: fixed;
+    padding: 2em;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
 }
