@@ -5,6 +5,7 @@ from django_filters.views import FilterView
 from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
+from django.http import HttpResponseRedirect
 
 from . import forms
 from . import models
@@ -68,11 +69,14 @@ def registration_view(request):
             user.is_active = True
             user.is_musician = True
             user.save()
-            return redirect(reverse_lazy('users:login'))
+            return HttpResponseRedirect('/users/login/'+'?Status='+'True')
     return render(request, 'users/registration.html', {'form': form})
 
 
 def login_user_view(request):
+    signup_success = request.GET.get('Status')
+    if signup_success:
+        messages.success(request, 'Account succesfully created. You can sign in now.')
     if request.method == 'POST':
         form = forms.LoginForm(request, request.POST)
 

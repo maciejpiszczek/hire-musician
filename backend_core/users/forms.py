@@ -9,7 +9,7 @@ from django.core.validators import EmailValidator
 
 class RegistrationForm(forms.ModelForm):
     username = forms.CharField(widget=forms.TextInput(attrs={
-        'placeholder': 'Username',
+        'placeholder': 'Enter username',
     }))
     password = forms.CharField(widget=forms.PasswordInput(attrs={
         'minlength': 5,

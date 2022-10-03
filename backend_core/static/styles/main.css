@@ -128,7 +128,7 @@ footer {
 }
 
 .sign-in {
-    position: fixed;
+    position: absolute;
     padding: 2em;
     left: 50%;
     top: 50%;
