@@ -3,9 +3,9 @@
 <div class="d-inline-block">
 
 </div>
-<div class="collapse" id="collapseExample">
+<div class="collapse card mb-3" id="collapseExample">
     <form action="" method="get">
-        <div class="search-filter mb-3">
+        <div class="search-filter mb-3 d-flex">
             <div class="col-auto">
                 <div class="filter-item">
                     Instrument:
@@ -16,15 +16,17 @@
             </div>
             <div class="col-auto">
                 <div class="filter-item">
-                    Music styles:
+                    Style:
                 </div>
                 <div class="filter-item">
                     {{ filter.form.music_style }}
                 </div>
             </div>
-        </div>
-        <div class="col-auto m-2" style="text-align: right; align-content: end">
-                <input type="submit" class="btn btn-primary" value="Filter">
+            <div class="w-25 d-inline-block">
+                <div class="float-end mt-3">
+                    <input type="submit" class="btn btn-danger" value="Filter">
+                </div>
+            </div>
         </div>
     </form>
 </div>

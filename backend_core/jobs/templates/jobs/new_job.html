@@ -1,13 +1,229 @@
 {% extends 'base.html' %}
-{% load crispy_forms_tags %}
 
 {% block container %}
-    <h3 class="text-center mt-3">Add a new {{ job_type }}</h3>
-    <form action="/jobs/{{ job_type.lower }}/new/" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {% crispy form %}
-    </form>
-    <a href="{% url 'jobs:jobs_list' %}">
-        <button class="btn btn-outline-info">Cancel</button>
-    </a>
+    <div class="" style="text-align: center;">
+        <div class="card mb-3 h-100">
+            <div class="row g-0 card-elements">
+                <h1>Add New {{ job_type }}</h1>
+                <form action="/jobs/{{ job_type.lower }}/new/" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div>
+                        <div>
+                            <div class="d-inline-flex">
+                                <div class="job-form-label">
+                                    <p>Title:&nbsp</p>
+                                </div>
+                                <div>
+                                    <p>{{ form.title }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="d-inline-flex">
+                                <div class="job-form-label">
+                                    <p>Slug:&nbsp</p>
+                                </div>
+                                <div>
+                                    <p>{{ form.slug }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="d-inline-flex">
+                                <div class="job-form-label">
+                                    <p>Instrument:&nbsp</p>
+                                </div>
+                                <div>
+                                    <p>{{ form.instrument }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="d-inline-flex">
+                                <div class="job-form-label">
+                                    <p>Style:&nbsp</p>
+                                </div>
+                                <div>
+                                    <p>{{ form.music_style }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="d-inline-flex">
+                                <div class="job-form-label">
+                                    <p>Description:&nbsp</p>
+                                </div>
+                                <div>
+                                    <p>{{ form.description }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="d-inline-flex">
+                                <div class="job-form-label">
+                                    <p>Cut:&nbsp</p>
+                                </div>
+                                <div>
+                                    <p>{{ form.cut }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="d-inline-flex">
+                                <div>
+                                    <p>{{ form.cut_unit }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="d-inline-flex">
+                                <div class="job-form-label">
+                                    <p>Event start:&nbsp</p>
+                                </div>
+                                <div>
+                                    <p>{{ form.event_start }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="d-inline-flex">
+                                <div class="job-form-label">
+                                    <p>Event end:&nbsp</p>
+                                </div>
+                                <div>
+                                    <p>{{ form.event_end }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        {% if job_type == 'StudioSession' %}
+                            <div>
+                                <div class="d-inline-flex">
+                                    <div class="job-form-label">
+                                        <p>Location:&nbsp</p>
+                                    </div>
+                                    <div>
+                                        <p>{{ form.location }}</p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="d-inline-flex">
+                                        <div class="job-form-label">
+                                            <p>Studio:&nbsp</p>
+                                        </div>
+                                        <div>
+                                            <p>{{ form.studio_name }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% elif job_type == 'Concert' %}
+                            <div>
+                                <div class="d-inline-flex">
+                                    <div class="job-form-label">
+                                        <p>Location:&nbsp</p>
+                                    </div>
+                                    <div>
+                                        <p>{{ form.location }}</p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="d-inline-flex">
+                                        <div class="job-form-label">
+                                            <p>Venue:&nbsp</p>
+                                        </div>
+                                        <div>
+                                            <p>{{ form.venue }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="d-inline-flex">
+                                        <div class="job-form-label">
+                                            <p>Capacity:&nbsp</p>
+                                        </div>
+                                        <div>
+                                            <p>{{ form.capacity }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="d-inline-flex">
+                                        <div class="job-form-label">
+                                            <p>Duration:&nbsp</p>
+                                        </div>
+                                        <div>
+                                            <p>{{ form.duration }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="d-inline-flex">
+                                        <div class="d-inline-flex col-12">
+                                            <div>
+                                                <p>Rehearsals:&nbsp</p>
+                                            </div>
+                                            <div>
+                                                <p>{{ form.rehearsals }}</p>
+                                            </div>
+                                        </div>
+                                        <div class="d-inline-flex col-12">
+                                            <div>
+                                                <p>Transfer:&nbsp</p>
+                                            </div>
+                                            <div>
+                                                <p>{{ form.includes_transfer }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% elif job_type == 'Tour' %}
+                            <div>
+                                <div class="d-inline-flex">
+                                    <div class="job-form-label">
+                                        <p>Region:&nbsp</p>
+                                    </div>
+                                    <div>
+                                        <p>{{ form.region }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="d-inline-flex">
+                                    <div class="job-form-label">
+                                        <p>Concerts:&nbsp</p>
+                                    </div>
+                                    <div>
+                                        <p>{{ form.concert_amount }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="d-inline-flex">
+                                    <div class="job-form-label">
+                                        <p>Days off:&nbsp</p>
+                                    </div>
+                                    <div>
+                                        <p>{{ form.days_off }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="d-inline-flex">
+                                    <div class="job-form-label">
+                                        <p>Rehearsals:&nbsp</p>
+                                    </div>
+                                    <div>
+                                        <p>{{ form.rehearsals }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                    <button type="submit" class="btn btn-danger">Add</button>
+                    <a href="{% url 'jobs:jobs_list' %}" class="btn btn-outline-danger">Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div>
 {% endblock container %}

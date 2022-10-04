@@ -49,8 +49,14 @@ footer {
 }
 
 .avatar {
+    display: inline-block;
     width: 150px;
     height: 150px;
+    border-radius: 50%;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    object-fit: cover;
 }
 
 .avatar-msg {
@@ -125,4 +131,18 @@ footer {
 
 .msg-datetime > p {
     margin: 0;
+}
+
+.sign-in {
+    position: absolute;
+    padding: 2em;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
+}
+
+.job-form-label {
+    width: 100px;
+    text-align: end;
 }

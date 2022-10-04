@@ -34,7 +34,7 @@ def search(request):
                                                             'concerts': concerts, 'tours': tours, 'jobs': jobs})
 
     else:
-        return HttpResponse('Please submit a search term.')
+        return render(request, 'jobs/search_results.html')
 
 
 class CalendarView(TemplateView):
