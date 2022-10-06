@@ -5,6 +5,16 @@
 {% endblock title %}
 
 {% block container %}
+    {{ sender_name|json_script:"sender-name" }}
+    <ul id="message-list">
+        {% for message in messages %}
+            {% if message.sender == sender %}
+                <li>[{{ message.sender }}]: {{ message.message }}</li>
+            {% elif message.sender == receiver %}
+                <li>[{{ message.sender }}]: {{ message.message }}</li>
+            {% endif %}
+        {% endfor %}
+    </ul>
     <textarea id="chat-log" cols="100" rows="20"></textarea><br>
     <input id="chat-message-input" type="text" size="100"><br>
     <input id="chat-message-submit" type="button" value="Send">
@@ -20,9 +30,21 @@
             + '/'
         );
 
+        chatSocket.onopen = function(e) {
+            console.log("Connection is opened");
+        }
+
         chatSocket.onmessage = function(e) {
             const data = JSON.parse(e.data);
             document.querySelector('#chat-log').value += (data.message + '\n');
+            console.log("Message is received");
+
+            const ul = document.getElementById('message-list')
+            var li = document.createElement('li')
+            li.append(document.createTextNode(
+                '[' + JSON.parse(document.getElementById('sender-name').textContent) + ']: ' + data.message
+            ))
+            ul.append(li);
         };
 
         chatSocket.onclose = function(e) {
