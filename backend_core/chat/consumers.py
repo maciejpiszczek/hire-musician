@@ -27,7 +27,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         )
 
     @database_sync_to_async
-    def save_message(self, sender, room_name, message):
+    def save_message(self, room_name, message):
         sender = get_user_model().objects.get(id=self.scope['user'].id)
         room = Room.objects.get(room_name=room_name)
 
@@ -38,8 +38,6 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
         new_message = Message.objects.create(message=message,
                                              sender=sender, receiver=receiver)
-        new_message.save()
-        return new_message
 
     # Receive message from WebSocket
     async def receive(self, text_data):
@@ -55,13 +53,12 @@ class ChatConsumer(AsyncWebsocketConsumer):
             }
         )
 
+        await self.save_message(self.scope['url_route']['kwargs']['room_name'], message)
+
     # Receive message from room group
     async def chat_message(self, event):
         sender = self.scope['user']
-        room_name = self.scope['url_route']['kwargs']['room_name']
         message = event['message']
-
-        await self.save_message(sender, room_name, message)
 
         # Send message to WebSocket
         await self.send(text_data=json.dumps({
