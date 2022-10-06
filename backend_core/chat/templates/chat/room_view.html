@@ -8,11 +8,7 @@
     {{ sender_name|json_script:"sender-name" }}
     <ul id="message-list">
         {% for message in messages %}
-            {% if message.sender == sender %}
-                <li>[{{ message.sender }}]: {{ message.message }}</li>
-            {% elif message.sender == receiver %}
-                <li>[{{ message.sender }}]: {{ message.message }}</li>
-            {% endif %}
+            <li>[{{ message.sender }}]: {{ message.message }}</li>
         {% endfor %}
     </ul>
     <textarea id="chat-log" cols="100" rows="20"></textarea><br>
