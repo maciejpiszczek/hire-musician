@@ -41,6 +41,7 @@ class ChatRoomView(LoginRequiredMixin, DetailView):
                                               receiver=self.request.user)).order_by('timestamp')
 
         return render(request, 'chat/room_view.html', {
+            'room_name': room_name,
             'sender': sender,
             'sender_name': sender.username,
             'receiver': receiver,
