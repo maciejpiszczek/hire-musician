@@ -24,18 +24,18 @@
                   <a href="{% url 'users:edit_profile' slug=profile.slug %}">
                     <button type="button" class="btn btn-warning m-2">Edit profile</button>
                   </a>
-                  <a href="{% url 'messenger:conversations-list' %}">
+                  <a href="#">
                     <button type="button" class="btn btn-outline-primary ms-1">View Messages</button>
                   </a>
               {% elif profile_edit == 2 %}
                   <a href="{% url 'users:edit_profile' slug=profile.slug %}">
                     <button type="button" class="btn btn-warning m-2">Edit profile</button>
                   </a>
-                  <a href="{% url 'messenger:personal-message' pk=user.id %}">
+                  <a href="#">
                     <button type="button" class="btn btn-outline-primary ms-1">Message</button>
                   </a>
               {% else %}
-                  <a href="{% url 'messenger:personal-message' pk=user.id %}">
+                  <a href="#">
                     <button type="button" class="btn btn-outline-primary ms-1">Message</button>
                   </a>
               {% endif %}
