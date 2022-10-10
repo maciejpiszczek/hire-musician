@@ -78,7 +78,7 @@ def login_user_view(request):
     if signup_success:
         messages.success(request, 'Account succesfully created. You can sign in now.')
     if request.method == 'POST':
-        form = forms.LoginForm(request, request.POST)
+        form = forms.LoginForm(request, request.POST or None)
 
         if form.is_valid():
             username = form.cleaned_data.get('username')
