@@ -1,42 +1,18 @@
 {% extends 'base.html' %}
+
 {% load static %}
 
-{% block styles %}
-    <link rel="stylesheet" href="{% static 'styles/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="{% static 'styles/main.css' %}">
-    <link rel="stylesheet" href="{% static 'styles/dashboard.css' %}">
-{% endblock styles %}
-
 {% block container %}
-    <div class="d-flex btn-group justify-content-between">
-        <div class="d-inline m-1">
-            <a href="{% url 'messenger:new-message' %}">
-                <button type="button" class="btn btn-danger" aria-expanded="false">
-                    New message
-                </button>
-            </a>
-        </div>
-        <div class="dropdown m-1">
-            <button class="btn btn-outline-danger dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Filter messages
-            </button>
-            <ul class="dropdown-menu dropdown-menu-dark">
-                <li><a class="dropdown-item" href="{% url 'messenger:inbox' %}">Inbox</a></li>
-                <li><a class="dropdown-item" href="{% url 'messenger:outbox' %}">Outbox</a></li>
-            </ul>
-        </div>
-    </div>
-    <div style="text-align: center;">
-        <h3>Your conversations</h3>
-    </div>
-    {% for addresate in addresates %}
+    <h2>Chat</h2>
+
+    {% for musician in object_list %}
         <div class="row row-cols-1 row-cols-md-2" style="height: 150px;">
             <div class="col-12 w-100 mb-3">
-                <a class="card-link" href="/messenger/conversation/{{ addresate.0 }}">
+                <a class="card-link" href="/chat/{{ musician.user_id }}">
                     <div class="card mb-3 h-100 d-flex justify-content-center">
                         <div class="col-md-auto vertical-center">
-                            {% if addresate.1.avatar %}
-                                <img src="{{ addresate.1.avatar.url }}" alt="avatar"
+                            {% if musician.1.avatar %}
+                                <img src="{{ musician.avatar.url }}" alt="avatar"
                                      class="rounded-circle img-fluid avatar-msg">
                             {% else %}
                                 <img src="{% static 'images/dummy-avatar.jpg' %}" alt="avatar"
@@ -51,7 +27,7 @@
                                             <div class="">
                                                 <div class="col-12">
                                                     <div class="d-inline-block">
-                                                        <h6>{{ addresate.1 }}</h6>
+                                                        <h6>{{ musician }}</h6>
                                                     </div>
 
                                                 </div>
@@ -65,7 +41,5 @@
                 </a>
             </div>
         </div>
-    {% empty %}
-        <p>You have no conversations yet.</p>
     {% endfor %}
 {% endblock container %}

@@ -66,11 +66,8 @@ def registration_view(request):
     if request.method == 'POST':
         if form.is_valid():
             user = form.save(commit=False)
-            user.is_active = True
-            user.is_musician = True
             user.save()
             return HttpResponseRedirect('/users/login/'+'?Status='+'True')
-    return render(request, 'users/registration.html', {'form': form})
 
 
 def login_user_view(request):
@@ -89,6 +86,7 @@ def login_user_view(request):
                 if user.is_active:
                     login(request, user)
                     return redirect(reverse_lazy('home:home'))
+
     else:
         form = forms.LoginForm()
 

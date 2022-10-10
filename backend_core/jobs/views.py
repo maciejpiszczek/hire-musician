@@ -27,16 +27,17 @@ class JobsListView(LoginRequiredMixin, FilterView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['no_results_message'] = "There are no job offers meeting your criteria."
+
         return context
 
 
 class MyJobsListView(JobsListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['jobs'] = chain(models.StudioSession.objects.filter(owner_id=self.request.user.id),
-                                models.Concert.objects.filter(owner_id=self.request.user.id),
-                                models.Tour.objects.filter(owner_id=self.request.user.id))
+        context['jobs'] = models.Job.objects.filter(owner=self.request.user)
+        context['my_jobs'] = True
         context['no_results_message'] = "You have no active job offers at the moment."
+
         return context
 
 
@@ -60,8 +61,9 @@ class JobDetailView(DetailView):
         return context
 
 
-class CreateJobView(LoginRequiredMixin, FormView):
+class CreateJobView(GroupRequiredMixin, FormView):
     template_name = 'jobs/new_job.html'
+    group_required = 'musicians'
     login_url = reverse_lazy('users:login')
     raise_exception = False
     success_url = reverse_lazy('jobs:jobs_list')
@@ -168,27 +170,19 @@ class JobAccessView(LoginRequiredMixin, FormMixin, DetailView):
         return HttpResponseRedirect('/jobs/')
 
 
-class MyJobAccessesListView(LoginRequiredMixin, FilterView):
-    model = models.JobAccess
+class MyJobAccessesListView(JobsListView):
     template_name = 'jobs/jobs_list.html'
     context_object_name = 'jobs'
-    filterset_fields = ['job']
+    filterset_class = JobsFilter
     paginate_by = 20
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['accesses'] = models.JobAccess.objects.filter(candidate=self.request.user)
-        context['jobs'] = []
-
+        jobs = []
         for access in context['accesses']:
-            studio = models.StudioSession.objects.filter(job_ptr_id=access.job.id)
-            concerts = models.Concert.objects.filter(job_ptr_id=access.job.id)
-            tours = models.Tour.objects.filter(job_ptr_id=access.job.id)
-
-            if not context['jobs']:
-                context['jobs'] = list(chain(studio, concerts, tours))
-            else:
-                context['jobs'] += list(chain(studio, concerts, tours))
-
+            jobs.append(models.Job.objects.get(id=access.job_id))
+        context['jobs'] = jobs
+        context['my_jobs'] = True
         context['no_results_message'] = "You have no job accesses."
         return context
