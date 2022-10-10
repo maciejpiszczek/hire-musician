@@ -3,6 +3,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django_filters.views import FilterView
 from django.contrib.auth import authenticate, login, logout, get_user_model
+from django.contrib.auth.models import Group
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
@@ -67,7 +68,9 @@ def registration_view(request):
         if form.is_valid():
             user = form.save(commit=False)
             user.save()
+            user.groups.add(Group.objects.get(name='musicians'))
             return HttpResponseRedirect('/users/login/'+'?Status='+'True')
+    return render(request, 'users/registration.html', {'form': form})
 
 
 def login_user_view(request):

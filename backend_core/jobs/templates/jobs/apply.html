@@ -1,8 +1,7 @@
 {% extends 'base.html' %}
-{% load crispy_forms_tags %}
 
 {% block container %}
-    <div class="" style="text-align: center;">
+    <div class="sign-in" style="text-align: center;">
         <div class="card mb-3 h-100">
             <div class="row g-0 card-elements">
                 <h4 class="text-center mt-3">Are you sure you want to apply for {{ job.title }}?</h4>
@@ -10,10 +9,9 @@
                     {% csrf_token %}
                     {{ form.as_p }}
                     <div style="display: inline;">
-                        <button class="btn btn-danger float-right btn-lg mb-3 mt-0" type="submit">Confirm</button>
-                        <a href="/jobs/view/{{ job.slug }}">
-                            <button class="btn btn-outline-danger float-right btn-lg mb-3 mt-0">Cancel</button>
-                        </a>
+                        <button class="btn btn-danger float-right mb-3 mt-0" type="submit">Confirm</button>
+                        <button class="btn btn-outline-danger float-right mb-3 mt-0"
+                                onclick="window.location='/jobs/view/{{ job.slug }}'; return false;">Cancel</button>
                     </div>
                 </form>
             </div>
