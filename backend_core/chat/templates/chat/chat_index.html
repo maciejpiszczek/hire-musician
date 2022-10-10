@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block container %}
+    <h2>Chat</h2>
+
+    {% for musician in object_list %}
+        <div class="row row-cols-1 row-cols-md-2" style="height: 150px;">
+            <div class="col-12 w-100 mb-3">
+                <a class="card-link" href="/chat/{{ musician.user_id }}">
+                    <div class="card mb-3 h-100 d-flex justify-content-center">
+                        <div class="col-md-auto vertical-center">
+                            {% if musician.1.avatar %}
+                                <img src="{{ musician.avatar.url }}" alt="avatar"
+                                     class="rounded-circle img-fluid avatar-msg">
+                            {% else %}
+                                <img src="{% static 'images/dummy-avatar.jpg' %}" alt="avatar"
+                                     class="rounded-circle img-fluid avatar-msg">
+                            {% endif %}
+                        </div>
+                        <div class="col-md-10 d-inline-block w-100">
+                            <div class="col-md-10 card-info">
+                                <div class="card-body">
+                                    <div class="d-flex">
+                                        <div style="width: 70%;">
+                                            <div class="">
+                                                <div class="col-12">
+                                                    <div class="d-inline-block">
+                                                        <h6>{{ musician }}</h6>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock container %}
