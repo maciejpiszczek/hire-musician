@@ -62,7 +62,7 @@ class JobDetailView(DetailView):
 
 
 class CreateJobView(GroupRequiredMixin, FormView):
-    template_name = 'jobs/new_job.html'
+    template_name = 'jobs/job_form.html'
     group_required = 'musicians'
     login_url = reverse_lazy('users:login')
     raise_exception = False
@@ -71,6 +71,7 @@ class CreateJobView(GroupRequiredMixin, FormView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['job_type'] = self.model.__name__
+        context['is_new'] = True
         return context
 
     def form_valid(self, form):
@@ -95,7 +96,7 @@ class CreateTourView(CreateJobView):
 
 
 class EditJobView(GroupRequiredMixin, AuthorManageMixin, UpdateView):
-    template_name = 'jobs/edit_job.html'
+    template_name = 'jobs/job_form.html'
     login_url = reverse_lazy('users:login')
     group_required = 'musicians'
     raise_exception = False
@@ -104,6 +105,7 @@ class EditJobView(GroupRequiredMixin, AuthorManageMixin, UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['job_type'] = self.model.__name__
+        context['is_new'] = False
         return context
 
     def get_success_url(self):

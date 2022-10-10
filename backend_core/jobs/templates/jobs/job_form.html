@@ -4,8 +4,13 @@
     <div class="" style="text-align: center;">
         <div class="card mb-3 h-100">
             <div class="row g-0 card-elements">
-                <h1>Add New {{ job_type }}</h1>
-                <form action="/jobs/{{ job_type.lower }}/new/" method="post" enctype="multipart/form-data">
+                {% if is_new %}
+                    <h1>Add New {{ job_type }}</h1>
+                    <form action="/jobs/{{ job_type.lower }}/new/" method="post" enctype="multipart/form-data">
+                {% else %}
+                    <h1>Edit {{ job_type }}: {{ job.title }}</h1>
+                    <form action="/jobs/{{ job_type.lower }}/edit/{{ job.slug }}">
+                {% endif %}
                     {% csrf_token %}
                     <div>
                         <div>
@@ -15,16 +20,6 @@
                                 </div>
                                 <div>
                                     <p>{{ form.title }}</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="d-inline-flex">
-                                <div class="job-form-label">
-                                    <p>Slug:&nbsp</p>
-                                </div>
-                                <div>
-                                    <p>{{ form.slug }}</p>
                                 </div>
                             </div>
                         </div>
