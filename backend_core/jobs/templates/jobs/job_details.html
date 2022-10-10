@@ -36,29 +36,31 @@
                 <div class="d-flex justify-content-center mb-2">
                     {% if job_detailed.get_class == 'StudioSession' %}
                         <a href="{% url 'jobs:edit_session' slug=job.slug %}">
-                            <button type="button" class="btn btn-warning">Edit Job</button>
+                            <button type="button" class="btn btn-outline-danger">Edit Job</button>
                         </a>
                     {% elif job_detailed.get_class == 'Concert' %}
                         <a href="{% url 'jobs:edit_concert' slug=job.slug %}">
-                            <button type="button" class="btn btn-warning">Edit Job</button>
+                            <button type="button" class="btn btn-outline-danger">Edit Job</button>
                         </a>
                     {% elif job_detailed.get_class == 'Tour' %}
                         <a href="{% url 'jobs:edit_tour' slug=job.slug %}">
-                            <button type="button" class="btn btn-warning">Edit Job</button>
+                            <button type="button" class="btn btn-outline-danger">Edit Job</button>
                         </a>
                     {% endif %}
                         <a href="{% url 'jobs:delete-job' slug=job.slug %}">
-                            <button type="button" class="btn btn-danger ms-1">Delete</button>
+                            <button type="button" class="btn btn-danger  ms-1">Delete</button>
                         </a>
                 </div>
             {% else %}
                     <div class="d-flex justify-content-center mb-2">
                         {% if not applied %}
                             <a href="{% url 'jobs:apply' slug=job.slug %}">
-                                <button type="button" class="btn btn-primary ms-1">Apply</button>
+                                <button type="button" class="btn btn-danger ms-1">Apply</button>
                             </a>
                         {% endif %}
-                        <button type="button" class="btn btn-outline-primary ms-1">Message</button>
+                        <a href="{% url 'chat:chat-view' pk=job.owner.id %}">
+                            <button type="button" class="btn btn-outline-danger ms-1">Message</button>
+                        </a>
                     </div>
             {% endif %}
           </div>
