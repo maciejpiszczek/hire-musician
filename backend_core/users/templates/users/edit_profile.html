@@ -1,17 +1,106 @@
 {% extends 'base.html' %}
-{% load crispy_forms_tags %}
 
 {% block container %}
     <form action="/users/{{ profile }}/edit/" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <h3 class="text-center mt-3">Editing {{ profile }} profile</h3>
-        {% if form.errors %}
-            {{ form.errors }}
-        {% endif %}
-        {{ form|crispy }}
-        <button class="btn btn-success float-right btn-lg mb-3 mt-0" type="submit">Update Profile</button>
+
+    <div class="" style="text-align: center;">
+        <div class="card mb-3 h-100">
+            <div class="row g-0 card-elements">
+                <h1>Edit profile</h1>
+                    {% if form.errors %}
+                        {{ form.errors }}
+                    {% endif %}
+                    {% csrf_token %}
+                    <div>
+                        <div>
+                            <div class="d-inline-flex">
+                                <div class="job-form-label">
+                                    <p>Avatar:&nbsp</p>
+                                </div>
+                                <div>
+                                    <p>{{ form.avatar }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="d-inline-flex">
+                                <div class="job-form-label">
+                                    <p>Bio:&nbsp</p>
+                                </div>
+                                <div>
+                                    <p>{{ form.bio }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="d-inline-flex">
+                                <div class="job-form-label">
+                                    <p>Instrument:&nbsp</p>
+                                </div>
+                                <div>
+                                    <p>{{ form.instrument }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="d-inline-flex">
+                                <div class="job-form-label">
+                                    <p>Style:&nbsp</p>
+                                </div>
+                                <div>
+                                    <p>{{ form.music_style }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="d-inline-flex">
+                                <div class="job-form-label">
+                                    <p>Equipment:&nbsp</p>
+                                </div>
+                                <div>
+                                    <p>{{ form.equipment }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="d-inline-flex">
+                                <div class="job-form-label">
+                                    <p>Is mobile:&nbsp</p>
+                                </div>
+                                <div>
+                                    <p>{{ form.is_mobile }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="d-inline-flex">
+                                <div class="job-form-label">
+                                    <p>Cut:&nbsp</p>
+                                </div>
+                                <div>
+                                    <p>{{ form.cut }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="d-inline-flex">
+                                <div class="job-form-label">
+                                    <p>Location:&nbsp</p>
+                                </div>
+                                <div>
+                                    <p>{{ form.location }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div class="d-inline-flex">
+                            <button type="submit" class="btn btn-danger m-1">Save</button>
+                            <a href="/users/profile/{{ user }}" class="btn btn-outline-danger m-1">Cancel</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </form>
-    <a href="/users/{{ profile.slug }}">
-        <button class="btn btn-danger float-right btn-lg mb-3 mt-0">Cancel</button>
-    </a>
 {% endblock container %}
