@@ -146,3 +146,7 @@ footer {
     width: 100px;
     text-align: end;
 }
+
+.red-active-backlight {
+    --bs-dropdown-link-active-bg: #dc3545;
+}
