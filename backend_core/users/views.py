@@ -2,7 +2,8 @@ import star_ratings.models
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django_filters.views import FilterView
-from django.contrib.auth import authenticate, login, logout, get_user_model
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.views import PasswordChangeView, PasswordChangeDoneView
 from django.contrib.auth.models import Group
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
@@ -13,6 +14,7 @@ from . import models
 from django.views.generic import DetailView, UpdateView
 
 from .filters import MusicianFilter
+from .forms import ChangePasswordForm
 
 
 class MusiciansProfilesListView(LoginRequiredMixin, FilterView):
@@ -49,8 +51,6 @@ class MusicianProfileView(LoginRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-
-        context['user'] = get_user_model().objects.get(id=self.object.user_id)
 
         if context['profile'].user == self.request.user:
             context['profile_edit'] = 1
@@ -117,3 +117,12 @@ class EditProfileView(LoginRequiredMixin, UpdateView):
         form.instance.owner = self.request.user
         form.save()
         return super().form_valid(form)
+
+
+class ChangePasswordView(PasswordChangeView):
+    form_class = ChangePasswordForm
+    template_name = 'users/password_change_form.html'
+
+
+class ChangePasswordDoneView(PasswordChangeDoneView):
+    template_name = 'users/password_change_done.html'

@@ -28,7 +28,7 @@
                         {{ user }}
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="/users/{{ user }}">My profile</a></li>
+                        <li><a class="dropdown-item" href="/users/profile/{{ user }}">My profile</a></li>
                         <li><a class="dropdown-item" href="{% url 'jobs:my_jobs' %}">My job offers</a></li>
                         <li><a class="dropdown-item" href="{% url 'jobs:my_accesses' %}">My job accesses</a></li>
                         <li><hr class="dropdown-divider"></li>

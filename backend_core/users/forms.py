@@ -1,8 +1,9 @@
 from django import forms
-from django.contrib.auth import get_user_model
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import get_user_model, password_validation
+from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm, SetPasswordForm
 from django.core.exceptions import ValidationError
 from django.core.validators import EmailValidator
+from django.utils.translation import gettext_lazy as _
 
 
 class RegistrationForm(forms.ModelForm):
@@ -65,3 +66,35 @@ class LoginForm(AuthenticationForm):
 
     class Meta:
         fields = ('username', 'password')
+
+
+class ChangePasswordForm(PasswordChangeForm):
+    error_messages = {
+        **SetPasswordForm.error_messages,
+        'password_incorrect': _(
+            'Your old password was entered incorrectly. Please enter it again.'
+        ),
+    }
+    old_password = forms.CharField(
+        label=_('Old password'),
+        strip=False,
+        widget=forms.PasswordInput(
+            attrs={'autocomplete': 'current-password',
+                   'autofocus': True,
+                   'placeholder': 'Current password...'}),
+    )
+    new_password1 = forms.CharField(
+        label=_('New password'),
+        widget=forms.PasswordInput(attrs={
+            'autocomplete': 'new-password',
+            'placeholder': 'New password...'}),
+        strip=False,
+        help_text=password_validation.password_validators_help_text_html(),
+    )
+    new_password2 = forms.CharField(
+        label=_('New password confirmation'),
+        strip=False,
+        widget=forms.PasswordInput(attrs={
+            'autocomplete': 'new-password',
+            'placeholder': 'Confirm new password...'}),
+    )
