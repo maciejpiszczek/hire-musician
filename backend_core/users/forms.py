@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth import get_user_model, password_validation
-from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm, SetPasswordForm
+from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm, SetPasswordForm, PasswordResetForm
 from django.core.exceptions import ValidationError
 from django.core.validators import EmailValidator
 from django.utils.translation import gettext_lazy as _
@@ -97,4 +97,14 @@ class ChangePasswordForm(PasswordChangeForm):
         widget=forms.PasswordInput(attrs={
             'autocomplete': 'new-password',
             'placeholder': 'Confirm new password...'}),
+    )
+
+
+class ResetPasswordForm(PasswordResetForm):
+    email = forms.EmailField(
+        label=_('Email'),
+        max_length=254,
+        widget=forms.EmailInput(attrs={
+            'autocomplete': 'email',
+            'placeholder': 'Enter email...'}),
     )

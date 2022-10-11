@@ -3,7 +3,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django_filters.views import FilterView
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.views import PasswordChangeView, PasswordChangeDoneView
+from django.contrib.auth.views import PasswordChangeView, PasswordChangeDoneView, PasswordResetView, \
+    PasswordResetDoneView, PasswordResetConfirmView
 from django.contrib.auth.models import Group
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
@@ -14,7 +15,7 @@ from . import models
 from django.views.generic import DetailView, UpdateView
 
 from .filters import MusicianFilter
-from .forms import ChangePasswordForm
+from .forms import ChangePasswordForm, ResetPasswordForm
 
 
 class MusiciansProfilesListView(LoginRequiredMixin, FilterView):
@@ -126,3 +127,16 @@ class ChangePasswordView(PasswordChangeView):
 
 class ChangePasswordDoneView(PasswordChangeDoneView):
     template_name = 'users/password_change_done.html'
+
+
+class ResetPasswordView(PasswordResetView):
+    template_name = 'users/password_reset.html'
+    form_class = ResetPasswordForm
+
+
+class ResetPasswordDoneView(PasswordResetDoneView):
+    template_name = 'users/password_reset_done.html'
+
+
+class ResetPasswordConfirmView(PasswordResetConfirmView):
+    template_name = 'users/password_reset_confirm.html'
