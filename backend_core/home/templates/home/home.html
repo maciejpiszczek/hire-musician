@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="{% static 'styles/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'styles/main.css' %}">
     <link rel="stylesheet" href="{% static 'styles/dashboard.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/scrollbar.css' %}">
 {% endblock styles %}
 
 {% block title %}
@@ -17,10 +18,9 @@
 {% endblock title %}
 
 {% block container %}
-    <div class="mb-5">
+    <div class="mb-4">
         {% if user.is_authenticated %}
-            <h1>Good to see you again,</h1>
-            <h3>{{ user }}! :)</h3>
+            <h1>Good to see you again, {{ user }}!</h1>
         {% else %}
             <h1>Welcome to Hire A Musician!</h1>
         {% endif %}

@@ -2,8 +2,15 @@
 
 {% load static %}
 
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'styles/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/main.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/dashboard.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/scrollbar.css' %}">
+{% endblock styles %}
+
 {% block container %}
-    <h2>Chat</h2>
+    <h1 style="text-align: center;">Chat</h1>
 
     {% for musician in object_list %}
         <div class="row row-cols-1 row-cols-md-2" style="height: 150px;">

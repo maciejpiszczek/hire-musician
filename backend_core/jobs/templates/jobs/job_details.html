@@ -2,6 +2,11 @@
 
 {% load static %}
 
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'styles/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/main.css' %}">
+{% endblock styles %}
+
 {% block container %}
     <section class="bg-dark contents">
   <div class="container py-5">

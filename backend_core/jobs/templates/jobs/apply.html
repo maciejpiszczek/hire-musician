@@ -1,5 +1,12 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'styles/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/main.css' %}">
+{% endblock styles %}
+
 {% block container %}
     <div class="sign-in" style="text-align: center;">
         <div class="card mb-3 h-100">

@@ -5,12 +5,19 @@
 {% block styles %}
     <link rel="stylesheet" href="{% static 'styles/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'styles/main.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/scrollbar.css' %}">
     <link rel="stylesheet" href="{% static 'styles/dashboard.css' %}">
     <link rel="stylesheet" href="{% static 'styles/pagination.css' %}">
 {% endblock styles %}
 
 {% block container %}
-    <h1 style="text-align: center;">Job offers</h1>
+    <h1 style="text-align: center;">
+        {% if my_jobs %}
+            My job offers
+        {% else %}
+            Job offers
+        {% endif %}
+    </h1>
     <div class="d-flex btn-group justify-content-between mb-3">
         <div class="d-inline">
             <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
@@ -22,11 +29,13 @@
                 <li><a class="dropdown-item" href="{% url 'jobs:new_tour' %}">Tour</a></li>
             </ul>
         </div>
-        <div class="filter-toggle">
-            <button class="btn btn-outline-danger dropdown-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                Filter options
-            </button>
-        </div>
+        {% if not my_jobs %}
+            <div class="filter-toggle">
+                <button class="btn btn-outline-danger dropdown-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                    Filter options
+                </button>
+            </div>
+        {% endif %}
     </div>
 
     {% if not my_jobs %}
