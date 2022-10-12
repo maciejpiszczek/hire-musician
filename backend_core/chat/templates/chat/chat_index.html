@@ -6,19 +6,20 @@
     <link rel="stylesheet" href="{% static 'styles/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'styles/main.css' %}">
     <link rel="stylesheet" href="{% static 'styles/dashboard.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/pagination.css' %}">
     <link rel="stylesheet" href="{% static 'styles/scrollbar.css' %}">
 {% endblock styles %}
 
 {% block container %}
     <h1 style="text-align: center;">Chat</h1>
-
+    <p>Who would you like to chat with?</p>
     {% for musician in object_list %}
         <div class="row row-cols-1 row-cols-md-2" style="height: 150px;">
             <div class="col-12 w-100 mb-3">
                 <a class="card-link" href="/chat/{{ musician.user_id }}">
                     <div class="card mb-3 h-100 d-flex justify-content-center">
                         <div class="col-md-auto vertical-center">
-                            {% if musician.1.avatar %}
+                            {% if musician.avatar %}
                                 <img src="{{ musician.avatar.url }}" alt="avatar"
                                      class="rounded-circle img-fluid avatar-msg">
                             {% else %}
