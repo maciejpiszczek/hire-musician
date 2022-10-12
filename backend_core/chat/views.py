@@ -7,13 +7,10 @@ from chat.models import Message, Room
 from users.models import UserProfile
 
 
-def chat_index(request):
-    return render(request, 'chat/chat_index.html')
-
-
 class ChatIndexView(LoginRequiredMixin, ListView):
     model = UserProfile
     template_name = 'chat/chat_index.html'
+    paginate_by = 20
 
     def get_queryset(self):
         return super().get_queryset().exclude(user_id=self.request.user.id)
@@ -39,16 +36,21 @@ class ChatRoomView(LoginRequiredMixin, DetailView):
         else:
             receiver = room.receiver
 
+        sender_profile = UserProfile.objects.get(user=sender)
+        receiver_profile = UserProfile.objects.get(user=receiver)
+
         messages = Message.objects.filter(Q(sender=self.request.user,
                                             receiver=get_user_model().objects.get(id=self.kwargs['pk']))
                                           | Q(sender=get_user_model().objects.get(id=self.kwargs['pk']),
                                               receiver=self.request.user)).order_by('timestamp')
 
-        return render(request, 'chat/chat_view.html', {
+        return render(request, 'chat/chat_view2.html', {
             'room_name': room_name,
             'sender': sender,
             'sender_name': sender.username,
+            'sender_profile': sender_profile,
             'receiver': receiver,
             'receiver_name': receiver.username,
+            'receiver_profile': receiver_profile,
             'messages': messages,
         })

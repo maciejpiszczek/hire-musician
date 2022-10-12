@@ -1,18 +1,40 @@
 {% extends 'base.html' %}
 
-{% block title %}
-    Chat
-{% endblock title %}
+{% load static %}
 
 {% block container %}
-    {{ sender_name|json_script:"sender-name" }}
+  <div class="row d-flex">
+    <div class="d-inline-flex">
+      {% if receiver_profile.avatar %}
+        <img src="{{ receiver_profile.avatar.url }}" alt="avatar"
+             class="rounded-circle img-fluid avatar">
+      {% else %}
+        <img src="{% static 'images/dummy-avatar.jpg' %}" alt="avatar"
+             class="rounded-circle img-fluid avatar">
+      {% endif %}
+      <div class="w-auto" style="margin: auto">
+        <h4>You are chatting with <b>{{ receiver }}</b></h4>
+      </div>
+    </div>
+  </div>
 
-
-    <ul id="message-list">
+    <div class="col-12 mt-3 overflow-scroll" style="height: 400px;">
+    <div id="message-list" data-bs-spy="scroll" data-bs-target="#navbar-example3" data-bs-smooth-scroll="true" class="" tabindex="0">
         {% for message in messages %}
-            <li>[{{ message.sender }}]: {{ message.message }}</li>
+            <div class="row d-flex justify-content-between">
+                <div class="w-50 d-flex">
+                    <h6>{{ message.sender }}</h6>
+                </div>
+                <div class="w-50 d-inline-flex">
+                    <p>{{ message.timestamp }}</p>
+                </div>
+            </div>
+            <p>{{ message.message }}</p>
+            <hr>
         {% endfor %}
-    </ul>
+    </div>
+  </div>
+
     <div class="chat-inputs">
         <input id="chat-message-input" type="text">
         <input id="chat-message-submit" class="btn btn-outline-danger" type="button" value="Send">
@@ -37,12 +59,12 @@
             const data = JSON.parse(e.data);
             console.log("Message is received");
 
-            const ul = document.getElementById('message-list')
+            const div = document.getElementById('message-list')
             var li = document.createElement('li')
             li.append(document.createTextNode(
                 '[' + data.sender + ']: ' + data.message
             ))
-            ul.append(li);
+            div.append(li);
         };
 
         chatSocket.onclose = function(e) {
@@ -65,4 +87,5 @@
             messageInputDom.value = '';
         };
     </script>
+
 {% endblock container %}
