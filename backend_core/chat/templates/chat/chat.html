@@ -18,28 +18,29 @@
     </div>
   </div>
 
-    <div class="col-12 mt-3 overflow-scroll" style="height: 400px;">
-    <div id="message-list" data-bs-spy="scroll" data-bs-target="#navbar-example3" data-bs-smooth-scroll="true" class="" tabindex="0">
+    <div class="col-12 mt-3 d-flex" style="height: 450px; flex-direction: column-reverse; overflow-y: scroll;">
+    <div id="message-list" data-bs-target="#navbar-example3" data-bs-smooth-scroll="true" class="" tabindex="0">
         {% for message in messages %}
             <div class="row d-flex justify-content-between">
                 <div class="w-50 d-flex">
                     <h6>{{ message.sender }}</h6>
                 </div>
-                <div class="w-50 d-inline-flex">
-                    <p>{{ message.timestamp }}</p>
-                </div>
             </div>
-            <p>{{ message.message }}</p>
+            <div class="w-75">
+                <p>{{ message.message }}</p>
+            </div>
             <hr>
         {% endfor %}
     </div>
   </div>
 
-    <div class="chat-inputs">
-        <input id="chat-message-input" type="text">
-        <input id="chat-message-submit" class="btn btn-outline-danger" type="button" value="Send">
+    <div class="chat-inputs mt-3">
+        <input id="chat-message-input" type="text" class="col-10">
+        <input id="chat-message-submit" class="btn btn-outline-danger float-end" type="button" value="Send">
     </div>
+
     {{ room_name|json_script:"room-name" }}
+
     <script>
         const roomName = JSON.parse(document.getElementById('room-name').textContent);
 
@@ -53,18 +54,26 @@
 
         chatSocket.onopen = function(e) {
             console.log("Connection is opened");
+            let messageList = document.getElementById('message-list');
+            messageList.lastChild.scrollIntoView();
         }
 
         chatSocket.onmessage = function(e) {
             const data = JSON.parse(e.data);
             console.log("Message is received");
 
-            const div = document.getElementById('message-list')
-            var li = document.createElement('li')
-            li.append(document.createTextNode(
-                '[' + data.sender + ']: ' + data.message
-            ))
-            div.append(li);
+            const messageList = document.getElementById('message-list');
+            let msg = document.createElement('div');
+            let html = `<div className="row d-flex justify-content-between">
+                <div className="w-50 d-flex">
+                    <h6>` + data.sender + `</h6>
+                </div>
+            </div>
+            <p>` + data.message + `</p>
+            <hr>`;
+            msg.innerHTML = html;
+            messageList.appendChild(msg);
+            messageList.lastChild.scrollIntoView();
         };
 
         chatSocket.onclose = function(e) {

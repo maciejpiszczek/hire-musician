@@ -44,7 +44,7 @@ class ChatRoomView(LoginRequiredMixin, DetailView):
                                           | Q(sender=get_user_model().objects.get(id=self.kwargs['pk']),
                                               receiver=self.request.user)).order_by('timestamp')
 
-        return render(request, 'chat/chat_view2.html', {
+        return render(request, 'chat/chat.html', {
             'room_name': room_name,
             'sender': sender,
             'sender_name': sender.username,
