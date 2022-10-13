@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'styles/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/main.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/dashboard.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/pagination.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/scrollbar.css' %}">
+{% endblock styles %}
+
+{% block container %}
+    <h1 style="text-align: center;">Chat</h1>
+    <p>Who would you like to chat with?</p>
+    {% for musician in musicians %}
+        <div class="row row-cols-1 row-cols-md-2" style="height: 150px;">
+            <div class="col-12 w-100 mb-3">
+                <a class="card-link" href="/chat/{{ musician.0.user_id }}">
+                    <div class="card mb-3 h-100 d-flex justify-content-center">
+                        <div class="col-md-auto vertical-center">
+                            {% if musician.avatar %}
+                                <img src="{{ musician.0.avatar.url }}" alt="avatar"
+                                     class="rounded-circle img-fluid avatar-msg">
+                            {% else %}
+                                <img src="{% static 'images/dummy-avatar.jpg' %}" alt="avatar"
+                                     class="rounded-circle img-fluid avatar-msg">
+                            {% endif %}
+                        </div>
+                        <div class="col-md-10 d-inline-block w-100">
+                            <div class="col-md-10 card-info">
+                                <div class="card-body">
+                                    <div class="d-flex">
+                                        <div style="width: 90%;">
+                                            <div class="">
+                                                <div class="col-12 d-flex justify-content-between">
+                                                    <div class="d-flex">
+                                                        <h6>{{ musician.0 }}</h6>
+                                                    </div>
+                                                    <div>
+                                                        {% if musician.1 == '' %}
+                                                        {% else %}
+                                                            <div>
+                                                                <p>Last activity {{ musician.1 }} ago</p>
+                                                            </div>
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock container %}

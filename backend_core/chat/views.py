@@ -1,3 +1,5 @@
+from datetime import datetime, timezone
+
 from django.shortcuts import render
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -5,15 +7,30 @@ from django.views.generic import DetailView, ListView
 from django.db.models import Q
 from chat.models import Message, Room
 from users.models import UserProfile
+from utils.calculate_timedelta import calculate_timedelta
 
 
 class ChatIndexView(LoginRequiredMixin, ListView):
     model = UserProfile
-    template_name = 'chat/chat_index.html'
+    template_name = 'chat/index.html'
     paginate_by = 20
 
     def get_queryset(self):
         return super().get_queryset().exclude(user_id=self.request.user.id)
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        queryset = super().get_queryset().exclude(user_id=self.request.user.id)
+        context = super().get_context_data(**kwargs)
+        user_list = []
+
+        for user in queryset:
+            user_msgs = Message.objects.filter(sender=get_user_model().objects.get(id=user.id)).order_by('-timestamp')
+
+            chat_tdelta = calculate_timedelta(datetime.now(timezone.utc), user_msgs[0].timestamp) if user_msgs else ''
+            user_list.append((user, chat_tdelta))
+
+        context['musicians'] = user_list
+        return context
 
 
 class ChatRoomView(LoginRequiredMixin, DetailView):
