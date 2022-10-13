@@ -9,27 +9,13 @@ from chat.models import Message
 from jobs.models import Job, StudioSession, Concert, Tour
 from users.models import UserProfile
 from datetime import datetime, timezone
-from math import floor
+from utils.calculate_timedelta import calculate_timedelta
 
 
 class HomeView(TemplateView):
     template_name = 'home/home.html'
 
     def get_context_data(self, **kwargs):
-        def calculate_timedelta(curr_dt, last_update):
-            tdelta = curr_dt - last_update
-            if 1 < tdelta.seconds / 86400:
-                td = str(floor(tdelta.seconds / 86400)) + ' days'
-            elif 1 < tdelta.seconds / 3600 < 24:
-                td = str(floor(tdelta.seconds / 3600)) + ' hours'
-            elif 2 < tdelta.seconds / 60 < 60:
-                td = str(floor(tdelta.seconds / 60)) + ' minutes'
-            elif 1 < tdelta.seconds / 60 < 2:
-                td = str(floor(tdelta.seconds / 60)) + ' minute'
-            elif tdelta.seconds / 60 < 1:
-                td = 'less than a minute'
-            return td
-
         context = super().get_context_data(**kwargs)
 
         if self.request.user.is_authenticated:
