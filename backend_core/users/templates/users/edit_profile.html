@@ -1,5 +1,12 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'styles/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/main.css' %}">
+{% endblock styles %}
+
 {% block container %}
     <form action="/users/{{ profile }}/edit/" method="post" enctype="multipart/form-data">
 

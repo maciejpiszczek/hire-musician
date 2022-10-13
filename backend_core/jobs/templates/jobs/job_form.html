@@ -23,7 +23,7 @@
                         <div>
                             <div class="d-inline-flex">
                                 <div class="job-form-label">
-                                    <p>Title:&nbsp</p>
+                                    <p>Title*:&nbsp</p>
                                 </div>
                                 <div>
                                     <p>{{ form.title }}</p>
@@ -33,7 +33,7 @@
                         <div>
                             <div class="d-inline-flex">
                                 <div class="job-form-label">
-                                    <p>Instrument:&nbsp</p>
+                                    <p>Instrument*:&nbsp</p>
                                 </div>
                                 <div>
                                     <p>{{ form.instrument }}</p>
@@ -43,7 +43,7 @@
                         <div>
                             <div class="d-inline-flex">
                                 <div class="job-form-label">
-                                    <p>Style:&nbsp</p>
+                                    <p>Style*:&nbsp</p>
                                 </div>
                                 <div>
                                     <p>{{ form.music_style }}</p>
@@ -53,7 +53,7 @@
                         <div>
                             <div class="d-inline-flex">
                                 <div class="job-form-label">
-                                    <p>Description:&nbsp</p>
+                                    <p>Description*:&nbsp</p>
                                 </div>
                                 <div>
                                     <p>{{ form.description }}</p>
@@ -63,7 +63,7 @@
                         <div>
                             <div class="d-inline-flex">
                                 <div class="job-form-label">
-                                    <p>Cut:&nbsp</p>
+                                    <p>Cut*:&nbsp</p>
                                 </div>
                                 <div>
                                     <p>{{ form.cut }}</p>
@@ -80,7 +80,7 @@
                         <div>
                             <div class="d-inline-flex">
                                 <div class="job-form-label">
-                                    <p>Event start:&nbsp</p>
+                                    <p>Event start*:&nbsp</p>
                                 </div>
                                 <div>
                                     <p>{{ form.event_start }}</p>
@@ -90,7 +90,7 @@
                         <div>
                             <div class="d-inline-flex">
                                 <div class="job-form-label">
-                                    <p>Event end:&nbsp</p>
+                                    <p>Event end*:&nbsp</p>
                                 </div>
                                 <div>
                                     <p>{{ form.event_end }}</p>
@@ -101,7 +101,7 @@
                             <div>
                                 <div class="d-inline-flex">
                                     <div class="job-form-label">
-                                        <p>Location:&nbsp</p>
+                                        <p>Location*:&nbsp</p>
                                     </div>
                                     <div>
                                         <p>{{ form.location }}</p>
@@ -110,7 +110,7 @@
                                 <div>
                                     <div class="d-inline-flex">
                                         <div class="job-form-label">
-                                            <p>Studio:&nbsp</p>
+                                            <p>Studio*:&nbsp</p>
                                         </div>
                                         <div>
                                             <p>{{ form.studio_name }}</p>
@@ -122,7 +122,7 @@
                             <div>
                                 <div class="d-inline-flex">
                                     <div class="job-form-label">
-                                        <p>Location:&nbsp</p>
+                                        <p>Location*:&nbsp</p>
                                     </div>
                                     <div>
                                         <p>{{ form.location }}</p>
@@ -151,7 +151,7 @@
                                 <div>
                                     <div class="d-inline-flex">
                                         <div class="job-form-label">
-                                            <p>Duration:&nbsp</p>
+                                            <p>Duration*:&nbsp</p>
                                         </div>
                                         <div>
                                             <p>{{ form.duration }}</p>
@@ -183,7 +183,7 @@
                             <div>
                                 <div class="d-inline-flex">
                                     <div class="job-form-label">
-                                        <p>Region:&nbsp</p>
+                                        <p>Region*:&nbsp</p>
                                     </div>
                                     <div>
                                         <p>{{ form.region }}</p>
@@ -193,7 +193,7 @@
                             <div>
                                 <div class="d-inline-flex">
                                     <div class="job-form-label">
-                                        <p>Concerts:&nbsp</p>
+                                        <p>Concerts*:&nbsp</p>
                                     </div>
                                     <div>
                                         <p>{{ form.concert_amount }}</p>
@@ -221,6 +221,7 @@
                                 </div>
                             </div>
                         {% endif %}
+                        <p>*required field</p>
                     </div>
                     <button type="submit" class="btn btn-danger">Add</button>
                     <a href="{% url 'jobs:jobs_list' %}" class="btn btn-outline-danger">Cancel</a>
