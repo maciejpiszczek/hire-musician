@@ -12,7 +12,11 @@
 
 {% block container %}
     <h1 style="text-align: center;">Chat</h1>
-    <p>Who would you like to chat with?</p>
+    {% if object_list %}
+        <p>Who would you like to chat with?</p>
+    {% else %}
+        <p>There are no other users at the moment.</p>
+    {% endif %}
     {% for musician in object_list %}
         <div class="row row-cols-1 row-cols-md-2" style="height: 150px;">
             <div class="col-12 w-100 mb-3">
@@ -50,5 +54,7 @@
             </div>
         </div>
     {% endfor %}
-    {% include 'partials/pagination.html' %}
+    {% if object_list %}
+        {% include 'partials/pagination.html' %}
+    {% endif %}
 {% endblock container %}
