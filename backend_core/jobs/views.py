@@ -26,6 +26,7 @@ class JobsListView(LoginRequiredMixin, FilterView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['header'] = 'Job offers'
         context['no_results_message'] = "There are no job offers meeting your criteria."
 
         return context
@@ -35,7 +36,7 @@ class MyJobsListView(JobsListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['jobs'] = models.Job.objects.filter(owner=self.request.user)
-        context['my_jobs'] = True
+        context['header'] = 'My job offers'
         context['no_results_message'] = "You have no active job offers at the moment."
 
         return context
@@ -194,6 +195,6 @@ class MyJobAccessesListView(JobsListView):
         for access in context['accesses']:
             jobs.append(models.Job.objects.get(id=access.job_id))
         context['jobs'] = jobs
-        context['my_jobs'] = True
+        context['header'] = 'My job accesses'
         context['no_results_message'] = "You have no job accesses."
         return context

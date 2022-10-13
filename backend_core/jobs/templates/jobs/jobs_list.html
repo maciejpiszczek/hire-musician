@@ -11,13 +11,7 @@
 {% endblock styles %}
 
 {% block container %}
-    <h1 style="text-align: center;">
-        {% if my_jobs %}
-            My job offers
-        {% else %}
-            Job offers
-        {% endif %}
-    </h1>
+    <h1 style="text-align: center;">{{ header }}</h1>
     <div class="d-flex btn-group justify-content-between mb-3">
         <div class="d-inline">
             <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
