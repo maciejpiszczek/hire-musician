@@ -1,17 +1,16 @@
 {% extends 'base.html' %}
-{% load crispy_forms_tags %}
 
 {% block container %}
     <div class="sign-in" style="text-align: center;">
         <div class="card mb-3 h-100">
             <div class="row g-0 card-elements">
-                <h4 class="text-center mt-3">Are you sure you want to delete {{ job.title }}?</h4>
-                <form action="/jobs/delete/{{ job.slug }}/" method="post" enctype="multipart/form-data">
+                <h4 class="text-center mt-3">Are you sure you want to {{ activity }}?</h4>
+                <form action="{{ url_route }}" method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     <div style="display: inline;">
                         <button class="btn btn-danger float-right mb-3 mt-0" type="submit">Confirm</button>
                         <button class="btn btn-outline-danger float-right mb-3 mt-0"
-                                onclick="window.location='/jobs/view/{{ job.slug }}/'; return false;">Cancel</button>
+                                onclick="window.location='/jobs/view/{{ job.slug }}'; return false;">Cancel</button>
                     </div>
                 </form>
             </div>

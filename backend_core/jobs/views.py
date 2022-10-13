@@ -138,7 +138,7 @@ class EditTourView(EditJobView):
 
 class JobDeleteView(GroupRequiredMixin, AuthorManageMixin, DeleteView):
     model = models.Job
-    template_name = 'jobs/delete_job.html'
+    template_name = 'jobs/confirm.html'
     login_url = reverse_lazy('users:login')
     group_required = 'musicians'
     success_url = reverse_lazy('jobs:jobs_list')
@@ -147,12 +147,14 @@ class JobDeleteView(GroupRequiredMixin, AuthorManageMixin, DeleteView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['job_type'] = self.model.__name__
+        context['activity'] = f'delete {self.object.title}'
+        context['url_route'] = f'/jobs/delete/{self.object.slug}/'
         return context
 
 
 class JobAccessView(LoginRequiredMixin, FormMixin, DetailView):
     model = models.Job
-    template_name = 'jobs/apply.html'
+    template_name = 'jobs/confirm.html'
     form_class = forms.JobAccessForm
 
     def post(self, request, *args, **kwargs):
@@ -170,6 +172,13 @@ class JobAccessView(LoginRequiredMixin, FormMixin, DetailView):
         form.instance.job = self.object
         form.save()
         return HttpResponseRedirect('/jobs/')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['job_type'] = self.model.__name__
+        context['activity'] = f'apply for {self.object.title}'
+        context['url_route'] = f'/jobs/apply/{self.object.slug}/'
+        return context
 
 
 class MyJobAccessesListView(JobsListView):
