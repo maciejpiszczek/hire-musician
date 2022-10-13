@@ -83,7 +83,7 @@
                                     <p>Event start*:&nbsp</p>
                                 </div>
                                 <div>
-                                    <input type="datetime-local" name="event_start">
+                                    <input type="datetime-local" name="event_start" min="{{ dt_now }}">
                                 </div>
                             </div>
                         </div>
@@ -93,7 +93,7 @@
                                     <p>Event end*:&nbsp</p>
                                 </div>
                                 <div>
-                                    <input type="datetime-local" name="event_end">
+                                    <input type="datetime-local" name="event_end" min="{{ dt_now }}">
                                 </div>
                             </div>
                         </div>

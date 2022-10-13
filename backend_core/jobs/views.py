@@ -1,3 +1,4 @@
+from django.utils import timezone
 from itertools import chain
 
 from braces.views import GroupRequiredMixin
@@ -73,6 +74,7 @@ class CreateJobView(GroupRequiredMixin, FormView):
         context = super().get_context_data(**kwargs)
         context['job_type'] = self.model.__name__
         context['is_new'] = True
+        context['dt_now'] = timezone.now().strftime("%Y-%m-%d" + "T" + "%H:%M")
         return context
 
     def form_valid(self, form):
