@@ -1,0 +1,153 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block container %}
+    <h1 style="text-align: center;">{{ header }}</h1>
+    <div class="d-flex justify-content-between mb-3">
+        {% if jobs_view %}
+            <div class="d-inline-flex">
+                <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                    Add new...
+                </button>
+                <ul class="dropdown-menu dropdown-menu-dark red-active-backlight">
+                    <li><a class="dropdown-item" href="{% url 'jobs:new_session' %}">Studio session</a></li>
+                    <li><a class="dropdown-item" href="{% url 'jobs:new_concert' %}">Concert</a></li>
+                    <li><a class="dropdown-item" href="{% url 'jobs:new_tour' %}">Tour</a></li>
+                </ul>
+            </div>
+        {% endif %}
+
+        {% if my_jobs %}
+        {% else %}
+            <div class="d-inline-flex">
+                <button class="btn btn-outline-danger dropdown-toggle" type="button" style="float: right;"
+                        data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                    Filter options
+                </button>
+            </div>
+        {% endif %}
+    </div>
+
+    {% if filter_type == 'Job' %}
+        {% include 'partials/jobs_filter.html' %}
+    {% else %}
+        {% include 'partials/musicians_filter.html' %}
+    {% endif %}
+
+    {% for obj in object_list %}
+        <div class="row row-cols-1 row-cols-md-2">
+            <div class="col-12 w-100 mb-3">
+                {% if jobs_view %}
+                    <a class="card-link" href="{% url 'jobs:job_details' slug=obj.slug %}">
+                {% else %}
+                    <a class="card-link" href="{% url 'users:profile_details' slug=obj.0.slug %}">
+                {% endif %}
+                    <div class="card mb-3 h-100 justify-content-center">
+                        <div class="col-md-auto vertical-center">
+                            {% if jobs_view %}
+                                <img src="/static/images/{{ obj.get_matching_subclass_object.get_class.lower }}.png" alt="avatar"
+                                     class="rounded-circle img-fluid avatar">
+                            {% else %}
+                                {% if obj.0.avatar %}
+                                    <img src="{{ obj.0.avatar.url }}" class="rounded-circle img-fluid avatar"
+                                         alt="user_avatar">
+                                {% else %}
+                                    <img src="{% static 'images/dummy-avatar.jpg' %}" alt="avatar"
+                                         class="rounded-circle img-fluid avatar">
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                        <div class="col-md-auto">
+                            <div class="col-md-10 card-info">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between">
+                                        {% if jobs_view %}
+                                        <div class="col-8">
+                                            <h5 class="card-title">{{ obj.title }}</h5>
+                                            {% if obj.event_start.date == obj.event_end.date %}
+                                                <p class="mb-0"><small>Date: {{ obj.event_start.date }}</small></p>
+                                            {% else %}
+                                                <p class="mb-0"><small>Date: {{ obj.event_start.date }} - {{ obj.event_end.date }}</small></p>
+                                            {% endif %}
+                                        </div>
+                                        <div class="col-4" style="text-align: right; padding-right: 20px;">
+                                            <h6 class="">Cut:</h6>
+                                            <p class="musician-cut mb-0">{{ obj.cut }} $</p>
+                                            <p class="text-muted">/{{ obj.cut_unit }}</p>
+                                        </div>
+                                        {% else %}
+                                        <div class="col-8">
+                                            <h5 class="card-title">{{ obj.0 }}</h5>
+                                        </div>
+                                        <div class="col-4" style="text-align: right; padding-right: 20px;">
+                                            <h6 class="">Cut:</h6>
+                                            <p class="musician-cut mb-0">{{ obj.0.cut }} $</p>
+                                            <p class="text-muted">/song</p>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="musician-info">
+                                        {% if jobs_view %}
+                                            <div class="col-3">
+                                                <p class="card-text">Event type:</p>
+                                                <p class="card-text">Instrument:</p>
+                                                <p class="card-text">Style:</p>
+                                            </div>
+                                            <div class="col-7">
+                                                <p class="card-text">{{ obj.get_matching_subclass_object.get_class }}</p>
+                                                <p class="card-text">{{ obj.instrument }}</p>
+                                                <p class="card-text">{{ obj.music_style }}</p>
+                                            </div>
+                                        {% else %}
+                                            <div class="col-3">
+                                                <p class="card-text">Instrument:</p>
+                                                <p class="card-text">Styles:</p>
+                                                <p class="card-text">Is mobile:</p>
+                                                <p class="card-text">Rating:</p>
+                                            </div>
+                                            <div class="col-7">
+                                                {% if not obj.0.instrument %}
+                                                    <p class="card-text">-</p>
+                                                {% else %}
+                                                    <p class="card-text">{{ obj.0.instrument }}</p>
+                                                {% endif %}
+                                                {% if not obj.0.music_style %}
+                                                    <p class="card-text">-</p>
+                                                {% else %}
+                                                    <p class="card-text">{{ obj.0.music_style }}</p>
+                                                {% endif %}
+                                                {% if not obj.0.is_mobile %}
+                                                    <p class="card-text">no</p>
+                                                {% else %}
+                                                    <p class="card-text">yes</p>
+                                                {% endif %}
+                                                {% if not obj.1 %}
+                                                    <p class="card-text">-</p>
+                                                {% else %}
+                                                    <p class="card-text">
+                                                        <i data-star="{{ obj.1 }}"></i>
+                                                        <small>{{ obj.1 }}</small>
+                                                    </p>
+                                                {% endif %}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    {% empty %}
+        <div>
+            <h6>{{ no_results_message }}</h6>
+        </div>
+    {% endfor %}
+
+    {% if object_list %}
+        {% include 'partials/pagination.html' %}
+    {% endif %}
+
+{% endblock container %}

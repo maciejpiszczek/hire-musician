@@ -18,16 +18,18 @@ from .permissions import AuthorManageMixin
 
 class JobsListView(LoginRequiredMixin, FilterView):
     model = models.Job
-    template_name = 'jobs/jobs_list.html'
+    template_name = 'list_view.html'
     login_url = reverse_lazy('users:login')
     raise_exception = False
-    context_object_name = 'jobs'
+    context_object_name = 'object_list'
     filterset_class = JobsFilter
     paginate_by = 20
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['header'] = 'Job offers'
+        context['jobs_view'] = True
+        context['filter_type'] = 'Job'
         context['no_results_message'] = "There are no job offers meeting your criteria."
 
         return context
@@ -36,10 +38,11 @@ class JobsListView(LoginRequiredMixin, FilterView):
 class MyJobsListView(JobsListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['jobs'] = models.Job.objects.filter(owner=self.request.user)
+        context['object_list'] = models.Job.objects.filter(owner=self.request.user)
         context['header'] = 'My job offers'
+        context['jobs_view'] = True
+        context['my_jobs'] = True
         context['no_results_message'] = "You have no active job offers at the moment."
-
         return context
 
 
@@ -185,8 +188,7 @@ class JobAccessView(LoginRequiredMixin, FormMixin, DetailView):
 
 
 class MyJobAccessesListView(JobsListView):
-    template_name = 'jobs/jobs_list.html'
-    context_object_name = 'jobs'
+    template_name = 'list_view.html'
     filterset_class = JobsFilter
     paginate_by = 20
 
@@ -196,7 +198,9 @@ class MyJobAccessesListView(JobsListView):
         jobs = []
         for access in context['accesses']:
             jobs.append(models.Job.objects.get(id=access.job_id))
-        context['jobs'] = jobs
+        context['object_list'] = jobs
         context['header'] = 'My job accesses'
+        context['my_jobs'] = True
+        context['jobs_view'] = False
         context['no_results_message'] = "You have no job accesses."
         return context
