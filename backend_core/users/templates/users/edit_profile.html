@@ -2,6 +2,10 @@
 
 {% load static %}
 
+{% block title %}
+    Edit Profile
+{% endblock title %}
+
 {% block styles %}
     <link rel="stylesheet" href="{% static 'styles/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'styles/main.css' %}">
@@ -13,7 +17,7 @@
     <div class="" style="text-align: center;">
         <div class="card mb-3 h-100">
             <div class="row g-0 card-elements">
-                <h1>Edit profile</h1>
+                <h1>Edit Profile</h1>
                     {% if form.errors %}
                         {{ form.errors }}
                     {% endif %}

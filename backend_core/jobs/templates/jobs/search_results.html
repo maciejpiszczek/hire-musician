@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block title %}
+    Search Results
+{% endblock title %}
+
 {% block container %}
     <h3>Search results for "{{ query }}":</h3>
     {% for musician in musicians %}

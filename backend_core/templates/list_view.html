@@ -2,6 +2,18 @@
 
 {% load static %}
 
+{% block title %}
+    {% if my_jobs and not jobs_view %}
+        My Accesses
+    {% elif my_jobs and jobs_view %}
+        My Job Offers
+    {% elif not my_jobs and jobs_view %}
+        Job Offers
+    {% else %}
+        Musicians
+    {% endif %}
+{% endblock title %}
+
 {% block container %}
     <h1 style="text-align: center;">{{ header }}</h1>
     <div class="d-flex justify-content-between mb-3">
