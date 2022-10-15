@@ -26,7 +26,7 @@ body {
     height: 60px;
 }
 
-#searchbar {
+.searchbar {
     justify-content: space-around;
 }
 
