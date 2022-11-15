@@ -35,7 +35,7 @@
             <p class="text-muted">Owner:</p>
             {% if owner_profile.avatar %}
               <img src="{{ owner_profile.avatar.url }}" alt="avatar"
-                  class="rounded-circle img-fluid" style="width: 150px; height: 150px;">
+                  class="rounded-circle img-fluid avatar" style="width: 150px; height: 150px;">
             {% else %}
               <img src="{% static 'images/dummy-avatar.jpg' %}" alt="avatar"
                   class="rounded-circle img-fluid" style="width: 150px; height: 150px;">
@@ -114,6 +114,16 @@
       <div class="col-lg-8">
         <div class="card mb-4">
           <div class="card-body">
+            <div class="row">
+                <div class="d-inline-flex mb-4" style="justify-content: space-between;">
+                  <p><strong>When:</strong></p>
+                  {% if job_detailed.get_class == 'Concert' %}
+                    <p>{{ job.event_start.date }} {{ job.event_start.time }}</p>
+                  {% else %}
+                    <p>{{ job.event_start.date }} - {{ job.event_end.date }}</p>
+                  {% endif %}
+                </div>
+            </div>
             <div class="row">
               <div class="col-sm-12" style="display: inline;">
                 <h6 class="mb-0" style="text-align: right;">Cut:</h6>
