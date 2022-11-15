@@ -1,12 +1,10 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractUser
-
 from django.db import models
+from django.utils.text import slugify
 
 from decimal import Decimal
-
-from django.utils.text import slugify
 
 
 class CustomUserManager(BaseUserManager):
@@ -65,9 +63,6 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return self.user.username
-
-    class Meta:
-        ordering = ('-rating',)
 
     def save(self, *args, **kwargs):
         if not self.slug:
