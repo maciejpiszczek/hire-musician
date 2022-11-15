@@ -22,7 +22,7 @@ Hire A Musician requires the following to run:
 **SSH:**  
 `git clone git@github.com:maciejpiszczek/hire-musician.git`
 2. Go to the project directory:  
-`cd donate-stuff`
+`cd hire-musician`
 3. Provide .env file with necessary environmental variables (see env/.env-default for reference).
 4. Start the server:  
 `docker compose up --build`
