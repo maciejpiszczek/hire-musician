@@ -31,7 +31,6 @@ class Job(models.Model):
         return f'{self.event_start.date()} - {self.event_end.date()} - {self.instrument} - {self.title}'
 
     class Meta:
-        # abstract = True
         ordering = ('-added',)
 
     def get_class(self):
@@ -79,7 +78,7 @@ class Concert(Job):
 class Tour(Job):
     region = models.CharField(max_length=200)
     concert_amount = models.PositiveIntegerField()
-    days_off = models.PositiveIntegerField(default=0, blank=True)
+    days_off = models.PositiveIntegerField(default=0)
     rehearsals = models.BooleanField(default=False, blank=True)
 
     def __str__(self):

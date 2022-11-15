@@ -1,3 +1,4 @@
+from django.utils import timezone
 from itertools import chain
 
 from braces.views import GroupRequiredMixin
@@ -17,15 +18,18 @@ from .permissions import AuthorManageMixin
 
 class JobsListView(LoginRequiredMixin, FilterView):
     model = models.Job
-    template_name = 'jobs/jobs_list.html'
+    template_name = 'list_view.html'
     login_url = reverse_lazy('users:login')
     raise_exception = False
-    context_object_name = 'jobs'
+    context_object_name = 'object_list'
     filterset_class = JobsFilter
     paginate_by = 20
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['header'] = 'Job offers'
+        context['jobs_view'] = True
+        context['filter_type'] = 'Job'
         context['no_results_message'] = "There are no job offers meeting your criteria."
 
         return context
@@ -34,10 +38,11 @@ class JobsListView(LoginRequiredMixin, FilterView):
 class MyJobsListView(JobsListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['jobs'] = models.Job.objects.filter(owner=self.request.user)
+        context['object_list'] = models.Job.objects.filter(owner=self.request.user)
+        context['header'] = 'My job offers'
+        context['jobs_view'] = True
         context['my_jobs'] = True
         context['no_results_message'] = "You have no active job offers at the moment."
-
         return context
 
 
@@ -72,6 +77,7 @@ class CreateJobView(GroupRequiredMixin, FormView):
         context = super().get_context_data(**kwargs)
         context['job_type'] = self.model.__name__
         context['is_new'] = True
+        context['dt_now'] = timezone.now().strftime("%Y-%m-%d" + "T" + "%H:%M")
         return context
 
     def form_valid(self, form):
@@ -138,7 +144,7 @@ class EditTourView(EditJobView):
 
 class JobDeleteView(GroupRequiredMixin, AuthorManageMixin, DeleteView):
     model = models.Job
-    template_name = 'jobs/delete_job.html'
+    template_name = 'jobs/confirm.html'
     login_url = reverse_lazy('users:login')
     group_required = 'musicians'
     success_url = reverse_lazy('jobs:jobs_list')
@@ -147,12 +153,14 @@ class JobDeleteView(GroupRequiredMixin, AuthorManageMixin, DeleteView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['job_type'] = self.model.__name__
+        context['activity'] = f'delete {self.object.title}'
+        context['url_route'] = f'/jobs/delete/{self.object.slug}/'
         return context
 
 
 class JobAccessView(LoginRequiredMixin, FormMixin, DetailView):
     model = models.Job
-    template_name = 'jobs/apply.html'
+    template_name = 'jobs/confirm.html'
     form_class = forms.JobAccessForm
 
     def post(self, request, *args, **kwargs):
@@ -171,10 +179,16 @@ class JobAccessView(LoginRequiredMixin, FormMixin, DetailView):
         form.save()
         return HttpResponseRedirect('/jobs/')
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['job_type'] = self.model.__name__
+        context['activity'] = f'apply for {self.object.title}'
+        context['url_route'] = f'/jobs/apply/{self.object.slug}/'
+        return context
+
 
 class MyJobAccessesListView(JobsListView):
-    template_name = 'jobs/jobs_list.html'
-    context_object_name = 'jobs'
+    template_name = 'list_view.html'
     filterset_class = JobsFilter
     paginate_by = 20
 
@@ -184,7 +198,9 @@ class MyJobAccessesListView(JobsListView):
         jobs = []
         for access in context['accesses']:
             jobs.append(models.Job.objects.get(id=access.job_id))
-        context['jobs'] = jobs
+        context['object_list'] = jobs
+        context['header'] = 'My job accesses'
         context['my_jobs'] = True
+        context['jobs_view'] = False
         context['no_results_message'] = "You have no job accesses."
         return context

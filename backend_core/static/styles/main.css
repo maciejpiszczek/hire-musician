@@ -18,11 +18,15 @@ body {
     cursor: pointer;
 }
 
+.card-link {
+    text-decoration: none;
+}
+
 .logo {
     height: 60px;
 }
 
-#searchbar {
+.searchbar {
     justify-content: space-around;
 }
 

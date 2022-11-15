@@ -20,12 +20,12 @@ from .forms import ChangePasswordForm, ResetPasswordForm
 
 class MusiciansProfilesListView(LoginRequiredMixin, FilterView):
     model = models.UserProfile
-    template_name = 'users/users_profiles_list.html'
+    template_name = 'list_view.html'
     login_url = reverse_lazy('users:login')
     raise_exception = False
     context_object_name = 'musicians'
     filterset_class = MusicianFilter
-    paginate_by = 10
+    paginate_by = 20
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -38,7 +38,8 @@ class MusiciansProfilesListView(LoginRequiredMixin, FilterView):
                 mus_rate = star_ratings.models.Rating.objects.get(object_id=mus_user.id)
                 mus_rating = mus_rate.average
             mus_list.append((musician, mus_rating))
-        context['mus_list'] = mus_list
+        context['object_list'] = mus_list
+        context['no_results_message'] = "There are no agents meeting your criteria."
 
         return context
 
