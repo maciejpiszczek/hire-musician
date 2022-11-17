@@ -9,6 +9,9 @@ class Message(models.Model):
     message = models.TextField()
     timestamp = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return f'{self.timestamp} - FROM {self.sender} TO {self.receiver}'
+
 
 class Room(models.Model):
     sender = models.ForeignKey(get_user_model(), related_name='room_sender', on_delete=models.SET(AnonymousUser.id))

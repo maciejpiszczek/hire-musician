@@ -90,8 +90,8 @@ class JobAccess(models.Model):
     candidate = models.ForeignKey(get_user_model(), related_name='candidate', on_delete=models.CASCADE)
     job = models.ForeignKey('Job', on_delete=models.CASCADE)
 
-    def get_job(self):
-        return Job.objects.get(id=self.job_id)
-
     def __str__(self):
         return f'{self.candidate} - {self.job.title}'
+
+    def get_job(self):
+        return Job.objects.get(id=self.job_id)
