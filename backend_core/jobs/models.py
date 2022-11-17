@@ -30,9 +30,6 @@ class Job(models.Model):
     def __str__(self):
         return f'{self.event_start.date()} - {self.event_end.date()} - {self.instrument} - {self.title}'
 
-    class Meta:
-        ordering = ('-added',)
-
     def get_class(self):
         return self.__class__.__name__
 

@@ -27,6 +27,7 @@ class JobsListView(LoginRequiredMixin, FilterView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['object_list'] = models.Job.objects.all().order_by('event_start')
         context['header'] = 'Job offers'
         context['jobs_view'] = True
         context['filter_type'] = 'Job'
@@ -38,7 +39,7 @@ class JobsListView(LoginRequiredMixin, FilterView):
 class MyJobsListView(JobsListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['object_list'] = models.Job.objects.filter(owner=self.request.user)
+        context['object_list'] = models.Job.objects.filter(owner=self.request.user).order_by('event_start')
         context['header'] = 'My job offers'
         context['jobs_view'] = True
         context['my_jobs'] = True
