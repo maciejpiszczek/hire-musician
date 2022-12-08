@@ -35,7 +35,7 @@ class HomeView(TemplateView):
             else:
                 context['user_tdelta'] = ''
 
-            msgs = Message.objects.filter(receiver=self.request.user)
+            msgs = Message.objects.all()
             if msgs:
                 last_inbox_msg = msgs.order_by('-timestamp')[0].timestamp
                 context['inbox_tdelta'] = calculate_timedelta(dt_now, last_inbox_msg)

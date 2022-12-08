@@ -202,6 +202,6 @@ class MyJobAccessesListView(JobsListView):
         context['object_list'] = jobs
         context['header'] = 'My job accesses'
         context['my_jobs'] = True
-        context['jobs_view'] = False
+        context['jobs_view'] = True
         context['no_results_message'] = "You have no job accesses."
         return context
