@@ -26,7 +26,7 @@ class ChatIndexView(LoginRequiredMixin, ListView):
         for user in queryset:
             user_msgs = Message.objects.filter(user=get_user_model().objects.get(id=user.id)).order_by('-date_added')
 
-            chat_tdelta = calculate_timedelta(datetime.now(timezone.utc), user_msgs[0].timestamp) if user_msgs else ''
+            chat_tdelta = calculate_timedelta(datetime.now(timezone.utc), user_msgs[0].date_added) if user_msgs else ''
             user_list.append((user, chat_tdelta))
 
         context['musicians'] = user_list

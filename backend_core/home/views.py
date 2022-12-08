@@ -37,7 +37,7 @@ class HomeView(TemplateView):
 
             msgs = Message.objects.all()
             if msgs:
-                last_inbox_msg = msgs.order_by('-timestamp')[0].timestamp
+                last_inbox_msg = msgs.order_by('-date_added')[0].date_added
                 context['inbox_tdelta'] = calculate_timedelta(dt_now, last_inbox_msg)
             else:
                 context['inbox_tdelta'] = ''

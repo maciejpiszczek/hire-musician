@@ -6,6 +6,15 @@
     Chat with {{ receiver }}
 {% endblock title %}
 
+{% block scripts %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
+            crossorigin="anonymous"></script>
+    {{ room.name|json_script:"json-roomname" }}
+    {{ request.user.username|json_script:"json-username" }}
+    <script src="{% static 'js/chat.js' %}" async defer></script>
+{% endblock scripts %}
+
 {% block container %}
   <div class="row d-flex">
     <div class="d-inline-flex">
@@ -23,11 +32,11 @@
   </div>
 
     <div class="col-12 mt-3 d-flex" style="height: 450px; flex-direction: column-reverse; overflow-y: scroll; background: #181c20">
-    <div id="message-list" data-bs-target="#navbar-example3" data-bs-smooth-scroll="true" class="" tabindex="0">
+    <div id="chat-messages" data-bs-target="#navbar-example3" data-bs-smooth-scroll="true" class="" tabindex="0">
         {% for message in messages %}
             <div class="row d-flex justify-content-between">
                 <div class="w-50 d-flex">
-                    <h6>{{ message.sender }}</h6>
+                    <h6>{{ message.user }}</h6>
                 </div>
             </div>
             <div class="w-75">
@@ -42,63 +51,5 @@
         <input id="chat-message-input" type="text" class="col-11 mt-1">
         <input id="chat-message-submit" class="btn btn-outline-danger float-end" type="button" value="Send">
     </div>
-
-    {{ room_name|json_script:"room-name" }}
-
-    <script>
-        const roomName = JSON.parse(document.getElementById('room-name').textContent);
-
-        const chatSocket = new WebSocket(
-            'ws://'
-            + window.location.host
-            + '/ws/chat/'
-            + roomName
-            + '/'
-        );
-
-        chatSocket.onopen = function(e) {
-            console.log("Connection is opened");
-            let messageList = document.getElementById('message-list');
-            messageList.lastChild.scrollIntoView();
-        }
-
-        chatSocket.onmessage = function(e) {
-            const data = JSON.parse(e.data);
-            console.log("Message is received");
-
-            const messageList = document.getElementById('message-list');
-            let msg = document.createElement('div');
-            let html = `<div className="row d-flex justify-content-between">
-                <div className="w-50 d-flex">
-                    <h6>` + data.sender + `</h6>
-                </div>
-            </div>
-            <p>` + data.message + `</p>
-            <hr>`;
-            msg.innerHTML = html;
-            messageList.appendChild(msg);
-            messageList.lastChild.scrollIntoView();
-        };
-
-        chatSocket.onclose = function(e) {
-            console.error('Chat socket closed unexpectedly');
-        };
-
-        document.querySelector('#chat-message-input').focus();
-        document.querySelector('#chat-message-input').onkeyup = function(e) {
-            if (e.keyCode === 13) {  // enter, return
-                document.querySelector('#chat-message-submit').click();
-            }
-        };
-
-        document.querySelector('#chat-message-submit').onclick = function(e) {
-            const messageInputDom = document.querySelector('#chat-message-input');
-            const message = messageInputDom.value;
-            chatSocket.send(JSON.stringify({
-                'message': message
-            }));
-            messageInputDom.value = '';
-        };
-    </script>
 
 {% endblock container %}
