@@ -3,6 +3,7 @@ from datetime import datetime, timezone
 from django.shortcuts import render
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import ObjectDoesNotExist
 from django.views.generic import DetailView, ListView
 from chat.models import Message, Room
 from users.models import UserProfile
@@ -36,7 +37,11 @@ class ChatRoomView(LoginRequiredMixin, DetailView):
     model = Room
 
     def get(self, request, *args, **kwargs):
-        room_ = Room.objects.get(pk=self.kwargs['pk'])
+        try:
+            room_ = Room.objects.get(name=('room' + str(self.kwargs['pk'])))
+        except ObjectDoesNotExist:
+            room_ = Room.objects.create(name=('room' + str(self.kwargs['pk'])))
+
         messages = Message.objects.filter(room=room_)
         if messages:
             mes_len = len(messages)
