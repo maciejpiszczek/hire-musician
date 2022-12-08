@@ -37,10 +37,15 @@ class ChatRoomView(LoginRequiredMixin, DetailView):
     model = Room
 
     def get(self, request, *args, **kwargs):
+        receiver_ = get_user_model().objects.get(id=self.kwargs['pk'])
         try:
-            room_ = Room.objects.get(name=('room' + str(self.kwargs['pk'])))
+            try:
+                room_ = Room.objects.get(slug=('room-' + str(self.kwargs['pk']) + '-' + str(self.request.user.id)))
+            except ObjectDoesNotExist:
+                room_ = Room.objects.get(slug=('room-' + str(self.request.user.id) + '-' + str(self.kwargs['pk'])))
         except ObjectDoesNotExist:
-            room_ = Room.objects.create(name=('room' + str(self.kwargs['pk'])))
+            room_ = Room.objects.create(name=(str(self.request.user) + '-' + str(receiver_)),
+                                        slug=('room-' + str(self.request.user.id) + '-' + str(self.kwargs['pk'])))
 
         messages = Message.objects.filter(room=room_)
         if messages:
@@ -52,4 +57,4 @@ class ChatRoomView(LoginRequiredMixin, DetailView):
         else:
             messages_ = None
 
-        return render(request, 'chat/chat.html', {'room': room_, 'messages': messages_})
+        return render(request, 'chat/chat.html', {'room': room_, 'messages': messages_, 'receiver': receiver_})
