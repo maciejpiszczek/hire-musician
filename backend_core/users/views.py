@@ -63,12 +63,7 @@ class MusicianProfileView(LoginRequiredMixin, DetailView):
             context['profile_edit'] = 0
 
         user_accesses = JobAccess.objects.filter(candidate=context['profile'].user)
-        events = []
-
-        for access in user_accesses:
-            events.append(Job.objects.get(id=access.job_id))
-
-        context['events'] = events
+        context['events'] = [access.job for access in user_accesses]
 
         return context
 
