@@ -136,7 +136,9 @@
             {% for event in events %}
               <div class="row">
                 <div class="col-sm-12">
-                  <p class="text-muted mb-0">{{ event }} </p>
+                  <a href="{% url 'jobs:job_details' slug=event.slug %}" class="text-decoration-none">
+                    <p class="text-muted mb-0">{{ event.event_start.date }} - {{ event.title }}</p>
+                  </a>
                 </div>
               </div>
             {% empty %}
@@ -149,6 +151,7 @@
           </div>
         </div>
 
+        {% if profile.equipment %}
         <div class="card mb-4">
           <div class="card-body">
             <div class="row">
@@ -164,6 +167,8 @@
             </div>
           </div>
         </div>
+        {% endif %}
+
         <div class="row">
           <div class="col-md-12">
             <div class="card mb-4 mb-md-0">
