@@ -10,6 +10,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
 
+from jobs.models import Job, JobAccess
 from . import forms
 from . import models
 from django.views.generic import DetailView, UpdateView
@@ -60,6 +61,14 @@ class MusicianProfileView(LoginRequiredMixin, DetailView):
             context['profile_edit'] = 2
         else:
             context['profile_edit'] = 0
+
+        user_accesses = JobAccess.objects.filter(candidate=context['profile'].user)
+        events = []
+
+        for access in user_accesses:
+            events.append(Job.objects.get(id=access.job_id))
+
+        context['events'] = events
 
         return context
 
