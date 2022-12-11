@@ -1,7 +1,9 @@
 import star_ratings.models
+from config import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django_filters.views import FilterView
+from django.views import View
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.views import PasswordChangeView, PasswordChangeDoneView, PasswordResetView, \
     PasswordResetDoneView, PasswordResetConfirmView
@@ -10,7 +12,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
 
-from jobs.models import Job, JobAccess
+from jobs.models import JobAccess
 from . import forms
 from . import models
 from django.views.generic import DetailView, UpdateView
@@ -100,11 +102,6 @@ def login_user_view(request):
         form = forms.LoginForm()
 
     return render(request, 'users/login.html', {'form': form})
-
-
-def logout_user(request):
-    logout(request)
-    return redirect(reverse_lazy('home:home'))
 
 
 class EditProfileView(LoginRequiredMixin, UpdateView):
