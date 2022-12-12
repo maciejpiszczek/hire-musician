@@ -42,9 +42,9 @@
             <div class="d-flex justify-content-between">
                 <p>{{ message.message }}</p>
                 {% if message.date_added.date < today %}
-                    <p>{{ message.date_added.date }} {{ message.date_added.hour|add:"1" }}:{{ message.date_added.minute }}</p>
+                    <p>{{ message.date_added.date }} {{ message.date_added.time|time:"H:i" }}</p>
                 {% else %}
-                    <p>{{ message.date_added.hour|add:"1" }}:{{ message.date_added.minute }}</p>
+                    <p>{{ message.date_added.time|time:"H:i"}}</p>
                 {% endif %}
             </div>
             <hr>
