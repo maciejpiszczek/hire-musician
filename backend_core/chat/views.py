@@ -15,9 +15,6 @@ class ChatIndexView(LoginRequiredMixin, ListView):
     template_name = 'chat/index.html'
     paginate_by = 20
 
-    def get_queryset(self):
-        return super().get_queryset().exclude(user_id=self.request.user.id)
-
     def get_context_data(self, *, object_list=None, **kwargs):
         queryset = super().get_queryset().exclude(user_id=self.request.user.id)
         context = super().get_context_data(**kwargs)
@@ -38,6 +35,7 @@ class ChatRoomView(LoginRequiredMixin, DetailView):
 
     def get(self, request, *args, **kwargs):
         receiver_ = get_user_model().objects.get(id=self.kwargs['pk'])
+        profile = UserProfile.objects.get(user=receiver_)
         try:
             try:
                 room_ = Room.objects.get(slug=('room-' + str(self.kwargs['pk']) + '-' + str(self.request.user.id)))
@@ -57,4 +55,5 @@ class ChatRoomView(LoginRequiredMixin, DetailView):
         else:
             messages_ = None
 
-        return render(request, 'chat/chat.html', {'room': room_, 'messages': messages_, 'receiver': receiver_})
+        return render(request, 'chat/chat.html', {'room': room_, 'messages': messages_, 'receiver': receiver_,
+                                                  'profile': profile})

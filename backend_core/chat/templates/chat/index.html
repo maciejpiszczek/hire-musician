@@ -19,7 +19,7 @@
                 <a class="card-link" href="/chat/{{ musician.0.user_id }}">
                     <div class="card mb-3 h-100 d-flex justify-content-center">
                         <div class="col-md-auto vertical-center">
-                            {% if musician.avatar %}
+                            {% if musician.0.avatar %}
                                 <img src="{{ musician.0.avatar.url }}" alt="avatar"
                                      class="rounded-circle img-fluid avatar-msg">
                             {% else %}

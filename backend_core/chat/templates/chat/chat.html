@@ -18,8 +18,8 @@
 {% block container %}
   <div class="row d-flex">
     <div class="d-inline-flex">
-      {% if receiver_profile.avatar %}
-        <img src="{{ receiver_profile.avatar.url }}" alt="avatar"
+      {% if profile.avatar %}
+        <img src="{{ profile.avatar.url }}" alt="avatar"
              class="rounded-circle img-fluid avatar">
       {% else %}
         <img src="{% static 'images/dummy-avatar.jpg' %}" alt="avatar"
