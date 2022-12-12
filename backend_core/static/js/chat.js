@@ -17,6 +17,10 @@ chatSocket.onmessage = function(e) {
     const data = JSON.parse(e.data);
 
     if (data.message) {
+        const now = new Date();
+        let currTime = now.getHours() + ":" + now.getMinutes();
+        console.log(currTime);
+
         const messageList = document.getElementById('chat-messages');
         let msg = document.createElement('div');
         let html = `<div className="row d-flex justify-content-between">
@@ -24,7 +28,10 @@ chatSocket.onmessage = function(e) {
                             <h6>` + data.username + `</h6>
                         </div>
                     </div>
-                    <p>` + data.message + `</p>
+                    <div class="d-flex justify-content-between">
+                        <p>` + data.message + `</p>
+                        <p>` + currTime + `</p>
+                    </div>
                     <hr>`;
         msg.innerHTML = html;
         messageList.appendChild(msg);

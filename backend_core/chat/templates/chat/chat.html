@@ -39,8 +39,9 @@
                     <h6>{{ message.user }}</h6>
                 </div>
             </div>
-            <div class="w-75">
+            <div class="d-flex justify-content-between">
                 <p>{{ message.message }}</p>
+                <p>{{ message.date_added.hour|add:"1" }}:{{ message.date_added.minute }}</p>
             </div>
             <hr>
         {% endfor %}
