@@ -56,4 +56,4 @@ class ChatRoomView(LoginRequiredMixin, DetailView):
             messages_ = None
 
         return render(request, 'chat/chat.html', {'room': room_, 'messages': messages_, 'receiver': receiver_,
-                                                  'profile': profile})
+                                                  'profile': profile, 'today': datetime.now().date()})
