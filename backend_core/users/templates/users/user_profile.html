@@ -126,13 +126,13 @@
 
         <div class="card mb-4">
           <div class="card-body">
+            {% if events %}
             <div class="row">
               <div class="col-sm-12">
-                <h6 class="mb-0">Upcoming jobs & events</h6>
+                <h6 class="mb-0">Upcoming events (performed)</h6>
               </div>
             </div>
             <hr>
-
             {% for event in events %}
               <div class="row">
                 <div class="col-sm-12">
@@ -141,15 +141,15 @@
                   </a>
                 </div>
               </div>
-            {% empty %}
-              <div class="row">
-                <div class="col-sm-12">
-                  <p class="text-muted mb-0">No upcoming events.</p>
-                </div>
-              </div>
             {% endfor %}
+            {% endif %}
 
             {% if jobs %}
+            <div class="row mt-3">
+              <div class="col-sm-12">
+                <h6 class="mb-0">Current job offers</h6>
+              </div>
+            </div>
             <hr>
             {% for job in jobs %}
               <div class="row">
