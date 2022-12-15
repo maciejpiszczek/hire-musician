@@ -148,6 +148,19 @@
                 </div>
               </div>
             {% endfor %}
+
+            {% if jobs %}
+            <hr>
+            {% for job in jobs %}
+              <div class="row">
+                <div class="col-sm-12">
+                  <a href="{% url 'jobs:job_details' slug=job.slug %}" class="text-decoration-none">
+                    <p class="text-muted mb-0">{{ job.event_start.date }} - {{ job.title }}</p>
+                  </a>
+                </div>
+              </div>
+            {% endfor %}
+            {% endif %}
           </div>
         </div>
 

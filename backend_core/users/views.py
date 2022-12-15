@@ -1,10 +1,8 @@
 import star_ratings.models
-from config import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django_filters.views import FilterView
-from django.views import View
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.views import PasswordChangeView, PasswordChangeDoneView, PasswordResetView, \
     PasswordResetDoneView, PasswordResetConfirmView
 from django.contrib.auth.models import Group
@@ -12,7 +10,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
 
-from jobs.models import JobAccess
+from jobs.models import JobAccess, Job
 from . import forms
 from . import models
 from django.views.generic import DetailView, UpdateView
@@ -64,7 +62,10 @@ class MusicianProfileView(LoginRequiredMixin, DetailView):
         else:
             context['profile_edit'] = 0
 
+        user_jobs = Job.objects.filter(owner=context['profile'].user)  # try self.request.kwargs['pk']
         user_accesses = JobAccess.objects.filter(candidate=context['profile'].user)
+
+        context['jobs'] = [job for job in user_jobs]
         context['events'] = [access.job for access in user_accesses]
 
         return context
