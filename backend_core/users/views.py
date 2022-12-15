@@ -62,7 +62,7 @@ class MusicianProfileView(LoginRequiredMixin, DetailView):
         else:
             context['profile_edit'] = 0
 
-        user_jobs = Job.objects.filter(owner=context['profile'].user)  # try self.request.kwargs['pk']
+        user_jobs = Job.objects.filter(owner=context['profile'].user)
         user_accesses = JobAccess.objects.filter(candidate=context['profile'].user)
 
         context['jobs'] = [job for job in user_jobs]
