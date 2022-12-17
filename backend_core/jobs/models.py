@@ -86,6 +86,7 @@ class Tour(Job):
 class JobAccess(models.Model):
     candidate = models.ForeignKey(get_user_model(), related_name='candidate', on_delete=models.CASCADE)
     job = models.ForeignKey('Job', on_delete=models.CASCADE)
+    approved = models.BooleanField(default=False)
 
     def __str__(self):
         return f'{self.candidate} - {self.job.title}'

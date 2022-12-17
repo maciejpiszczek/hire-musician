@@ -88,8 +88,9 @@
                     <hr>
                     {% for candidate in candidates %}
                         <div class="row">
-                          <div class="col-sm-12">
-                            <a href="/users/{{ candidate }}" class="text-muted mb-0">{{ candidate }}</a>
+                          <div class="col-sm-12 d-flex" style="justify-content: space-between;">
+                            <a href="/users/profile/{{ candidate }}" class="text-muted mb-0">{{ candidate }}</a>
+                            <button type="button" id="candidate-{{ candidate.id }}" class="">Hire!</button>
                           </div>
                         </div>
                     {% empty %}
