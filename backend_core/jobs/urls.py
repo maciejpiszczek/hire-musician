@@ -5,7 +5,6 @@ app_name = 'jobs'
 
 urlpatterns = [
     path('', views.JobsListView.as_view(), name='jobs_list'),
-    path('view/<slug:slug>/', views.JobDetailView.as_view(), name='job_details'),
     path('studiosession/new/', views.CreateStudioSessionView.as_view(), name='new_session'),
     path('concert/new/', views.CreateConcertView.as_view(), name='new_concert'),
     path('tour/new/', views.CreateTourView.as_view(), name='new_tour'),
@@ -16,4 +15,5 @@ urlpatterns = [
     path('my/', views.MyJobsListView.as_view(), name='my_jobs'),
     path('my_accesses/', views.MyJobAccessesListView.as_view(), name='my_accesses'),
     path('delete/<slug:slug>/', views.JobDeleteView.as_view(), name='delete-job'),
+    path('<slug:slug>/', views.JobDetailView.as_view(), name='job_details'),
 ]
