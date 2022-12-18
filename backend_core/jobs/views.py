@@ -58,6 +58,8 @@ class JobDetailView(DetailView):
         context['job_detailed'] = [job for job in jobs if job.title == context['job'].title][0]
         context['owner_profile'] = UserProfile.objects.get(user_id=context['job'].owner_id)
         accesses = models.JobAccess.objects.filter(job=context['job'].id)
+        # hired = [access for access in accesses if (access.approved is True)]
+        context['hired'] = True if accesses.filter(approved=True) else False
         context['candidates'] = [access.candidate for access in accesses]
         context['access_count'] = len(accesses)
         context['job_owner'] = True if (context['job'].owner == self.request.user or self.request.user.is_superuser) \

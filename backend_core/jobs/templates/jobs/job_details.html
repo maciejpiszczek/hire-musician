@@ -74,6 +74,7 @@
             {% endif %}
           </div>
 
+          {% if hired is False %}
           {% if job_owner %}
               <div class="card-body">
                   <div class="row">
@@ -90,7 +91,7 @@
                         <div class="row">
                           <div class="col-sm-12 d-flex" style="justify-content: space-between;">
                             <a href="/users/profile/{{ candidate }}" class="text-muted mb-0">{{ candidate }}</a>
-                            <button type="button" id="candidate-{{ candidate.id }}" class="">Hire!</button>
+                            <button type="button" id="candidate-{{ candidate.id }}" class="hire-button">Hire!</button>
                           </div>
                         </div>
                     {% empty %}
@@ -108,6 +109,7 @@
                       <h6>{{ access_count }}</h6>
                   </div>
               </div>
+          {% endif %}
           {% endif %}
         </div>
       </div>
