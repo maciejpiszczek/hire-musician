@@ -110,6 +110,20 @@
                   </div>
               </div>
           {% endif %}
+          {% else %}
+            <div class="card-body text-center h-auto">
+                <p class="text-muted">Hired agent:</p>
+                {% if hired_agent.avatar %}
+                  <img src="{{ hired_agent.avatar.url }}" alt="avatar"
+                      class="rounded-circle img-fluid avatar" style="width: 150px; height: 150px;">
+                {% else %}
+                  <img src="{% static 'images/dummy-avatar.jpg' %}" alt="avatar"
+                      class="rounded-circle img-fluid" style="width: 150px; height: 150px;">
+                {% endif %}
+                <a href="/users/profile/{{ hired_agent }}">
+                  <h5 class="my-3">{{ hired_agent }}</h5>
+                </a>
+            </div>
           {% endif %}
         </div>
       </div>
