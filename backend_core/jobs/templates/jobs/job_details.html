@@ -11,6 +11,13 @@
     <link rel="stylesheet" href="{% static 'styles/main.css' %}">
 {% endblock styles %}
 
+{% block scripts %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
+            crossorigin="anonymous"></script>
+    <script type="text/javascript" src="{% static 'js/choose-candidate.js' %}" async defer></script>
+{% endblock scripts %}
+
 {% block container %}
     <section class="bg-dark contents">
   <div class="container py-5">
@@ -91,7 +98,7 @@
                         <div class="row">
                           <div class="col-sm-12 d-flex" style="justify-content: space-between;">
                             <a href="/users/profile/{{ candidate }}" class="text-muted mb-0">{{ candidate }}</a>
-                            <button type="button" id="candidate-{{ candidate.id }}" class="hire-button">Hire!</button>
+                            <button type="button" id="{{ candidate.id }}" class="hire-button">Hire!</button>
                           </div>
                         </div>
                     {% empty %}
