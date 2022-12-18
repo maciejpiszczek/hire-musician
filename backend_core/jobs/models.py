@@ -26,6 +26,7 @@ class Job(models.Model):
     added = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     is_active = models.BooleanField(default=True)
+    is_available = models.BooleanField(default=True)
 
     def __str__(self):
         return f'{self.event_start.date()} - {self.event_end.date()} - {self.instrument} - {self.title}'

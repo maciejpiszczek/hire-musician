@@ -51,9 +51,12 @@ def search(request):
     if 'query' in request.GET and request.GET['query']:
         query = request.GET['query']
         musicians = UserProfile.objects.filter(slug__icontains=query)
-        studio_sessions = StudioSession.objects.filter(Q(title__icontains=query) | Q(music_style__icontains=query))
-        concerts = Concert.objects.filter(Q(title__icontains=query) | Q(music_style__icontains=query))
-        tours = Tour.objects.filter(Q(title__icontains=query) | Q(music_style__icontains=query))
+        studio_sessions = StudioSession.objects.filter(Q(is_available=True)
+                                                       & (Q(title__icontains=query) | Q(music_style__icontains=query)))
+        concerts = Concert.objects.filter(Q(is_available=True)
+                                          & (Q(title__icontains=query) | Q(music_style__icontains=query)))
+        tours = Tour.objects.filter(Q(is_available=True)
+                                    & (Q(title__icontains=query) | Q(music_style__icontains=query)))
         jobs = chain(studio_sessions, concerts, tours)
         no_results = True if len(list(chain(musicians, studio_sessions, concerts, tours))) == 0 else False
 
