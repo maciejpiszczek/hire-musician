@@ -66,7 +66,7 @@ class MusicianProfileView(LoginRequiredMixin, DetailView):
         user_accesses = JobAccess.objects.filter(candidate=context['profile'].user)
 
         context['jobs'] = [job for job in user_jobs]
-        context['events'] = [access.job for access in user_accesses]
+        context['events'] = [access.job for access in user_accesses if access.approved]
 
         return context
 
