@@ -124,6 +124,7 @@
           </div>
         {% endif %}
 
+        {% if events or jobs %}
         <div class="card mb-4">
           <div class="card-body">
             {% if events %}
@@ -165,6 +166,7 @@
             {% endif %}
           </div>
         </div>
+        {% endif %}
 
         {% if profile.equipment %}
         <div class="card mb-4">
