@@ -1,13 +1,16 @@
+import json
+
 from django.utils import timezone
 from itertools import chain
 
 from braces.views import GroupRequiredMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponseRedirect, HttpResponseForbidden
+from django.http import HttpResponseRedirect, HttpResponseForbidden, HttpResponse
 from django.urls import reverse_lazy
 from django.views.generic import DetailView, FormView, UpdateView, DeleteView
 from django.views.generic.edit import FormMixin
 from django_filters.views import FilterView
+from django.db import DatabaseError
 
 from . import models, forms
 
@@ -51,6 +54,17 @@ class JobDetailView(DetailView):
     model = models.Job
     template_name = 'jobs/job_details.html'
     context_object_name = 'job'
+
+    def post(self, request, *args, **kwargs):
+        json_data = json.loads(self.request.body)
+        try:
+            job_access = models.JobAccess.objects.filter(job_id=models.Job.objects.get(
+                slug=self.kwargs['slug']).id).get(candidate_id=int(json_data['candidate_id']))
+            job_access.approved = True
+            job_access.save()
+            return HttpResponse(status=200)
+        except DatabaseError:
+            return HttpResponse(status=400)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

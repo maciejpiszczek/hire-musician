@@ -94,11 +94,12 @@
                       </div>
                     </div>
                     <hr>
+                    {% csrf_token %}
                     {% for candidate in candidates %}
                         <div class="row">
                           <div class="col-sm-12 d-flex" style="justify-content: space-between;">
                             <a href="/users/profile/{{ candidate }}" class="text-muted mb-0">{{ candidate }}</a>
-                            <button type="button" id="{{ candidate.id }}" class="hire-button">Hire!</button>
+                            <button type="button" id="{{ candidate.id }}" data-id="{{ candidate.id }}" class="hire-button">Hire!</button>
                           </div>
                         </div>
                     {% empty %}
