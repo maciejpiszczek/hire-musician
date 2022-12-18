@@ -9,6 +9,7 @@ from django.contrib.auth.models import Group
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
+from django.core.exceptions import ObjectDoesNotExist
 
 from jobs.models import JobAccess, Job
 from . import forms
@@ -64,6 +65,16 @@ class MusicianProfileView(LoginRequiredMixin, DetailView):
 
         user_jobs = Job.objects.filter(owner=context['profile'].user)
         user_accesses = JobAccess.objects.filter(candidate=context['profile'].user)
+        try:
+            context['user_rating'] = star_ratings.models.Rating.objects.get(object_id=context['profile'].id).average
+        except ObjectDoesNotExist:
+            context['user_rating'] = None
+
+        jobaccess = JobAccess.objects.filter(candidate_id=context['profile'].user.id)
+        for a in jobaccess:
+            if (a.job.owner == self.request.user) & a.approved:
+                context['performed'] = True
+                break
 
         context['jobs'] = [job for job in user_jobs]
         context['events'] = [access.job for access in user_accesses if access.approved]

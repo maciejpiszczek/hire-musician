@@ -194,7 +194,16 @@
                   <h6 class="mb-0">Rating</h6>
                   <hr>
                   <div style="text-align: right;">
+                    {% if performed %}
                       {% ratings object %}
+                    {% else %}
+                      {% if user_rating %}
+                        <i data-star="{{ user_rating }}"></i>
+                        <small>{{ user_rating }}</small>
+                      {% else %}
+                        <small>No one voted for this user yet.</small>
+                      {% endif %}
+                    {% endif %}
                   </div>
                 </div>
               </div>
