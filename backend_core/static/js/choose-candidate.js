@@ -15,5 +15,8 @@ hireBtns.forEach(btn => {
 
         let data = JSON.stringify({"candidate_id": btn.id});
         xhr.send(data);
+
+        const candDiv = document.querySelector("#candidate-list");
+        candDiv.remove();
     }
 });

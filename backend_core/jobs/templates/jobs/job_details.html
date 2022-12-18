@@ -34,7 +34,7 @@
     </div>
     <div class="row mt-3">
       <div class="col-lg-4">
-        <div class="card h-100 d-block">
+        <div id="participants" class="card h-100 d-block">
           <div class="card-body text-center h-auto">
             {% if applied %}
                 <h6>You applied for this job.</h6>
@@ -83,7 +83,7 @@
 
           {% if hired is False %}
           {% if job_owner %}
-              <div class="card-body">
+              <div id="candidate-list" class="card-body">
                   <div class="row">
                       <div class="col-sm-12">
                         <h6 class="mb-0">Accesses
