@@ -11,7 +11,10 @@ from django.views.generic import DetailView, FormView, UpdateView, DeleteView
 from django.views.generic.edit import FormMixin
 from django_filters.views import FilterView
 from django.db import DatabaseError
+from django.contrib.auth import get_user_model
+from django.core.exceptions import ObjectDoesNotExist
 
+from chat.models import Room, Message
 from . import models, forms
 
 from .filters import JobsFilter
@@ -64,9 +67,29 @@ class JobDetailView(DetailView):
             if job.is_available:
                 job_access.approved = True
                 job.is_available = False
+
+                try:
+                    room = Room.objects.get(name=(str(self.request.user) + '-' + str(get_user_model().objects.get(id=int(json_data['candidate_id'])))))
+                except ObjectDoesNotExist:
+                    room = Room.objects.get(name=(str(get_user_model().objects.get(id=int(json_data['candidate_id']))) + '-' + str(self.request.user)))
+                except:
+                    room = Room.objects.create(name=(str(self.request.user) + '-' + str(get_user_model().objects.get(id=int(json_data['candidate_id'])))),
+                                               slug=('room-' + str(self.request.user.id) + '-' + json_data['candidate_id']))
+                message = Message.objects.create(room=room, user=self.request.user,
+                                                 message='AUTO MESSAGE - you have been hired!')
+                message.save()
+
             else:
                 job_access.approved = False
                 job.is_available = True
+
+                try:
+                    room = Room.objects.get(name=(str(self.request.user) + '-' + str(get_user_model().objects.get(id=int(json_data['candidate_id'])))))
+                except ObjectDoesNotExist:
+                    room = Room.objects.get(name=(str(get_user_model().objects.get(id=int(json_data['candidate_id']))) + '-' + str(self.request.user)))
+                message = Message.objects.create(room=room, user=self.request.user,
+                                                 message='AUTO MESSAGE - a job owner has cancelled a contract with you.')
+                message.save()
 
             job_access.save()
             job.save()
