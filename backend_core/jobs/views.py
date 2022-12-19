@@ -71,10 +71,11 @@ class JobDetailView(DetailView):
                 try:
                     room = Room.objects.get(name=(str(self.request.user) + '-' + str(get_user_model().objects.get(id=int(json_data['candidate_id'])))))
                 except ObjectDoesNotExist:
-                    room = Room.objects.get(name=(str(get_user_model().objects.get(id=int(json_data['candidate_id']))) + '-' + str(self.request.user)))
-                except:
-                    room = Room.objects.create(name=(str(self.request.user) + '-' + str(get_user_model().objects.get(id=int(json_data['candidate_id'])))),
-                                               slug=('room-' + str(self.request.user.id) + '-' + json_data['candidate_id']))
+                    try:
+                        room = Room.objects.get(name=(str(get_user_model().objects.get(id=int(json_data['candidate_id']))) + '-' + str(self.request.user)))
+                    except ObjectDoesNotExist:
+                        room = Room.objects.create(name=(str(self.request.user) + '-' + str(get_user_model().objects.get(id=int(json_data['candidate_id'])))),
+                                                   slug=('room-' + str(self.request.user.id) + '-' + json_data['candidate_id']))
                 message = Message.objects.create(room=room, user=self.request.user,
                                                  message='AUTO MESSAGE - you have been hired!')
                 message.save()
@@ -88,7 +89,7 @@ class JobDetailView(DetailView):
                 except ObjectDoesNotExist:
                     room = Room.objects.get(name=(str(get_user_model().objects.get(id=int(json_data['candidate_id']))) + '-' + str(self.request.user)))
                 message = Message.objects.create(room=room, user=self.request.user,
-                                                 message='AUTO MESSAGE - a job owner has cancelled a contract with you.')
+                                                 message='AUTO MESSAGE - job owner has cancelled a contract with you.')
                 message.save()
 
             job_access.save()
