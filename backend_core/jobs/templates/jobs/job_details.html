@@ -133,6 +133,12 @@
                 </a>
                 {% csrf_token %}
                 <button type="button" id="cancel-btn" data-id="{{ hired_agent.user.id }}" class="btn btn-outline-danger">Cancel contract</button>
+
+                <div id="cancel-confirmation" class="d-none">
+                    Are you sure?<br>
+                    <button type="button" id="confirm-btn" class="btn btn-danger">Yes</button>
+                    <button type="button" id="discard-btn" class="btn btn-outline-danger">No</button>
+                </div>
             </div>
           {% endif %}
         </div>
