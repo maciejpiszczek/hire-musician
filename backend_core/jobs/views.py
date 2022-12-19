@@ -60,11 +60,20 @@ class JobDetailView(DetailView):
         try:
             job = models.Job.objects.get(slug=self.kwargs['slug'])
             job_access = models.JobAccess.objects.filter(job=job).get(candidate_id=int(json_data['candidate_id']))
-            job_access.approved = True
-            job_access.save()
-            job.is_available = False
-            job.save()
+
+            if job.is_available:
+                job_access.approved = True
+                job_access.save()
+                job.is_available = False
+                job.save()
+            else:
+                job_access.approved = False
+                job_access.save()
+                job.is_available = True
+                job.save()
+
             return HttpResponse(status=200)
+
         except DatabaseError:
             return HttpResponse(status=400)
 

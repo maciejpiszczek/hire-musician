@@ -131,6 +131,8 @@
                 <a href="/users/profile/{{ hired_agent }}">
                   <h5 class="my-3">{{ hired_agent }}</h5>
                 </a>
+                {% csrf_token %}
+                <button type="button" id="cancel-btn" data-id="{{ hired_agent.user.id }}" class="btn btn-outline-danger">Cancel contract</button>
             </div>
           {% endif %}
         </div>
