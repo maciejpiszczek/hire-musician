@@ -63,14 +63,13 @@ class JobDetailView(DetailView):
 
             if job.is_available:
                 job_access.approved = True
-                job_access.save()
                 job.is_available = False
-                job.save()
             else:
                 job_access.approved = False
-                job_access.save()
                 job.is_available = True
-                job.save()
+
+            job_access.save()
+            job.save()
 
             return HttpResponse(status=200)
 
