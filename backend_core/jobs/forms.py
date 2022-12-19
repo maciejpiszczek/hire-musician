@@ -12,19 +12,19 @@ class CreateJobForm(forms.ModelForm):
 class CreateStudioSessionForm(CreateJobForm):
     class Meta:
         model = models.StudioSession
-        exclude = ('owner', 'added', 'updated', 'is_active')
+        exclude = ('owner', 'added', 'updated', 'is_active', 'is_available')
 
 
 class CreateConcertForm(CreateJobForm):
     class Meta:
         model = models.Concert
-        exclude = ('owner', 'added', 'updated', 'is_active')
+        exclude = ('owner', 'added', 'updated', 'is_active', 'is_available')
 
 
 class CreateTourForm(CreateJobForm):
     class Meta:
         model = models.Tour
-        exclude = ('owner', 'added', 'updated', 'is_active')
+        exclude = ('owner', 'added', 'updated', 'is_active', 'is_available')
 
 
 class JobAccessForm(forms.ModelForm):
