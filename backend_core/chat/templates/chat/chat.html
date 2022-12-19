@@ -13,6 +13,7 @@
     {{ room.name|json_script:"json-roomname" }}
     {{ request.user.username|json_script:"json-username" }}
     <script src="{% static 'js/chat.js' %}" async defer></script>
+    <script src="{% static 'js/event-links.js' %}" async defer></script>
 {% endblock scripts %}
 
 {% block container %}
@@ -40,7 +41,7 @@
                 </div>
             </div>
             <div class="d-flex justify-content-between">
-                <p>{{ message.message }}</p>
+                <p class="msg-text">{{ message.message }}</p>
                 {% if message.date_added.date < today %}
                     <p>{{ message.date_added.date }} {{ message.date_added.time|time:"H:i" }}</p>
                 {% else %}

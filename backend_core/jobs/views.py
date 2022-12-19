@@ -77,7 +77,7 @@ class JobDetailView(DetailView):
                         room = Room.objects.create(name=(str(self.request.user) + '-' + str(get_user_model().objects.get(id=int(json_data['candidate_id'])))),
                                                    slug=('room-' + str(self.request.user.id) + '-' + json_data['candidate_id']))
                 message = Message.objects.create(room=room, user=self.request.user,
-                                                 message='AUTO MESSAGE - you have been hired!')
+                                                 message=f'AUTO MESSAGE - you have been hired for "{job.title}".')
                 message.save()
 
             else:
@@ -89,7 +89,7 @@ class JobDetailView(DetailView):
                 except ObjectDoesNotExist:
                     room = Room.objects.get(name=(str(get_user_model().objects.get(id=int(json_data['candidate_id']))) + '-' + str(self.request.user)))
                 message = Message.objects.create(room=room, user=self.request.user,
-                                                 message='AUTO MESSAGE - job owner has cancelled a contract with you.')
+                                                 message=f'AUTO MESSAGE - job owner has cancelled a contract for "{job.title}".')
                 message.save()
 
             job_access.save()
