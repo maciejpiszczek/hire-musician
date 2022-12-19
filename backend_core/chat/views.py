@@ -21,7 +21,7 @@ class ChatIndexView(LoginRequiredMixin, ListView):
         user_list = []
 
         for user in queryset:
-            user_msgs = Message.objects.filter(user=get_user_model().objects.get(id=user.id)).order_by('-date_added')
+            user_msgs = Message.objects.filter(user=get_user_model().objects.get(id=user.user.id)).order_by('-date_added')
 
             chat_tdelta = calculate_timedelta(datetime.now(timezone.utc), user_msgs[0].date_added) if user_msgs else ''
             user_list.append((user, chat_tdelta))
