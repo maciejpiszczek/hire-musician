@@ -70,12 +70,14 @@ class JobDetailView(DetailView):
 
                 try:
                     try:
-                        room = Room.objects.get(name=(str(get_user_model().objects.get(id=int(json_data['candidate_id']))) + '-' + str(self.request.user)))
+                        room = Room.objects.get(name=(str(get_user_model().objects.get(id=int(json_data['candidate_id'])))
+                                                      + '-' + str(self.request.user)))
                     except ObjectDoesNotExist:
                         room = Room.objects.get(name=(str(self.request.user) + '-' + str(
                                                       get_user_model().objects.get(id=int(json_data['candidate_id'])))))
                 except ObjectDoesNotExist:
-                    room = Room.objects.create(name=(str(self.request.user) + '-' + str(get_user_model().objects.get(id=int(json_data['candidate_id'])))),
+                    room = Room.objects.create(name=(str(self.request.user) + '-'
+                                                     + str(get_user_model().objects.get(id=int(json_data['candidate_id'])))),
                                                slug=('room-' + str(self.request.user.id) + '-' + json_data['candidate_id']))
 
                 message = Message.objects.create(room=room, user=self.request.user,
@@ -88,19 +90,23 @@ class JobDetailView(DetailView):
 
                 if self.request.user == job.owner:
                     try:
-                        room = Room.objects.get(name=(str(self.request.user) + '-' + str(get_user_model().objects.get(id=int(json_data['candidate_id'])))))
+                        room = Room.objects.get(name=(str(self.request.user) + '-'
+                                                      + str(get_user_model().objects.get(id=int(json_data['candidate_id'])))))
                     except ObjectDoesNotExist:
                         room = Room.objects.get(
                             name=(str(get_user_model().objects.get(id=int(json_data['candidate_id'])))
                                   + '-' + str(self.request.user)))
+                    message = Message.objects.create(room=room, user=self.request.user,
+                                                     message=f'AUTO MESSAGE - job owner has cancelled a contract '
+                                                             f'for "{job.title}".')
                 elif self.request.user.id == int(json_data['candidate_id']):
                     try:
                         room = Room.objects.get(name=(str(self.request.user) + '-' + job.owner.username))
                     except ObjectDoesNotExist:
                         room = Room.objects.get(name=(job.owner.username + '-' + str(self.request.user)))
-
-                message = Message.objects.create(room=room, user=self.request.user,
-                                                 message=f'AUTO MESSAGE - job owner has cancelled a contract for "{job.title}".')
+                    message = Message.objects.create(room=room, user=self.request.user,
+                                                     message=f'AUTO MESSAGE - {self.request.user} '
+                                                             f'has cancelled a contract for "{job.title}".')
                 message.save()
 
             job_access.save()
