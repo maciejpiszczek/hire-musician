@@ -7,6 +7,8 @@ from braces.views import GroupRequiredMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect, HttpResponseForbidden, HttpResponse
 from django.urls import reverse_lazy
+from django.shortcuts import render
+from django.views import View
 from django.views.generic import DetailView, FormView, UpdateView, DeleteView
 from django.views.generic.edit import FormMixin
 from django_filters.views import FilterView
@@ -276,3 +278,8 @@ class MyJobAccessesListView(JobsListView):
         context['jobs_view'] = True
         context['no_results_message'] = "You have no job accesses."
         return context
+
+
+class CalendarView(View):
+    def get(self, request, *args, **kwargs):
+        return render(request, 'jobs/calendar.html')

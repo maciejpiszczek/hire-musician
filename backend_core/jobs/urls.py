@@ -15,5 +15,6 @@ urlpatterns = [
     path('my/', views.MyJobsListView.as_view(), name='my_jobs'),
     path('my_accesses/', views.MyJobAccessesListView.as_view(), name='my_accesses'),
     path('delete/<slug:slug>/', views.JobDeleteView.as_view(), name='delete-job'),
+    path('calendar/', views.CalendarView.as_view(), name='calendar'),
     path('<slug:slug>/', views.JobDetailView.as_view(), name='job_details'),
 ]
