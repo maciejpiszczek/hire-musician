@@ -280,6 +280,8 @@ class MyJobAccessesListView(JobsListView):
         return context
 
 
-class CalendarView(View):
+class CalendarView(LoginRequiredMixin, View):
+    login_url = 'users:login'
+
     def get(self, request, *args, **kwargs):
         return render(request, 'jobs/calendar.html')
