@@ -69,13 +69,15 @@ class JobDetailView(DetailView):
                 job.is_available = False
 
                 try:
-                    room = Room.objects.get(name=(str(self.request.user) + '-' + str(get_user_model().objects.get(id=int(json_data['candidate_id'])))))
-                except ObjectDoesNotExist:
                     try:
                         room = Room.objects.get(name=(str(get_user_model().objects.get(id=int(json_data['candidate_id']))) + '-' + str(self.request.user)))
                     except ObjectDoesNotExist:
-                        room = Room.objects.create(name=(str(self.request.user) + '-' + str(get_user_model().objects.get(id=int(json_data['candidate_id'])))),
-                                                   slug=('room-' + str(self.request.user.id) + '-' + json_data['candidate_id']))
+                        room = Room.objects.get(name=(str(self.request.user) + '-' + str(
+                                                      get_user_model().objects.get(id=int(json_data['candidate_id'])))))
+                except ObjectDoesNotExist:
+                    room = Room.objects.create(name=(str(self.request.user) + '-' + str(get_user_model().objects.get(id=int(json_data['candidate_id'])))),
+                                               slug=('room-' + str(self.request.user.id) + '-' + json_data['candidate_id']))
+
                 message = Message.objects.create(room=room, user=self.request.user,
                                                  message=f'AUTO MESSAGE - you have been hired for "{job.title}".')
                 message.save()
@@ -84,10 +86,19 @@ class JobDetailView(DetailView):
                 job_access.approved = False
                 job.is_available = True
 
-                try:
-                    room = Room.objects.get(name=(str(self.request.user) + '-' + str(get_user_model().objects.get(id=int(json_data['candidate_id'])))))
-                except ObjectDoesNotExist:
-                    room = Room.objects.get(name=(str(get_user_model().objects.get(id=int(json_data['candidate_id']))) + '-' + str(self.request.user)))
+                if self.request.user == job.owner:
+                    try:
+                        room = Room.objects.get(name=(str(self.request.user) + '-' + str(get_user_model().objects.get(id=int(json_data['candidate_id'])))))
+                    except ObjectDoesNotExist:
+                        room = Room.objects.get(
+                            name=(str(get_user_model().objects.get(id=int(json_data['candidate_id'])))
+                                  + '-' + str(self.request.user)))
+                elif self.request.user.id == int(json_data['candidate_id']):
+                    try:
+                        room = Room.objects.get(name=(str(self.request.user) + '-' + job.owner.username))
+                    except ObjectDoesNotExist:
+                        room = Room.objects.get(name=(job.owner.username + '-' + str(self.request.user)))
+
                 message = Message.objects.create(room=room, user=self.request.user,
                                                  message=f'AUTO MESSAGE - job owner has cancelled a contract for "{job.title}".')
                 message.save()
@@ -106,13 +117,14 @@ class JobDetailView(DetailView):
         context['job_detailed'] = [job for job in jobs if job.title == context['job'].title][0]
         context['owner_profile'] = UserProfile.objects.get(user_id=context['job'].owner_id)
         accesses = models.JobAccess.objects.filter(job=context['job'].id)
-        context['hired'] = True if accesses.filter(approved=True) else False
-        if context['hired']:
-            context['hired_agent'] = UserProfile.objects.get(user_id=accesses.get(approved=True).candidate.id)
         context['candidates'] = [access.candidate for access in accesses]
         context['access_count'] = len(accesses)
         context['job_owner'] = True if (context['job'].owner == self.request.user or self.request.user.is_superuser) \
             else False
+        context['hired'] = True if accesses.filter(approved=True) else False
+        if context['hired']:
+            context['hired_agent'] = UserProfile.objects.get(user_id=accesses.get(approved=True).candidate.id)
+            context['is_authorized'] = True if (context['job_owner'] or self.request.user == accesses.get(approved=True).candidate) else False
         context['applied'] = True if models.JobAccess.objects.filter(candidate=self.request.user, job=self.object) \
             else False
         user_profile = UserProfile.objects.get(user=self.request.user)

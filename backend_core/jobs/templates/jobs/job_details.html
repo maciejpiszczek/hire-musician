@@ -132,6 +132,8 @@
                   <h5 class="my-3">{{ hired_agent }}</h5>
                 </a>
                 {% csrf_token %}
+
+                {% if is_authorized %}
                 <button type="button" id="cancel-btn" data-id="{{ hired_agent.user.id }}" class="btn btn-outline-danger">Cancel contract</button>
 
                 <div id="cancel-confirmation" class="d-none">
@@ -139,6 +141,7 @@
                     <button type="button" id="confirm-btn" class="btn btn-danger">Yes</button>
                     <button type="button" id="discard-btn" class="btn btn-outline-danger">No</button>
                 </div>
+                {% endif %}
             </div>
           {% endif %}
         </div>
