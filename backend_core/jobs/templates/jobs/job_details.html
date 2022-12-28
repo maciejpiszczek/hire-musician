@@ -69,7 +69,7 @@
                 </div>
             {% else %}
                     <div class="d-flex justify-content-center mb-2">
-                        {% if not applied %}
+                        {% if not applied and filled_profile %}
                             <a href="{% url 'jobs:apply' slug=job.slug %}">
                                 <button type="button" class="btn btn-danger ms-1">Apply</button>
                             </a>

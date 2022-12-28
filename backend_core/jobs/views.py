@@ -115,6 +115,8 @@ class JobDetailView(DetailView):
             else False
         context['applied'] = True if models.JobAccess.objects.filter(candidate=self.request.user, job=self.object) \
             else False
+        user_profile = UserProfile.objects.get(user=self.request.user)
+        context['filled_profile'] = True if (user_profile.instrument and user_profile.music_style) else False
         return context
 
 
