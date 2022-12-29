@@ -1,3 +1,5 @@
+from datetime import datetime
+
 import star_ratings.models
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
