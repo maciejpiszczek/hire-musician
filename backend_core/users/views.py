@@ -102,7 +102,7 @@ class SignInView(LoginView):
         form = forms.LoginForm()
         signup_success = request.GET.get('Status')
 
-        if signup_success == 'True':
+        if signup_success:
             messages.success(request, 'Account succesfully created. You can sign in now.')
 
         return render(request, 'users/login.html', {'form': form})

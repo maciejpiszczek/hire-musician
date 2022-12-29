@@ -3,6 +3,7 @@ from itertools import chain
 from django.contrib.auth import get_user_model
 from django.db.models import Q
 from django.shortcuts import render
+from django.views import View
 from django.views.generic import TemplateView
 
 from chat.models import Message
@@ -47,21 +48,22 @@ class HomeView(TemplateView):
         return context
 
 
-def search(request):
-    if 'query' in request.GET and request.GET['query']:
-        query = request.GET['query']
-        musicians = UserProfile.objects.filter(slug__icontains=query)
-        studio_sessions = StudioSession.objects.filter(Q(is_available=True)
-                                                       & (Q(title__icontains=query) | Q(music_style__icontains=query)))
-        concerts = Concert.objects.filter(Q(is_available=True)
-                                          & (Q(title__icontains=query) | Q(music_style__icontains=query)))
-        tours = Tour.objects.filter(Q(is_available=True)
-                                    & (Q(title__icontains=query) | Q(music_style__icontains=query)))
-        jobs = chain(studio_sessions, concerts, tours)
-        no_results = True if len(list(chain(musicians, studio_sessions, concerts, tours))) == 0 else False
+class SearchView(View):
+    def get(self, request, *args, **kwargs):
+        if 'query' in request.GET and request.GET['query']:
+            query = request.GET['query']
+            musicians = UserProfile.objects.filter(slug__icontains=query)
+            studio_sessions = StudioSession.objects.filter(Q(is_available=True)
+                                                           & (Q(title__icontains=query) | Q(music_style__icontains=query)))
+            concerts = Concert.objects.filter(Q(is_available=True)
+                                              & (Q(title__icontains=query) | Q(music_style__icontains=query)))
+            tours = Tour.objects.filter(Q(is_available=True)
+                                        & (Q(title__icontains=query) | Q(music_style__icontains=query)))
+            jobs = chain(studio_sessions, concerts, tours)
+            no_results = True if len(list(chain(musicians, studio_sessions, concerts, tours))) == 0 else False
 
-        return render(request, 'jobs/search_results.html', {'query': query, 'no_results': no_results,
-                                                            'musicians': musicians, 'jobs': jobs})
+            return render(request, 'jobs/search_results.html', {'query': query, 'no_results': no_results,
+                                                                'musicians': musicians, 'jobs': jobs})
 
-    else:
-        return render(request, 'jobs/search_results.html')
+        else:
+            return render(request, 'jobs/search_results.html')
