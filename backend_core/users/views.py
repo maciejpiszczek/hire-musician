@@ -2,6 +2,7 @@ import star_ratings.models
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django_filters.views import FilterView
+from django.views import View
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.views import PasswordChangeView, PasswordChangeDoneView, PasswordResetView, \
     PasswordResetDoneView, PasswordResetConfirmView
@@ -82,20 +83,23 @@ class MusicianProfileView(LoginRequiredMixin, DetailView):
         return context
 
 
-def registration_view(request):
-    form = forms.RegistrationForm(request.POST or None, request.FILES or None)
-    if request.method == 'POST':
+class SignUpView(View):
+    def get(self, request, *args, **kwargs):
+        form = forms.RegistrationForm(request.POST or None, request.FILES or None)
+        return render(request, 'users/registration.html', {'form': form})
+
+    def post(self, request, *args, **kwargs):
+        form = forms.RegistrationForm(request.POST or None, request.FILES or None)
         if form.is_valid():
             user = form.save(commit=False)
             user.save()
             user.groups.add(Group.objects.get(name='musicians'))
-            return HttpResponseRedirect('/users/login/'+'?Status='+'True')
-    return render(request, 'users/registration.html', {'form': form})
+            return HttpResponseRedirect('/users/login/' + '?Status=' + 'True')
 
 
 def login_user_view(request):
     signup_success = request.GET.get('Status')
-    if signup_success:
+    if signup_success == 'True':
         messages.success(request, 'Account succesfully created. You can sign in now.')
     if request.method == 'POST':
         form = forms.LoginForm(request, request.POST or None)
