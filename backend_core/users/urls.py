@@ -6,7 +6,7 @@ app_name = 'users'
 
 urlpatterns = [
     path('', views.MusiciansProfilesListView.as_view(), name='musicians_list'),
-    path('login/', views.login_user_view, name='login'),
+    path('login/', views.SignInView.as_view(), name='login'),
     path('register/', views.SignUpView.as_view(), name='registration'),
     path('profile/<slug:slug>/', views.MusicianProfileView.as_view(), name='profile_details'),
     path('<slug:slug>/edit/', views.EditProfileView.as_view(), name='edit_profile'),

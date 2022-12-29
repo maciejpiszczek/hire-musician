@@ -4,7 +4,7 @@ from django.contrib import messages
 from django_filters.views import FilterView
 from django.views import View
 from django.contrib.auth import authenticate, login
-from django.contrib.auth.views import PasswordChangeView, PasswordChangeDoneView, PasswordResetView, \
+from django.contrib.auth.views import LoginView, PasswordChangeView, PasswordChangeDoneView, PasswordResetView, \
     PasswordResetDoneView, PasswordResetConfirmView
 from django.contrib.auth.models import Group
 from django.shortcuts import render, redirect
@@ -97,11 +97,17 @@ class SignUpView(View):
             return HttpResponseRedirect('/users/login/' + '?Status=' + 'True')
 
 
-def login_user_view(request):
-    signup_success = request.GET.get('Status')
-    if signup_success == 'True':
-        messages.success(request, 'Account succesfully created. You can sign in now.')
-    if request.method == 'POST':
+class SignInView(LoginView):
+    def get(self, request, *args, **kwargs):
+        form = forms.LoginForm()
+        signup_success = request.GET.get('Status')
+
+        if signup_success == 'True':
+            messages.success(request, 'Account succesfully created. You can sign in now.')
+
+        return render(request, 'users/login.html', {'form': form})
+
+    def post(self, request, *args, **kwargs):
         form = forms.LoginForm(request, request.POST or None)
 
         if form.is_valid():
@@ -113,11 +119,6 @@ def login_user_view(request):
                 if user.is_active:
                     login(request, user)
                     return redirect(reverse_lazy('home:home'))
-
-    else:
-        form = forms.LoginForm()
-
-    return render(request, 'users/login.html', {'form': form})
 
 
 class EditProfileView(LoginRequiredMixin, UpdateView):
