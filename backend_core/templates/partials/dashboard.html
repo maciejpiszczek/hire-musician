@@ -1,14 +1,14 @@
 {% load static %}
 
-<div class="row">
-        <div class="col-12 mb-3">
+<div class="row row-cols-1 row-cols-md-2 g-4 mb-5">
+        <div class="col-6">
             <a class="card-link" href="{% url 'jobs:jobs_list' %}">
                 <div class="card mb-3 h-100 justify-content-center">
                     <div class="row g-0 card-elements">
-                        <div class="col-md-3 card-images">
+                        <div class="col-md-4 card-images">
                             <img src="{% static '/images/jobs.svg' %}" class="img-fluid rounded-start" alt="...">
                         </div>
-                        <div class="col-md-9">
+                        <div class="col-md-8">
                             <div class="card-body">
                                 <h5 class="card-title">Jobs</h5>
                                 <p class="card-text">Search for job opportunities -&nbspboth live and in studio, add offers and grow.</p>
@@ -24,14 +24,14 @@
                 </div>
             </a>
         </div>
-        <div class="col-12 mb-3">
+        <div class="col-6">
             <a class="card-link" href="/users">
                 <div class="card mb-3 h-100 justify-content-center">
                     <div class="row g-0">
-                        <div class="col-md-3 card-images">
+                        <div class="col-md-4 card-images">
                             <img src="{% static '/images/musicians.svg' %}" class="img-fluid rounded-start" alt="...">
                         </div>
-                        <div class="col-md-9">
+                        <div class="col-md-8">
                             <div class="card-body">
                                 <h5 class="card-title">Musicians</h5>
                                 <p class="card-text">Find a right man for the job.</p>
@@ -47,14 +47,14 @@
                 </div>
             </a>
         </div>
-        <div class="col-12 mb-3">
+        <div class="col-6">
             <a class="card-link" href="{% url 'chat:chat-index' %}">
                 <div class="card mb-3 h-100 justify-content-center">
                     <div class="row g-0">
-                        <div class="col-md-3 card-images">
+                        <div class="col-md-4 card-images">
                             <img src="{% static '/images/messages.svg' %}" class="img-fluid rounded-start" alt="...">
                         </div>
-                        <div class="col-md-9">
+                        <div class="col-md-8">
                             <div class="card-body">
                                 <h5 class="card-title">Chat</h5>
                                 <p class="card-text">Get in touch with fellow musicians.</p>
@@ -63,6 +63,26 @@
                                     {% else %}
                                         Last update {{ inbox_tdelta }} ago
                                     {% endif %}
+                                </small></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-6">
+            <a class="card-link" href="{% url 'jobs:calendar' %}">
+                <div class="card mb-3 h-100 justify-content-center">
+                    <div class="row g-0">
+                        <div class="col-md-4 card-images">
+                            <img src="{% static '/images/calendar.svg' %}" class="img-fluid rounded-start" alt="...">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title">Calendar</h5>
+                                <p class="card-text">Time management is the key -&nbspuse a featured calendar to keep up with your schedule.</p>
+                                <p class="card-text"><small class="last-update">
+                                    Last update 3 mins ago
                                 </small></p>
                             </div>
                         </div>
