@@ -5,11 +5,11 @@ from itertools import chain
 
 from braces.views import GroupRequiredMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponseRedirect, HttpResponseForbidden, HttpResponse, JsonResponse
+from django.http import HttpResponseRedirect, HttpResponseForbidden, HttpResponse
 from django.urls import reverse_lazy
 from django.shortcuts import render
 from django.views import View
-from django.views.generic import DetailView, FormView, UpdateView, DeleteView, TemplateView
+from django.views.generic import DetailView, FormView, UpdateView, DeleteView
 from django.views.generic.edit import FormMixin
 from django_filters.views import FilterView
 from django.db import DatabaseError
@@ -293,41 +293,16 @@ class CalendarView(LoginRequiredMixin, View):
         jobs_json = json.dumps(
             [
                 {
-                    'id': job.slug,
+                    'id': job.id,
                     'name': job.title,
                     'date': [job.event_start.strftime("%B/%d/%Y"), job.event_end.strftime("%B/%d/%Y")],
+                    'badge': f'{job.event_start.strftime("%d/%m/%Y")} - {job.event_end.strftime("%d/%m/%Y")}'
+                             if job.event_start.strftime("%d/%m/%Y") != job.event_end.strftime("%d/%m/%Y")
+                             else f'{job.event_start.strftime("%H:%M")} - {job.event_end.strftime("%H:%M")}',
                     'type': job.get_matching_subclass_object().get_class().lower(),
                 }
                 for job in jobs
             ]
         )
 
-        # return HttpResponse(jobs_json, content_type='application/json')
         return render(request, 'jobs/calendar.html', {'jobs': jobs_json})
-
-# class CalendarView(LoginRequiredMixin, TemplateView):
-#     login_url = 'users:login'
-#     template_name = 'jobs/calendar.html'
-#
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data()
-#         jobs = list(models.Job.objects.filter(owner=self.request.user))
-#         appr_accesses = models.JobAccess.objects.filter(Q(candidate=self.request.user) & Q(approved=True))
-#         for access in appr_accesses:
-#             jobs.append(models.Job.objects.get(id=access.job_id))
-#
-#         jobs_json = json.dumps(
-#             [
-#                 {
-#                     'id': job.slug,
-#                     'name': job.title,
-#                     'date': [job.event_start.strftime("%B/%d/%Y"), job.event_end.strftime("%B/%d/%Y")],
-#                     'type': job.get_matching_subclass_object().get_class()
-#                 }
-#                 for job in jobs
-#             ]
-#         )
-#
-#         context['jobs'] = jobs_json
-#
-#         return context

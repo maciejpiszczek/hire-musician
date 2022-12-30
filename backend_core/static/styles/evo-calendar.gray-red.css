@@ -158,10 +158,10 @@
     color: #fff;
     border-radius: 0;
     background-color: rgba(222,0,0,.7);
-    border: 1px solid #00adb5;
+    border: 1px solid #a41515;
 }
 .midnight-blue .event-container:hover > .event-info > p.event-title > span {
-    background-color: rgb(0 173 181);
+    background-color: rgba(222,0,0,255);
 }
 
 .midnight-blue .event-list > .event-empty {
