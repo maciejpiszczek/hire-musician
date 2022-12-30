@@ -27,12 +27,11 @@
     <div id="calendar"></div>
     <script>
         const jobsObj = JSON.parse('{{ jobs|escapejs }}');
-        console.log(jobsObj);
-
         $("#calendar").evoCalendar({
             calendarEvents: jobsObj,
             theme: 'Midnight Blue',
             sidebarDisplayDefault: false,
+            eventDisplayDefault: false,
             todayHighlight: true,
         });
     </script>
