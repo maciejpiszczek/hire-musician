@@ -26,8 +26,8 @@
     <h1 style="text-align: center;">My Calendar</h1>
     <div id="calendar"></div>
     <script>
-        const jobs = document.querySelector("#jobs");
-        const jobsObj = JSON.parse(jobs.innerHTML);
+        const jobsObj = JSON.parse('{{ jobs|escapejs }}');
+        console.log(jobsObj);
 
         $("#calendar").evoCalendar({
             calendarEvents: jobsObj,
