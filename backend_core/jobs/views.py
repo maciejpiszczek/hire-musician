@@ -4,6 +4,7 @@ from django.utils import timezone
 from itertools import chain
 
 from braces.views import GroupRequiredMixin
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect, HttpResponseForbidden, HttpResponse
 from django.urls import reverse_lazy
@@ -261,6 +262,7 @@ class JobAccessView(LoginRequiredMixin, FormMixin, DetailView):
         date_list = set(date_list)
 
         if form.is_valid() and (self.object.event_start.date() in date_list or self.object.event_end.date() in date_list):
+            messages.error(request, 'You are already busy at that time!')
             return self.form_invalid(form)
         elif form.is_valid():
             return self.form_valid(form)

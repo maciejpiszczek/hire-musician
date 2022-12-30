@@ -9,6 +9,14 @@
 {% endblock title %}
 
 {% block container %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-danger">
+                {{ message }}
+                <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
     <div class="sign-in" style="text-align: center;">
         <div class="card mb-3 h-100">
             <div class="row g-0 card-elements">
