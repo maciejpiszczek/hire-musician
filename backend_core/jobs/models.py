@@ -89,6 +89,9 @@ class JobAccess(models.Model):
     job = models.ForeignKey('Job', on_delete=models.CASCADE)
     approved = models.BooleanField(default=False)
 
+    class Meta:
+        unique_together = ('candidate', 'job')
+
     def __str__(self):
         return f'{self.candidate} - {self.job.title}'
 
