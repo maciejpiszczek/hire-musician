@@ -296,7 +296,7 @@ class CalendarView(LoginRequiredMixin, View):
                     'id': job.slug,
                     'name': job.title,
                     'date': [job.event_start.strftime("%B/%d/%Y"), job.event_end.strftime("%B/%d/%Y")],
-                    'type': job.get_matching_subclass_object().get_class()
+                    'type': job.get_matching_subclass_object().get_class().lower(),
                 }
                 for job in jobs
             ]

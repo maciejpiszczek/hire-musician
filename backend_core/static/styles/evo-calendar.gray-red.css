@@ -139,9 +139,19 @@
 .midnight-blue .event-container:hover > .event-icon > div {
     border-color: #fff;
 } 
-.midnight-blue .event-container > .event-icon > div.event-bullet-birthday,
-.midnight-blue .event-indicator > .type-bullet > div.type-birthday {
-    background-color: #6c72bf;
+.midnight-blue .event-container > .event-icon > div.event-bullet-tour,
+.midnight-blue .event-indicator > .type-bullet > div.type-tour {
+    background-color: #00dd00;
+}
+
+.midnight-blue .event-container > .event-icon > div.event-bullet-concert,
+.midnight-blue .event-indicator > .type-bullet > div.type-concert {
+    background-color: #a41515;
+}
+
+.midnight-blue .event-container > .event-icon > div.event-bullet-studiosession,
+.midnight-blue .event-indicator > .type-bullet > div.type-studiosession {
+    background-color: #0dcaf0;
 }
 
 .midnight-blue .event-container > .event-info > p.event-title > span {
