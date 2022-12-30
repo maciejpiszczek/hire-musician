@@ -243,7 +243,26 @@ class JobAccessView(LoginRequiredMixin, FormMixin, DetailView):
             return HttpResponseForbidden()
         self.object = self.get_object()
         form = self.get_form()
-        if form.is_valid():
+
+        jobs = models.Job.objects.filter(owner=self.request.user)
+        date_list = []
+
+        for job in jobs:
+            date_list.append(job.event_start.date())
+            date_list.append(job.event_end.date())
+
+        appr_accesses = models.JobAccess.objects.filter(Q(candidate=self.request.user) & Q(approved=True))
+
+        for access in appr_accesses:
+            job = models.Job.objects.get(id=access.job_id)
+            date_list.append(job.event_start.date())
+            date_list.append(job.event_end.date())
+
+        date_list = set(date_list)
+
+        if form.is_valid() and (self.object.event_start.date() in date_list or self.object.event_end.date() in date_list):
+            return self.form_invalid(form)
+        elif form.is_valid():
             return self.form_valid(form)
         else:
             return self.form_invalid(form)
