@@ -7,7 +7,7 @@ from django.views import View
 from django.views.generic import TemplateView
 
 from chat.models import Message
-from jobs.models import Job, StudioSession, Concert, Tour
+from jobs.models import Job, StudioSession, Concert, Tour, JobAccess
 from users.models import UserProfile
 from datetime import datetime, timezone
 from utils.calculate_timedelta import calculate_timedelta
@@ -42,6 +42,14 @@ class HomeView(TemplateView):
                 context['inbox_tdelta'] = calculate_timedelta(dt_now, last_inbox_msg)
             else:
                 context['inbox_tdelta'] = ''
+
+            jobs = Job.objects.filter(owner=self.request.user)
+
+            if jobs:
+                last_added_job = jobs.order_by('-added')[0].added
+                context['calendar_tdelta'] = calculate_timedelta(dt_now, last_added_job)
+            else:
+                context['calendar_tdelta'] = ''
 
         context['users_count'] = len(UserProfile.objects.all())
         context['jobs_count'] = len(Job.objects.all())
