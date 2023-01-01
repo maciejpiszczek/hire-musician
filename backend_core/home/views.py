@@ -7,7 +7,7 @@ from django.views import View
 from django.views.generic import TemplateView
 
 from chat.models import Message
-from jobs.models import Job, StudioSession, Concert, Tour, JobAccess
+from jobs.models import Job, StudioSession, Concert, Tour
 from users.models import UserProfile
 from datetime import datetime, timezone
 from utils.calculate_timedelta import calculate_timedelta
@@ -36,17 +36,26 @@ class HomeView(TemplateView):
             else:
                 context['user_tdelta'] = ''
 
-            msgs = Message.objects.all()
+            msgs = Message.objects.filter(Q(room__name__icontains=self.request.user.username))
             if msgs:
-                last_inbox_msg = msgs.order_by('-date_added')[0].date_added
-                context['inbox_tdelta'] = calculate_timedelta(dt_now, last_inbox_msg)
+                last_msg = msgs.order_by('-date_added')[0].date_added
+                context['inbox_tdelta'] = calculate_timedelta(dt_now, last_msg)
             else:
                 context['inbox_tdelta'] = ''
 
             jobs = Job.objects.filter(owner=self.request.user)
+            notifs = Message.objects.filter(Q(room__name__icontains=self.request.user.username)
+                                            & Q(message__icontains="AUTO MESSAGE"))
+
             if jobs:
-                last_calendar_update = jobs.order_by('-added')[0].added
-                context['calendar_tdelta'] = calculate_timedelta(dt_now, last_calendar_update)
+                last_added_job = jobs.order_by('-added')[0].added
+                job_tdelta = calculate_timedelta(dt_now, last_added_job)
+                if notifs:
+                    last_notif = notifs.order_by('-date_added')[0].date_added
+                    notif_tdelta = calculate_timedelta(dt_now, last_notif)
+                    context['calendar_tdelta'] = job_tdelta if (last_added_job > last_notif) else notif_tdelta
+                else:
+                    context['calendar_tdelta'] = job_tdelta
             else:
                 context['calendar_tdelta'] = ''
 
@@ -61,7 +70,8 @@ class SearchView(View):
             query = request.GET['query']
             musicians = UserProfile.objects.filter(slug__icontains=query)
             studio_sessions = StudioSession.objects.filter(Q(is_available=True)
-                                                           & (Q(title__icontains=query) | Q(music_style__icontains=query)))
+                                                           & (Q(title__icontains=query)
+                                                              | Q(music_style__icontains=query)))
             concerts = Concert.objects.filter(Q(is_available=True)
                                               & (Q(title__icontains=query) | Q(music_style__icontains=query)))
             tours = Tour.objects.filter(Q(is_available=True)
