@@ -14,7 +14,6 @@ from django.views.generic import DetailView, FormView, UpdateView, DeleteView
 from django.views.generic.edit import FormMixin
 from django_filters.views import FilterView
 from django.db import DatabaseError
-from django.db.models import Q
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ObjectDoesNotExist
 
@@ -252,7 +251,7 @@ class JobAccessView(LoginRequiredMixin, FormMixin, DetailView):
             date_list.append(job.event_start.date())
             date_list.append(job.event_end.date())
 
-        appr_accesses = models.JobAccess.objects.filter(Q(candidate=self.request.user) & Q(approved=True))
+        appr_accesses = models.JobAccess.objects.filter(candidate=self.request.user, approved=True)
 
         for access in appr_accesses:
             job = models.Job.objects.get(id=access.job_id)
@@ -307,7 +306,7 @@ class CalendarView(LoginRequiredMixin, View):
 
     def get(self, request, *args, **kwargs):
         jobs = list(models.Job.objects.filter(owner=self.request.user))
-        appr_accesses = models.JobAccess.objects.filter(Q(candidate=self.request.user) & Q(approved=True))
+        appr_accesses = models.JobAccess.objects.filter(candidate=self.request.user, approved=True)
         for access in appr_accesses:
             jobs.append(models.Job.objects.get(id=access.job_id))
 
