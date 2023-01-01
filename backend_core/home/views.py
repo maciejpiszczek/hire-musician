@@ -44,10 +44,9 @@ class HomeView(TemplateView):
                 context['inbox_tdelta'] = ''
 
             jobs = Job.objects.filter(owner=self.request.user)
-
             if jobs:
-                last_added_job = jobs.order_by('-added')[0].added
-                context['calendar_tdelta'] = calculate_timedelta(dt_now, last_added_job)
+                last_calendar_update = jobs.order_by('-added')[0].added
+                context['calendar_tdelta'] = calculate_timedelta(dt_now, last_calendar_update)
             else:
                 context['calendar_tdelta'] = ''
 
