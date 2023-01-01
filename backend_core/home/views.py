@@ -47,16 +47,26 @@ class HomeView(TemplateView):
             notifs = Message.objects.filter(Q(room__name__icontains=self.request.user.username)
                                             & Q(message__icontains="AUTO MESSAGE"))
 
+            calendar_tdelta = 0
+            last_added_job = 0
+
             if jobs:
                 last_added_job = jobs.order_by('-added')[0].added
                 job_tdelta = calculate_timedelta(dt_now, last_added_job)
-                if notifs:
-                    last_notif = notifs.order_by('-date_added')[0].date_added
-                    notif_tdelta = calculate_timedelta(dt_now, last_notif)
-                    context['calendar_tdelta'] = job_tdelta if (last_added_job > last_notif) else notif_tdelta
-                else:
-                    context['calendar_tdelta'] = job_tdelta
-            else:
+                calendar_tdelta = job_tdelta
+
+            if notifs:
+                last_notif = notifs.order_by('-date_added')[0].date_added
+                notif_tdelta = calculate_timedelta(dt_now, last_notif)
+                calendar_tdelta = notif_tdelta
+            elif jobs and notifs:
+                last_notif = notifs.order_by('-date_added')[0].date_added
+                notif_tdelta = calculate_timedelta(dt_now, last_notif)
+                calendar_tdelta = notif_tdelta if (last_notif > last_added_job) else calendar_tdelta
+
+            context['calendar_tdelta'] = calendar_tdelta
+
+            if not jobs and not notifs:
                 context['calendar_tdelta'] = ''
 
         context['users_count'] = len(UserProfile.objects.all())
