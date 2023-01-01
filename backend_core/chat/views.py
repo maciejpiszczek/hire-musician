@@ -46,14 +46,11 @@ class ChatRoomView(LoginRequiredMixin, DetailView):
                                         slug=('room-' + str(self.request.user.id) + '-' + str(self.kwargs['pk'])))
 
         messages = Message.objects.filter(room=room_)
-        if messages:
-            mes_len = len(messages)
-            if mes_len >= 25:
-                messages_ = messages.order_by('date_added')[(mes_len - 25):mes_len]
-            else:
-                messages_ = messages.order_by('date_added')
+        mes_len = len(messages)
+        if mes_len >= 25:
+            messages_ = messages.order_by('date_added')[(mes_len - 25):mes_len]
         else:
-            messages_ = None
+            messages_ = messages.order_by('date_added')
 
         return render(request, 'chat/chat.html', {'room': room_, 'messages': messages_, 'receiver': receiver_,
                                                   'profile': profile, 'today': datetime.now().date()})
