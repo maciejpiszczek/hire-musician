@@ -55,7 +55,7 @@ class HomeView(TemplateView):
                 job_tdelta = calculate_timedelta(dt_now, last_added_job)
                 calendar_tdelta = job_tdelta
 
-            if notifs:
+            if notifs and not jobs:
                 last_notif = notifs.order_by('-date_added')[0].date_added
                 notif_tdelta = calculate_timedelta(dt_now, last_notif)
                 calendar_tdelta = notif_tdelta
