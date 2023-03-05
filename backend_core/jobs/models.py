@@ -6,6 +6,22 @@ from django.db import models
 from django.utils.text import slugify
 
 
+class CutUnit(models.Model):
+    name = models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.name
+
+    def save(self, *args, **kwargs):
+        cut_unit = CutUnit.objects.filter(name=self.name.lower())
+
+        if not cut_unit:
+            self.name = self.name.lower()
+            return super().save(*args, **kwargs)
+
+        return cut_unit
+
+
 class Job(models.Model):
     owner = models.ForeignKey(get_user_model(), related_name='job_creator', on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
@@ -14,13 +30,7 @@ class Job(models.Model):
     music_style = models.CharField(max_length=200)
     description = models.TextField()
     cut = models.DecimalField(max_digits=10, decimal_places=2)
-    cut_unit_choices = [
-        ('hour', 'hour',),
-        ('song', 'song'),
-        ('concert', 'concert'),
-        ('session', 'session'),
-    ]
-    cut_unit = models.CharField(max_length=200, choices=cut_unit_choices, default=1)
+    cut_unit = models.ForeignKey('CutUnit', on_delete=models.CASCADE, related_name='jobs')
     event_start = models.DateTimeField()
     event_end = models.DateTimeField()
     added = models.DateTimeField(auto_now_add=True)
