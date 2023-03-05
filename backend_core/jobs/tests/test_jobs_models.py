@@ -1,27 +1,15 @@
+import pytest
+
 from datetime import datetime, timezone
 from decimal import Decimal
-
-import pytest
-from django.contrib.auth import get_user_model
 
 from jobs.models import Job, StudioSession, Concert, Tour
 
 
-@pytest.fixture
-def create_user():
-    User = get_user_model()
-    user = User.objects.create(
-        username='michal_w',
-        email='mi@w.pl',
-        password='zaq12wsx'
-    )
-    return user
-
-
 @pytest.mark.django_db
-def test_create_job(create_user):
+def test_create_job(user):
     job = Job.objects.create(
-        owner=create_user,
+        owner=user,
         title='Test event',
         instrument='drums',
         music_style='jazz',
@@ -36,9 +24,9 @@ def test_create_job(create_user):
 
 
 @pytest.mark.django_db
-def test_create_studio_session(create_user):
+def test_create_studio_session(user):
     job = StudioSession.objects.create(
-        owner=create_user,
+        owner=user,
         title='Test event',
         instrument='drums',
         music_style='jazz',
@@ -55,9 +43,9 @@ def test_create_studio_session(create_user):
 
 
 @pytest.mark.django_db
-def test_create_concert(create_user):
+def test_create_concert(user):
     job = Concert.objects.create(
-        owner=create_user,
+        owner=user,
         title='Test event',
         instrument='drums',
         music_style='jazz',
@@ -78,9 +66,9 @@ def test_create_concert(create_user):
 
 
 @pytest.mark.django_db
-def test_create_tour(create_user):
+def test_create_tour(user):
     job = Tour.objects.create(
-        owner=create_user,
+        owner=user,
         title='Test event',
         instrument='drums',
         music_style='jazz',
