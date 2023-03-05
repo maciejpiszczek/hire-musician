@@ -1,5 +1,6 @@
 import pytest
 
+from chat.models import Room
 from users.models import UserProfile
 
 
@@ -17,3 +18,8 @@ def get_user_profile(user):
     user_ = user
     profile = UserProfile.objects.get(user=user_)
     return profile
+
+
+@pytest.fixture
+def room(db):
+    return Room.objects.create(name='test_room')
