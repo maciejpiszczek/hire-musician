@@ -1,3 +1,5 @@
+import random
+
 import pytest
 import datetime
 
@@ -6,7 +8,10 @@ from decimal import Decimal
 from django.contrib.auth.models import Group
 
 from jobs.forms import JobAccessForm
-from jobs.models import Job
+from jobs.models import Job, CutUnit
+
+
+cut_units = CutUnit.objects.all()
 
 
 @pytest.fixture
@@ -25,7 +30,7 @@ def create_user_and_job(django_user_model):
         music_style='rock',
         description='loremipsum',
         cut=Decimal(100),
-        cut_unit='song',
+        cut_unit=random.choice(cut_units),
         event_start=now_ + datetime.timedelta(hours=1),
         event_end=now_ + datetime.timedelta(hours=3),
     )

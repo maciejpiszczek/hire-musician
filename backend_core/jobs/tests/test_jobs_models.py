@@ -1,9 +1,14 @@
+import random
+
 import pytest
 
 from datetime import datetime, timezone
 from decimal import Decimal
 
-from jobs.models import Job, StudioSession, Concert, Tour
+from jobs.models import Job, StudioSession, Concert, Tour, CutUnit
+
+
+cut_units = CutUnit.objects.all()
 
 
 @pytest.mark.django_db
@@ -15,7 +20,7 @@ def test_create_job(user):
         music_style='jazz',
         description='job description...',
         cut=Decimal(100),
-        cut_unit='hour',
+        cut_unit=random.choice(cut_units),
         event_start=datetime(2023, 4, 1, 19, 0, 0, tzinfo=timezone.utc),
         event_end=datetime(2023, 4, 1, 21, 0, 0, tzinfo=timezone.utc),
     )
@@ -32,7 +37,7 @@ def test_create_studio_session(user):
         music_style='jazz',
         description='job description...',
         cut=Decimal(100),
-        cut_unit='hour',
+        cut_unit=random.choice(cut_units),
         event_start=datetime(2023, 4, 1, 19, 0, 0, tzinfo=timezone.utc),
         event_end=datetime(2023, 4, 1, 21, 0, 0, tzinfo=timezone.utc),
         location='Warsaw',
@@ -51,7 +56,7 @@ def test_create_concert(user):
         music_style='jazz',
         description='job description...',
         cut=Decimal(100),
-        cut_unit='hour',
+        cut_unit=random.choice(cut_units),
         event_start=datetime(2023, 4, 1, 19, 0, 0, tzinfo=timezone.utc),
         event_end=datetime(2023, 4, 1, 21, 0, 0, tzinfo=timezone.utc),
         location='Warsaw',
@@ -74,7 +79,7 @@ def test_create_tour(user):
         music_style='jazz',
         description='job description...',
         cut=Decimal(100),
-        cut_unit='hour',
+        cut_unit=random.choice(cut_units),
         event_start=datetime(2023, 4, 1, 19, 0, 0, tzinfo=timezone.utc),
         event_end=datetime(2023, 4, 1, 21, 0, 0, tzinfo=timezone.utc),
         region='Europe',
