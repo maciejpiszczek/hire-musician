@@ -5,14 +5,36 @@ from jobs.models import Job, StudioSession, Concert, Tour, CutUnit
 cut_units = CutUnit.objects.all()
 
 
-@pytest.mark.django_db
-def test_create_job(job):
+@pytest.mark.models
+def test_create_job(db, job):
     job_ = job
     assert len(Job.objects.all()) == 1
 
 
-@pytest.mark.django_db
-def test_create_studio_session(user, job):
+@pytest.mark.models
+def test_job_fields(job):
+    assert [*vars(job)] == [
+        "_state",
+        "id",
+        "owner_id",
+        "title",
+        "slug",
+        "instrument",
+        "music_style",
+        "description",
+        "cut",
+        "cut_unit_id",
+        "event_start",
+        "event_end",
+        "added",
+        "updated",
+        "is_active",
+        "is_available"
+    ]
+
+
+@pytest.mark.models
+def test_create_studio_session(db, user, job):
     job_ = job
     StudioSession.objects.create(
         owner=user,
@@ -31,8 +53,8 @@ def test_create_studio_session(user, job):
     assert len(StudioSession.objects.all()) == 1
 
 
-@pytest.mark.django_db
-def test_create_concert(job):
+@pytest.mark.models
+def test_create_concert(db, job):
     job_ = job
     Concert.objects.create(
         owner=job_.owner,
@@ -55,8 +77,8 @@ def test_create_concert(job):
     assert len(Concert.objects.all()) == 1
 
 
-@pytest.mark.django_db
-def test_create_tour(job):
+@pytest.mark.models
+def test_create_tour(db, job):
     job_ = job
     Tour.objects.create(
         owner=job_.owner,

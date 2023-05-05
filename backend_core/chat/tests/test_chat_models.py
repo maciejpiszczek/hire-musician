@@ -3,14 +3,14 @@ import pytest
 from chat.models import Room, Message
 
 
-@pytest.mark.django_db
-def test_create_room():
+@pytest.mark.models
+def test_create_room(db):
     Room.objects.create(name='abc')
     assert len(Room.objects.all()) == 1
 
 
-@pytest.mark.django_db
-def test_create_message(room, user):
+@pytest.mark.models
+def test_create_message(db, room, user):
     Message.objects.create(
         room=room,
         user=user,
