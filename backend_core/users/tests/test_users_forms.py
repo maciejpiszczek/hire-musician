@@ -11,8 +11,8 @@ from users.forms import RegistrationForm, LoginForm
      ('albicc', 'a.pl', 'zaq12wsx', 'zaq12wsx', False),
      ('albicc', 'a@a.pl', 'zax', 'zax', True),
      ])
-@pytest.mark.django_db
-def test_user_registration_form(username, email, password, password_confirmation, valid):
+@pytest.mark.forms
+def test_user_registration_form(db, username, email, password, password_confirmation, valid):
     form = RegistrationForm(data={
         'username': username,
         'email': email,
