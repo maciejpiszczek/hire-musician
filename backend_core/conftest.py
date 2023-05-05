@@ -1,8 +1,11 @@
-from datetime import timezone, datetime
+import random
+from datetime import timezone, datetime, timedelta
 
 import pytest
+from _decimal import Decimal
 
 from chat.models import Room
+from jobs.models import Job, CutUnit
 from users.models import UserProfile
 
 
@@ -30,3 +33,18 @@ def room(db):
 @pytest.fixture
 def job_datetime():
     return datetime(datetime.now().year + 1, 4, 1, 19, 0, 0, tzinfo=timezone.utc)
+
+
+@pytest.fixture
+def job(db, user, job_datetime):
+    return Job.objects.create(
+        owner=user,
+        title='Test event',
+        instrument='drums',
+        music_style='jazz',
+        description='job description...',
+        cut=Decimal(100),
+        cut_unit=random.choice(CutUnit.objects.all()),
+        event_start=job_datetime + timedelta(days=1),
+        event_end=job_datetime + timedelta(days=1, hours=2),
+    )
