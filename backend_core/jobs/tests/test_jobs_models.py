@@ -2,7 +2,7 @@ import random
 
 import pytest
 
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 from decimal import Decimal
 
 from jobs.models import Job, StudioSession, Concert, Tour, CutUnit
@@ -12,7 +12,7 @@ cut_units = CutUnit.objects.all()
 
 
 @pytest.mark.django_db
-def test_create_job(user):
+def test_create_job(user, job_datetime):
     job = Job.objects.create(
         owner=user,
         title='Test event',
@@ -21,8 +21,8 @@ def test_create_job(user):
         description='job description...',
         cut=Decimal(100),
         cut_unit=random.choice(cut_units),
-        event_start=datetime(2023, 4, 1, 19, 0, 0, tzinfo=timezone.utc),
-        event_end=datetime(2023, 4, 1, 21, 0, 0, tzinfo=timezone.utc),
+        event_start=job_datetime + timedelta(days=1),
+        event_end=job_datetime + timedelta(days=1, hours=2),
     )
     jobs = Job.objects.all()
     assert len(jobs) == 1

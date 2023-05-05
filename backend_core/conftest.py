@@ -1,3 +1,5 @@
+from datetime import timezone, datetime
+
 import pytest
 
 from chat.models import Room
@@ -23,3 +25,8 @@ def get_user_profile(user):
 @pytest.fixture
 def room(db):
     return Room.objects.create(name='test_room')
+
+
+@pytest.fixture
+def job_datetime():
+    return datetime(datetime.now().year + 1, 4, 1, 19, 0, 0, tzinfo=timezone.utc)
